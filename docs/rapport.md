@@ -19,7 +19,7 @@ MAX_PLAYERS
 3. **state**: I don't remember
 4. **player**: the player who put the tile 
 5. **coordinates**: the place of the tile in the grid
-6. **special**: I don't remember
+6. **special**: I don't remember (maybe for dark side)
 
 |  | ATTRIBUT  | DATA TYPE |
 |---|-------------|---------|
@@ -114,9 +114,11 @@ MAX_PLAYERS
 
 |   | ATTRIBUT  | DATA TYPE | 
 |---|-------------|---------|
-|   | x |    INT  |
+|   | x | INT  |
 |   | y | INT     |
 
+
+## Carcassone Rules 
 
 
 
