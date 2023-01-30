@@ -7,7 +7,7 @@ struct Stack_t{
     unsigned int *number_tiles;
     Tile * list_tiles;
 };
-typedef Stuck_t Stuck;
+typedef Stack_t Stack;
 
 
-#ifndef
+#endif

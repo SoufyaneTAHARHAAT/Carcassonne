@@ -3,7 +3,7 @@
 
 #include "Player.h"
 #include "Grid.h"
-#include "Stuck.h"
+#include "Stack.h"
 
 enum State_g{
     UNFINISHED,
@@ -14,7 +14,7 @@ typedef enum State_g State_game;
 struct Game{
     int * id_players; // pointer to an array contains id players
     Grid * G; // pointer to the grid
-    Stuck * S; // pointer to the stuck of tiles
+    Stack * S; // pointer to the stack of tiles
     State_game state_game;
 
 };
