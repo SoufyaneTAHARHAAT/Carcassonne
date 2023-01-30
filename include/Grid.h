@@ -4,7 +4,7 @@
 #include "Tile.h"
 
 struct Grid{
-    Tile * grd;
+    Tile * tab_tiles;
 };
 typedef struct Grid Grid;
 

@@ -4,37 +4,49 @@
 #include "coordinate.h"
 #include "Meeple.h"
 
-enum State_t {
+enum State_t
+{
     PLAYED,
     ON_HOLD, // STILL IN STACK OF TILES
-}; typedef enum State_t Tile_state;
+};
+typedef enum State_t Tile_state;
 
-enum Borders_t {
+enum Borders_t
+{
     TOP,
     RIGHT,
     BOTTOM,
     LEFT,
     CENTER,
-}; typedef enum Borders_t Borders;
+};
+typedef enum Borders_t Borders;
 
-enum  Landscape_t {
+enum Landscape_t
+{
     ROAD,
     CITY,
-    FIELD
-}; typedef enum Landscape_t Landscape;
+    CLOISTER, // THE ONE THAT NEED TO BE SURROUNDED BU 8 TILES
+    fIELD,    // ABBAYE
+    SHIELD,   // BLASON
+    VILLAGE
 
-struct Border_land_t {
+};
+typedef enum Landscape_t Landscape;
+
+struct Border_land_t
+{
     Borders border;
     Landscape Landscape;
-}; typedef struct Border_land_t Border_land;
+};
+typedef struct Border_land_t Border_land;
 
 // create struct for the tiles
-struct Tile {
+struct Tile_t
+{
     int id_tile;
     Border_land borders[5];
     Tile_state tile_state;
-
 };
-typedef struct Tile Tile;
+typedef struct Tile_t Tile;
 
 #endif

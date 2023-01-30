@@ -9,15 +9,19 @@ enum State_g{
     UNFINISHED,
     FINISHED
 };
-typedef enum State_g State_game;
+typedef enum State_g Game_state;
 
 struct Game{
     int * id_players; // pointer to an array contains id players
-    Grid * G; // pointer to the grid
-    Stack * S; // pointer to the stack of tiles
-    State_game state_game;
+    Grid * grid; // pointer to the grid
+    Stack * stack; // pointer to the stack of tiles
+    Game_state game_state;
 
 };
+ 
+
+
+Game * init_game(int *id_players , Grid * grid , Stack *stack);
 
 
 #endif

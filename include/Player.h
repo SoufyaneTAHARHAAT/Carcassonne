@@ -1,18 +1,18 @@
-// create template for the player
 
-// create template for the player
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "Meeple.h"
 #include <stdbool.h>
+#include "Meeple.h"
+#include "Tile.h"
 
 struct Player {
     int id_player;
     Color player_color;
     char * name;
+    short age;
     bool turn_to_play;
     unsigned short score;
-    // Tiles* tiles;
+    Tile* tiles;
 };
 typedef struct Player Player;
 
