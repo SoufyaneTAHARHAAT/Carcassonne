@@ -4,10 +4,10 @@
 #include "coordinate.h"
 
 // create enum iwth IN and OUT
-enum State_t {
+enum Meeple_State_t {
     IN,
     OUT
-}; typedef enum State_t Meeple_state;
+}; typedef enum Meeple_State_t Meeple_state;
 
 // create enum with the colors green, red, blue, yellow and black
 enum Color_t {
