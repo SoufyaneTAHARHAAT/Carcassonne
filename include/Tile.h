@@ -26,10 +26,10 @@ enum Landscape_t
     ROAD,
     CITY,
     CLOISTER, // THE ONE THAT NEED TO BE SURROUNDED BU 8 TILES
-    fIELD,    // ABBAYE
+    FIELD,    // ABBAYE
     SHIELD,   // BLASON
     VILLAGE
-
+    
 };
 typedef enum Landscape_t Landscape;
 
@@ -43,10 +43,14 @@ typedef struct Border_land_t Border_land;
 // create struct for the tiles
 struct Tile_t
 {
-    int id_tile;
+    int id_tile; 
     Border_land borders[5];
     Tile_state tile_state;
 };
 typedef struct Tile_t Tile;
+
+
+Tile *create_tile(char arr1[], char arr2[] ,char arr3[],char arr4[], char arr5[]);
+Landscape compare(int count , int stop ,  ...);
 
 #endif

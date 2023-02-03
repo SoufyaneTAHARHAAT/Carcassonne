@@ -1,0 +1,6 @@
+we created the function compare to avoid using multiple if else statement
+if my caluculations were correct we would need 30 if else.
+then we had in idea about looping through functions params.
+this led to significant reduce of boilerplate code.
+
+

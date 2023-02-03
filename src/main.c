@@ -5,7 +5,7 @@
 
 int main() {
     char * filename = "docs/list_tiles.csv";
-    Stack *s = (Stack *)malloc(sizeof(Stack));
+    Stack *s = create_stack();
     read_tiles_file(filename , s);
     return 0;
 }

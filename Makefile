@@ -3,8 +3,8 @@ CFLAGS = -Wall -Wextra  -pedantic -std=c11 -g
 LDFLAGS = -lm
 BIN = bin
 
-target: main.o Stack.o
-	$(CC) $(BIN)/main.o $(BIN)/Stack.o  -o $(BIN)/out $(LDFLAGS)
+target: main.o Stack.o Tile.o
+	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o  -o $(BIN)/out $(LDFLAGS)
 
 run: 
 	$(BIN)/./out
@@ -16,6 +16,9 @@ main.o: src/main.c
 
 Stack.o:src/Stack.c
 	$(CC) $(CFLAGS) -c src/Stack.c -o $(BIN)/Stack.o
+
+Tile.o:src/Tile.c
+	$(CC) $(CFLAGS) -c src/Tile.c -o $(BIN)/Tile.o
 
 clean:
 	rm -f $(BIN)/*.o target
