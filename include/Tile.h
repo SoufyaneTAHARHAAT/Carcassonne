@@ -36,7 +36,7 @@ typedef enum Landscape_t Landscape;
 struct Border_land_t
 {
     Borders border;
-    Landscape Landscape;
+    Landscape landscape;
 };
 typedef struct Border_land_t Border_land;
 
@@ -52,5 +52,7 @@ typedef struct Tile_t Tile;
 
 Tile *create_tile(char arr1[], char arr2[] ,char arr3[],char arr4[], char arr5[]);
 Landscape compare(int count , int stop ,  ...);
+void show_tile(Tile t);
 
+void check_null(void * n , char * msg); 
 #endif

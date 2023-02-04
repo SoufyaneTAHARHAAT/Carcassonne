@@ -1,0 +1,9 @@
+s->head_list ====> |  T1 | , |  T2 |  , |  T3 | , |  T4 | , |  T5 | , |  T6 |
+
+
+
+create newNode T0;
+T0->next = s->headList;
+s->headlist = T0;
+
+

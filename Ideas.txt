@@ -1,6 +1,20 @@
+03/02/2023
 we created the function compare to avoid using multiple if else statement
 if my caluculations were correct we would need 30 if else.
 then we had in idea about looping through functions params.
 this led to significant reduce of boilerplate code.
+
+04/03/2023
+
+* We came to realize that if we read the file the same manner every time the stack 
+will have the same orders of tiles
+the players after playing so many games can know the content of the tile before playing
+at first we thought about mixing the order of the stack by messing up with addresses of the tiles
+but then fortunatly I came back to my senses and got convinced that swapping content is much more better
+and more easier to manipulate, my idea is like shooting myself in the foot
+
+* We realized that we had to check every time if a pointer is null so we came up with a great idea to of 
+creating a function that checks if pointer is null no matter it's type after casting to void.
+(creating a function to reduce effort is never a great idea it's a must). 
 
 
