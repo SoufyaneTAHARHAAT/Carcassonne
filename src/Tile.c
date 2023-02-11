@@ -118,59 +118,47 @@ void print_args(int count, ...) {
   va_end(args);
 }
 
-void show_tile(Tile t)
+
+void print_tile(Tile *t) {
+    printf("\n");
+    printf("%12c" , ' ');;print_landscape(t , 0); printf("\n");
+    printf("%5c" , ' ');printf(" ---- ----- -----\n");
+    printf("%5c" , ' ');printf("|                |\n");
+    printf("%5c" , ' ');printf("|                |\n");
+    printf("%5c" , ' ');printf("|                |\n");
+    print_landscape(t , 3); printf("%8c" , ' '); print_landscape(t , 4); printf("%9c" , ' ');;print_landscape(t , 1); printf("\n");
+    printf("%5c" , ' ');printf("|                |\n");
+    printf("%5c" , ' ');printf("|                |\n");
+    printf("%5c" , ' ');printf("|                |\n");
+    printf("%5c" , ' ');printf(" ---- ----- -----\n");
+    printf("%12c" , ' ');;print_landscape(t , 2);printf("\n");
+}
+
+void print_landscape(Tile *t, int l)
 {
-
-    printf("tile id = %d\n", t.id_tile);
-
-    for (int i = 0; i < 5; i++)
+    
+    switch (t->borders[l].landscape)
     {
-        switch (t.borders[i].border)
-        {
-        case TOP:
-            printf("borders[%d].border = %s \n", i + 1, "TOP");
-            break;
-        case RIGHT:
-            printf("borders[%d].border = %s \n", i + 1, "RIHGT");
-            break;
-        case BOTTOM:
-
-            printf("borders[%d].border = %s \n", i + 1, "BOTTM");
-            break;
-        case LEFT:
-            printf("borders[%d].border = %s \n", i + 1, "LEFT");
-            break;
-        case CENTER:
-            printf("borders[%d].border = %s \n", i + 1, "CENTER");
-            break;
-        default:
-            break;
-        }
-        switch (t.borders[i].landscape)
-        {
-        case ROAD:
-            printf("borders[%d].landscape = %s \n", i + 1, "ROAD");
-            break;
         case CITY:
-            printf("borders[%d].landscape = %s \n", i + 1, "CITY");
-            break;
-        case CLOISTER:
-
-            printf("borders[%d].landscape = %s \n", i + 1, "CLOISTER");
+            printf("CITY");
             break;
         case FIELD:
-            printf("borders[%d].landscape = %s \n", i + 1, "FIELD");
+            printf("FILD");
+            break;
+        case CLOISTER:
+            printf("CLST");
             break;
         case SHIELD:
-            printf("borders[%d].landscape = %s \n", i + 1, "SHIELD");
+            printf("SHLD");
+            break;
+        case ROAD:
+            printf("ROAD");
             break;
         case VILLAGE:
-            printf("borders[%d].landscape = %s \n", i + 1, "VILLAGE");
+            printf("VLGE");
             break;
         default:
             break;
-        }
     }
-
-    if (t.tile_state == ON_HOLD) printf("tile state ON_HOLD\n"); else printf("tile state PLAYED \n");
+     
 }

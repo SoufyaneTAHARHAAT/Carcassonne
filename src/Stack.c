@@ -52,10 +52,11 @@ void show_stack(Stack *s) {
     Node *temp = s->head_list;
     while (temp != NULL)
     {
-        printf("id tile = %d ->" , temp->t->id_tile);
+        // printf("id tile = %d ->" , temp->t->id_tile);
+        print_tile(temp->t);
         temp  = temp->next;
     }
-    
+    printf("\n");
 }
 
 void check_null(void *n, char *msg)
