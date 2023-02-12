@@ -4,7 +4,7 @@ if my caluculations were correct we would need 30 if else.
 then we had in idea about looping through functions params.
 this led to significant reduce of boilerplate code.
 
-04/03/2023
+04/02/2023
 
 * We came to realize that if we read the file the same manner every time the stack 
 will have the same orders of tiles
@@ -15,6 +15,9 @@ and more easier to manipulate, my idea is like shooting myself in the foot
 
 * We realized that we had to check every time if a pointer is null so we came up with a great idea to of 
 creating a function that checks if pointer is null no matter it's type after casting to void.
-(creating a function to reduce effort is never a great idea it's a must). 
+(creating a function to reduce effort is never a great idea it's a must).
 
 
+12/02/2022
+I watched a long video titled how I program in C here is the link https://www.youtube.com/watch?v=443UNeGrFoM&t=2805s&ab_channel=EskilSteenberg
+on 31:43, Eskil Steenberg talked about a better naming convention

@@ -4,6 +4,9 @@
 #include "coordinate.h"
 #include "Meeple.h"
 
+#define MAX_TILES 72
+
+
 enum State_t
 {
     PLAYED,
@@ -50,9 +53,9 @@ struct Tile_t
 typedef struct Tile_t Tile;
 
 
-Tile *create_tile(char arr1[], char arr2[] ,char arr3[],char arr4[], char arr5[]);
+Tile *tile_create(char arr1[], char arr2[] ,char arr3[],char arr4[], char arr5[]);
 Landscape compare(int count , int stop ,  ...);
-void print_tile(Tile *t);
-void print_landscape(Tile *t, int l);
+void tile_print(Tile *t);
+void landscape_print(Tile *t, int l);
 void check_null(void * n , char * msg); 
 #endif

@@ -6,7 +6,7 @@
 
 int id_indicator = 0;
 
-Tile *create_tile(char arr1[], char arr2[], char arr3[], char arr4[], char arr5[])
+Tile *tile_create(char arr1[], char arr2[], char arr3[], char arr4[], char arr5[])
 {
     Tile *t = (Tile *)malloc(sizeof(Tile));
     if (t == NULL)
@@ -119,22 +119,22 @@ void print_args(int count, ...) {
 }
 
 
-void print_tile(Tile *t) {
+void tile_print(Tile *t) {
     printf("\n");
-    printf("%12c" , ' ');;print_landscape(t , 0); printf("\n");
+    printf("%12c" , ' ');;landscape_print(t , 0); printf("\n");
     printf("%5c" , ' ');printf(" ---- ----- -----\n");
     printf("%5c" , ' ');printf("|                |\n");
     printf("%5c" , ' ');printf("|                |\n");
     printf("%5c" , ' ');printf("|                |\n");
-    print_landscape(t , 3); printf("%8c" , ' '); print_landscape(t , 4); printf("%9c" , ' ');;print_landscape(t , 1); printf("\n");
+    landscape_print(t , 3); printf("%8c" , ' '); landscape_print(t , 4); printf("%9c" , ' ');;landscape_print(t , 1); printf("\n");
     printf("%5c" , ' ');printf("|                |\n");
     printf("%5c" , ' ');printf("|                |\n");
     printf("%5c" , ' ');printf("|                |\n");
     printf("%5c" , ' ');printf(" ---- ----- -----\n");
-    printf("%12c" , ' ');;print_landscape(t , 2);printf("\n");
+    printf("%12c" , ' ');;landscape_print(t , 2);printf("\n");
 }
 
-void print_landscape(Tile *t, int l)
+void landscape_print(Tile *t, int l)
 {
     
     switch (t->borders[l].landscape)

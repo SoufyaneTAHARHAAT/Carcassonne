@@ -21,7 +21,7 @@ struct Game{
  
 
 
-Game * init_game(int *id_players , Grid * grid , Stack *stack);
+Game * game_init(int *id_players , Grid * grid , Stack *stack);
 
 
 #endif
