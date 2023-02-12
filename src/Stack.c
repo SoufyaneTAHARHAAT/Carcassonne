@@ -29,7 +29,7 @@ Stack *stack_create()
     Stack *s = (Stack *)malloc(sizeof(Stack));
     check_null((void *)s, "could not allocate memory for Stack");
     s->tiles_number = 0;
-    s->head_list = NULL;
+    s->head = NULL;
     return s;
 }
 
@@ -37,9 +37,9 @@ void stack_push(Stack *s, Tile *t)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
     check_null((void *)new_node, "could not allocate memory for Node");
-    if (s->head_list == NULL)
+    if (s->head == NULL)
     {
-        s->head_list = new_node;
+        s->head = new_node;
         new_node->t = t;
         new_node->next = NULL;
         s->tiles_number++;
@@ -47,25 +47,25 @@ void stack_push(Stack *s, Tile *t)
     else
     {
         new_node->t = t;
-        new_node->next = s->head_list;
-        s->head_list = new_node;
+        new_node->next = s->head;
+        s->head = new_node;
         s->tiles_number++;
     }
 }
 
 Tile * stack_pop(Stack*s) {
-    check_null((void *)s->head_list , "No pop operation allowed, stack is empty");
+    check_null((void *)s->head , "No pop operation allowed, stack is empty");
 
     // if there is only one tile left in the stack
-    if (s->head_list->next == NULL) {
-        free(s->head_list);
-        s->head_list = NULL;
+    if (s->head->next == NULL) {
+        free(s->head);
+        s->head = NULL;
         s->tiles_number = 0;
         return NULL;
     }
     else {
-        Node * temp = s->head_list;
-        s->head_list = s->head_list->next;
+        Node * temp = s->head;
+        s->head = s->head->next;
         free(temp);
         s->tiles_number--;
         return temp->t;
@@ -73,7 +73,7 @@ Tile * stack_pop(Stack*s) {
 }
 
 void stack_show(Stack *s) {
-    Node *temp = s->head_list;
+    Node *temp = s->head;
     while (temp != NULL)
     {
         // printf("id tile = %d ->" , temp->t->id_tile);
@@ -89,17 +89,18 @@ void stack_mix(Stack *s) {
     srand( time( NULL ) );
     for (int i = 0; i < (int)s->tiles_number; i++)
     {
-        
-        int rand_one = (rand() % s->tiles_number); // 5
-        Node * n1 = stack_nth_node(  s->head_list, rand_one);
-        int rand_two = (rand() % s->tiles_number); // 10
-        Node * n2 = stack_nth_node(s->head_list  , rand_two); 
+        int r1 = rand();
+        int rand_one = (r1++ % s->tiles_number); // 5
+        Node * n1 = stack_nth_node(  s->head, rand_one);
+        int r2 = rand();
+        int rand_two = (r2++ % s->tiles_number); // 10
+        Node * n2 = stack_nth_node(s->head  , rand_two); 
         stack_swap_nodes(n1 , n2);
     }
 }
 
 
-Node *stack_nth_node( Node *head, unsigned int n){
+Node *stack_nth_node( Node *head, __u_int n){
     Node * temp = head;
     int counter = 0;
     while (counter < (int)n) {
@@ -124,7 +125,7 @@ void stack_swap_nodes(Node * n1 , Node *n2) {
 }
 
 void stack_summary(Stack *s) {
-    Node *temp = s->head_list;
+    Node *temp = s->head;
 
     while (temp !=NULL)
     {

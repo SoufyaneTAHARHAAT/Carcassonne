@@ -14,7 +14,12 @@ int main() {
   stack_mix(s);
   stack_summary(s);
 
-  grid_show(g);
+  grid_put_tile(g , s->head->t ,  0 , 0);
+
+  printf("\n");
+  //  grid_show(g);
+
+  tile_print(s->head->t);   
   
 
   return 0;

@@ -26,6 +26,7 @@ typedef struct Grid_t Grid;
 
 
 Grid * grid_create();
+void grid_put_tile(Grid *g , Tile *t , int x , int y);
 void grid_show(Grid *g); 
 
 #endif

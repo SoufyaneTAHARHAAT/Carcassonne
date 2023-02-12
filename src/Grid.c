@@ -19,14 +19,25 @@ Grid * grid_create() {
     return grid;
 }
 
+void grid_put_tile(Grid *g , Tile *t, int x , int y){
+    g->tab[x][y].square_state = OCCUPIED;
+    g->tab[x][y].t = t;
+}
 
 
-void grid_show(Grid * g) {
+
+void grid_show(Grid *g) {
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
         {
-            printf(" %d " , g->tab[i][j].t->id_tile);
+
+            if (g->tab[i][j].square_state == EMPTY) {
+                printf("E ");
+            }
+            else {
+                printf("%d " , g->tab[i][j].t->id_tile);
+            }
         }
         
         printf("\n");
