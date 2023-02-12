@@ -21,3 +21,9 @@ creating a function that checks if pointer is null no matter it's type after cas
 12/02/2022
 I watched a long video titled how I program in C here is the link https://www.youtube.com/watch?v=443UNeGrFoM&t=2805s&ab_channel=EskilSteenberg
 on 31:43, Eskil Steenberg talked about a better naming convention
+on the stack we had swap nodes We thought that stack gives us only acess to the top but we created a function to swap nodes
+in the stack this can violate the concept but who cares
+
+we changed the grid, at first hand the grid is only 2dArray of tiles than we thought it will be diff to check if a square has a
+tile or not , of course we can check for null pointer , but we can do better as always , 2d array of squares where every square has
+pointer to Tile and state enum  {empty , occupied}
