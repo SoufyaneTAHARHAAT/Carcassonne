@@ -3,7 +3,7 @@
 #include "./../include/Stack.h"
 #include "./../include/Grid.h"
 
-int main() {
+int main() { 
   char *filename = "docs/list_tiles.csv";
   Stack *s = stack_create();
   Grid *g = grid_create();
