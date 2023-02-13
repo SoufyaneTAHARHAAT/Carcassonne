@@ -19,7 +19,7 @@ Grid * grid_create() {
     return grid;
 }
 
-void grid_put_tile(Grid *g , Tile *t, int x , int y){
+void grid_put_tile(Grid *g , Tile *t, __u_int x , __u_int y){
     g->tab[x][y].square_state = OCCUPIED;
     g->tab[x][y].t = t;
 }

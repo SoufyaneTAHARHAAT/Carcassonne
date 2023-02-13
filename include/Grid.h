@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #ifndef GRID_H
 #define GRID_H
 
@@ -26,7 +28,7 @@ typedef struct Grid_t Grid;
 
 
 Grid * grid_create();
-void grid_put_tile(Grid *g , Tile *t , int x , int y);
+void grid_put_tile(Grid *g , Tile *t , __u_int x , __u_int y);
 void grid_show(Grid *g); 
 
 #endif

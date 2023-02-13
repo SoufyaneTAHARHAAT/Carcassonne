@@ -27,3 +27,10 @@ in the stack this can violate the concept but who cares
 we changed the grid, at first hand the grid is only 2dArray of tiles than we thought it will be diff to check if a square has a
 tile or not , of course we can check for null pointer , but we can do better as always , 2d array of squares where every square has
 pointer to Tile and state enum  {empty , occupied}
+
+13/02/2023
+
+After one day writing a function to print tiles and grid, We thought in the long run will be very difficult 
+to work . so We came to the conclusion that we can have em empty image grid every move we put an image tile
+in the grid 
+what about adding an attribute on Tile struct played_by
