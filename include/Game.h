@@ -19,12 +19,13 @@ struct Game_t{
     Grid * grid; // pointer to the grid
     Stack * stack; // pointer to the stack of tiles
     Game_state game_state;
+    __u_int num_players;
 
 };typedef struct Game_t Game;
  
 
-Game * game_init(Grid * g , Stack *s , __u_int num_players);
+Game * game_init(Player * players_arr[MAX_PLAYERS]  , Grid * g , Stack *s , __u_int num_players);
 
-void game_get_players(Player * plyayers_arr[MAX_PLAYERS]); 
+void game_get_players(Player * players_arr[MAX_PLAYERS]); 
 
 #endif

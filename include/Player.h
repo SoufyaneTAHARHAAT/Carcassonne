@@ -15,7 +15,11 @@ struct Player_t {
 };
 typedef struct Player_t Player;
 
+// create an instance of Player struct
 Player * player_create(Color player_color  , char *name , short age);
+
+// print function  
+void player_show(Player *p);
 
 
 #endif

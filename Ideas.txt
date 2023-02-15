@@ -37,4 +37,5 @@ what about adding an attribute on Tile struct played_by
 
 15/02/2023
 
-I guess in Game struct having an array of id_players is efficient , just pointers to the Player Struct is better
+I guess in Game struct having an array of id_players is inefficient , just pointers to the Player Struct is better
+For game_inti function we had problems passing a whole array because assign

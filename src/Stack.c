@@ -132,6 +132,7 @@ void stack_summary(Stack *s) {
         temp = temp->next;
     }
     
+    printf("\n");
 }
 
 void check_null(void *n, char *msg)
