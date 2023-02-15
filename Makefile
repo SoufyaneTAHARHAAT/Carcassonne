@@ -3,11 +3,11 @@ CFLAGS = -Wall -Wextra  -pedantic -std=c11 -g
 LDFLAGS = -lm
 BIN = bin
 
-target: main.o Stack.o Tile.o Grid.o
-	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o ${BIN}/Grid.o  -o $(BIN)/out $(LDFLAGS)
+target: main.o Stack.o Tile.o Grid.o Game.o Player.o
+	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o ${BIN}/Grid.o ${BIN}/Player.o ${BIN}/Game.o -o $(BIN)/exe $(LDFLAGS)
 
 run: 
-	$(BIN)/./out
+	$(BIN)/./exe
 debug:
 	valgrind -s --track-origins=yes --leak-check=full $(BIN)/./out
 
@@ -23,6 +23,14 @@ Tile.o:src/Tile.c
 Grid.o: src/Grid.c
 
 	$(CC) $(CFLAGS) -c src/Grid.c -o $(BIN)/Grid.o
+
+Player.o: src/Player.c
+
+	$(CC) $(CFLAGS) -c src/Player.c -o $(BIN)/Player.o
+
+Game.o: src/Game.c
+
+	$(CC) $(CFLAGS) -c src/Game.c -o $(BIN)/Game.o
 
 clean:
 	rm -f $(BIN)/*.o target

@@ -34,3 +34,7 @@ After one day writing a function to print tiles and grid, We thought in the long
 to work . so We came to the conclusion that we can have em empty image grid every move we put an image tile
 in the grid 
 what about adding an attribute on Tile struct played_by
+
+15/02/2023
+
+I guess in Game struct having an array of id_players is efficient , just pointers to the Player Struct is better

@@ -1,4 +1,3 @@
-
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <stdbool.h>
@@ -16,6 +15,7 @@ struct Player_t {
 };
 typedef struct Player_t Player;
 
-Player * player_init(Color player_color  , char *name , short age);
+Player * player_create(Color player_color  , char *name , short age);
+
 
 #endif

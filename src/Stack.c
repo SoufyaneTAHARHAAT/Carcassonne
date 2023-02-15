@@ -63,13 +63,12 @@ Tile * stack_pop(Stack*s) {
         s->tiles_number = 0;
         return NULL;
     }
-    else {
+    
         Node * temp = s->head;
         s->head = s->head->next;
         free(temp);
         s->tiles_number--;
         return temp->t;
-    }
 }
 
 void stack_show(Stack *s) {
