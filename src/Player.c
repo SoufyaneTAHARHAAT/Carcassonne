@@ -4,46 +4,73 @@
 // verstile
 int id_player_indicator = 0;
 
-Player * player_create(Color player_color  , char *name , short age) {
+Player *player_create(Color player_color, char *name, short age, Player_category player_cat)
+{
     Player *p = (Player *)malloc(sizeof(Player));
-    check_null((void *)p  , "could not allocate memory for struct player !!!");
-    p->id_player = id_player_indicator;
+    check_null((void *)p, "could not allocate memory for struct player !!!");
+    p->id_player = ++id_player_indicator;
     p->player_color = player_color;
     p->name = name;
     p->age = age;
-    p->turn_to_play = false;
+    p->turn_to_play = false; // consider the case where the first player must have turn to play true
     p->score = 0;
+    switch (player_cat)
+    {
+    case HUMAN:
+        p->player_cat = HUMAN;
+        break;
+    case AI:
+        p->player_cat = AI;
+    default:
+        break;
+    }
     p->tiles_history = NULL;
     return p;
 }
 
-
-void player_show(Player *p) {
-    printf("name : %s\n" , p->name);
-    printf("score : %d\n" , p->score);
-    switch (p->player_color)
+void player_show(Player *p)
+{
+    printf("id : %d \n", p->id_player);
+    printf("name : %s\n", p->name);
+    switch (p->player_cat)
     {
-    case RED:
-            printf("color : RED\n");
+    case HUMAN:
+        printf("player category: HUMAN\n");
         break;
-    case GREEN:
-            printf("color : GREEN\n");
-        break;
-    case YELLOW:
-            printf("color : YELLOW\n");
-        break;
-    case BLUE:
-            printf("color : BLUE\n");
-        break;
-    case BLACK:
-            printf("color : BLACK\n");
+    case AI:
+        printf("player category: AI\n");
         break;
     default:
         break;
     }
-    
-    printf("turn to play %d\n" , p->turn_to_play);
+    printf("score : %d\n", p->score);
+    switch (p->player_color)
+    {
+    case RED:
+        printf("color : RED\n");
+        break;
+    case GREEN:
+        printf("color : GREEN\n");
+        break;
+    case YELLOW:
+        printf("color : YELLOW\n");
+        break;
+    case BLUE:
+        printf("color : BLUE\n");
+        break;
+    case BLACK:
+        printf("color : BLACK\n");
+        break;
+    default:
+        break;
+    }
+
+    if (p->turn_to_play)
+    {
+        printf("turn to play: true\n");
+    }
+    else
+    {
+        printf("turn to play: false\n");
+    }
 }
-
-
-
