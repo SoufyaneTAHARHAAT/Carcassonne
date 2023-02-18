@@ -4,6 +4,8 @@
 #include "Meeple.h"
 #include "Tile.h"
 
+#define MEEPLES_NUM 8
+
 enum Player_category{
     HUMAN,
     AI
@@ -19,11 +21,14 @@ struct Player_t {
     unsigned short score;
     Tile* tiles_history; // to consider later nchllh
     Player_category player_cat;
+    Meeple *meeples_arr[MEEPLES_NUM]; //arr of meeples
 };
 typedef struct Player_t Player;
 
 // create an instance of Player struct
 Player * player_create(Color player_color  , char *name , short age , Player_category player_cat);
+
+
 
 // print function  
 void player_show(Player *p);

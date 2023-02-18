@@ -1,6 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
+#include <stdbool.h>
 #include "coordinate.h"
 #include "Meeple.h"
 
@@ -26,7 +27,7 @@ typedef enum Borders_t Borders;
 
 enum Landscape_t
 {
-    ROAD,
+    ROAD, 
     CITY,
     CLOISTER, // THE ONE THAT NEED TO BE SURROUNDED BU 8 TILES PRE
     FIELD,    // ABBAYE
@@ -40,6 +41,7 @@ struct Border_land_t
 {
     Borders border;
     Landscape landscape;
+    bool meepled;
 };
 typedef struct Border_land_t Border_land;
 

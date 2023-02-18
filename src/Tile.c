@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <stdarg.h>
 #include "./../include/Tile.h"
 
@@ -25,41 +26,48 @@ Tile *tile_create(char arr1[], char arr2[], char arr3[], char arr4[], char arr5[
         switch (i)
         {
         case 0:
-            bl.border = TOP;
+            bl.border = LEFT;
             bl.landscape = l;
+            bl.meepled = false;
             t->borders[i] = bl;
             break;
         case 1:
-            bl.border = RIGHT;
+            bl.border = TOP;
             bl.landscape = l;
+            bl.meepled = false;
             t->borders[i] = bl;
             break;
         case 2:
-            bl.border = BOTTOM;
+            bl.border = RIGHT;
             bl.landscape = l;
+            bl.meepled = false;
             t->borders[i] = bl;
             break;
         case 3:
-            bl.border = LEFT;
+            bl.border = BOTTOM;
             bl.landscape = l;
+            bl.meepled = false;
             t->borders[i] = bl;
             break;
         case 4:
             bl.border = CENTER;
             bl.landscape = l;
+            bl.meepled = false;
             t->borders[i] = bl;
             break;
         }
     }
-    
+
     return t;
-} 
+}
+
+
 
 Landscape compare(int count, int stop, ...)
 {
     va_list args;
     va_start(args, count);
-    
+
     for (int i = 0; i < count; i++)
     {
         char *argument = va_arg(args, char *);
@@ -71,32 +79,32 @@ Landscape compare(int count, int stop, ...)
         {
             if (strcmp("route", argument) == 0)
             {
-                //printf("route");
+                // printf("route");
                 return ROAD;
             }
             else if (strcmp("ville", argument) == 0)
             {
-                //printf("ville");
+                // printf("ville");
                 return CITY;
             }
             else if (strcmp("blason", argument) == 0)
             {
-                //printf("blason");
+                // printf("blason");
                 return SHIELD;
             }
             else if (strcmp("village", argument) == 0)
             {
-                //printf("village");
+                // printf("village");
                 return VILLAGE;
             }
             else if (strcmp("abbaye", argument) == 0)
             {
-                //printf("abbaye");
+                // printf("abbaye");
                 return FIELD;
             }
             else if (strcmp("pre", argument) == 0)
             {
-                //printf("pre");
+                // printf("pre");
                 return CLOISTER;
             }
             break;
@@ -108,57 +116,78 @@ Landscape compare(int count, int stop, ...)
     return ROAD;
 }
 
-void print_args(int count, ...) {
-  va_list args;
-  va_start(args, count);
-  for (int i = 0; i < count; i++) {
-    char * argument = va_arg(args, char *);
-    printf("Argument %d: %s\n", i + 1, argument);
-  }
-  va_end(args);
+void print_args(int count, ...)
+{
+    va_list args;
+    va_start(args, count);
+    for (int i = 0; i < count; i++)
+    {
+        char *argument = va_arg(args, char *);
+        printf("Argument %d: %s\n", i + 1, argument);
+    }
+    va_end(args);
 }
 
-
-void tile_print(Tile *t) {
+void tile_print(Tile *t)
+{
     printf("\n");
-    printf("%12c" , ' ');;landscape_print(t , 0); printf("\n");
-    printf("%5c" , ' ');printf(" ---- ----- -----\n");
-    printf("%5c" , ' ');printf("|                |\n");
-    printf("%5c" , ' ');printf("|                |\n");
-    printf("%5c" , ' ');printf("|                |\n");
-    landscape_print(t , 3); printf("%8c" , ' '); landscape_print(t , 4); printf("%9c" , ' ');;landscape_print(t , 1); printf("\n");
-    printf("%5c" , ' ');printf("|                |\n");
-    printf("%5c" , ' ');printf("|                |\n");
-    printf("%5c" , ' ');printf("|                |\n");
-    printf("%5c" , ' ');printf(" ---- ----- -----\n");
-    printf("%12c" , ' ');;landscape_print(t , 2);printf("\n");
+    printf("%12c", ' ');
+    ;
+    landscape_print(t, 1);
+    printf("\n");
+    printf("%5c", ' ');
+    printf(" ---- ----- -----\n");
+    printf("%5c", ' ');
+    printf("|                |\n");
+    printf("%5c", ' ');
+    printf("|                |\n");
+    printf("%5c", ' ');
+    printf("|                |\n");
+    landscape_print(t, 0);
+    printf("%8c", ' ');
+    landscape_print(t, 4);
+    printf("%9c", ' ');
+    ;
+    landscape_print(t, 2);
+    printf("\n");
+    printf("%5c", ' ');
+    printf("|                |\n");
+    printf("%5c", ' ');
+    printf("|                |\n");
+    printf("%5c", ' ');
+    printf("|                |\n");
+    printf("%5c", ' ');
+    printf(" ---- ----- -----\n");
+    printf("%12c", ' ');
+    ;
+    landscape_print(t, 3);
+    printf("\n");
 }
 
 void landscape_print(Tile *t, int l)
 {
-    
+
     switch (t->borders[l].landscape)
     {
-        case CITY:
-            printf("CITY");
-            break;
-        case FIELD:
-            printf("FILD");
-            break;
-        case CLOISTER:
-            printf("CLST");
-            break;
-        case SHIELD:
-            printf("SHLD");
-            break;
-        case ROAD:
-            printf("ROAD");
-            break;
-        case VILLAGE:
-            printf("VLGE");
-            break;
-        default:
-            break;
+    case CITY:
+        printf("CITY");
+        break;
+    case FIELD:
+        printf("FILD");
+        break;
+    case CLOISTER:
+        printf("CLST");
+        break;
+    case SHIELD:
+        printf("SHLD");
+        break;
+    case ROAD:
+        printf("ROAD");
+        break;
+    case VILLAGE:
+        printf("VLGE");
+        break;
+    default:
+        break;
     }
-     
 }

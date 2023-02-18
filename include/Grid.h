@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #ifndef GRID_H
 #define GRID_H
 
 #include "Tile.h"
+#include "Meeple.h"
+
 
 #define ROWS 72
 #define COLS 72
@@ -27,8 +30,9 @@ struct Grid_t{
 typedef struct Grid_t Grid;
 
 
-Grid * grid_create();
-void grid_put_tile(Grid *g , Tile *t , __u_int x , __u_int y);
+Grid *grid_create();
+bool grid_put_tile(Grid *g , Tile *t , __u_int x , __u_int y);
+bool grid_put_meeple(Grid *g , Meeple * mp , Borders cardinal_dir, __u_int x, __u_int y);
 void grid_show(Grid *g); 
 
 #endif

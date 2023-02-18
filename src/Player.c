@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./../include/Player.h"
+#include "./../include/Meeple.h"
 // verstile
 int id_player_indicator = 0;
 
@@ -12,19 +13,24 @@ Player *player_create(Color player_color, char *name, short age, Player_category
     p->player_color = player_color;
     p->name = name;
     p->age = age;
-    p->turn_to_play = false; // consider the case where the first player must have turn to play true
+    p->turn_to_play = false; // consider the case where the first player must have "turn_to_play" as true
     p->score = 0;
     switch (player_cat)
     {
-    case HUMAN:
-        p->player_cat = HUMAN;
-        break;
-    case AI:
-        p->player_cat = AI;
-    default:
-        break;
+        case HUMAN:
+            p->player_cat = HUMAN;
+            break;
+        case AI:
+            p->player_cat = AI;
+        default:
+            break;
     }
     p->tiles_history = NULL;
+    for (int i = 0; i < MEEPLES_NUM; i++)
+    {
+        p->meeples_arr[i] = meeple_create(player_color);
+    }
+    
     return p;
 }
 
@@ -65,12 +71,14 @@ void player_show(Player *p)
         break;
     }
 
-    if (p->turn_to_play)
+    for (int i = 0; i < MEEPLES_NUM; i++)
     {
-        printf("turn to play: true\n");
+        printf("Meeple n:%d, position:{%d , %d} " , i+1 , p->meeples_arr[i]->position.x , p->meeples_arr[i]->position.y);
+        if (p->meeples_arr[i]->state == IN_GRID) printf(" IN_GRID \n");
+        else printf("OUT_GRID \n");
     }
-    else
-    {
-        printf("turn to play: false\n");
-    }
+    
+
+    if (p->turn_to_play) printf("turn to play: true\n");
+    else printf("turn to play: false\n");
 }

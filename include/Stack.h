@@ -21,7 +21,7 @@ void read_tiles_file(char *filename, Stack *s);
 Stack * stack_create();
 void stack_push(Stack *s , Tile *t);
 Tile * stack_pop(Stack *s);
-void stack_mix(Stack *s);
+void stack_shuffle(Stack *s);
 void stack_swap_nodes(Node * n1, Node *n2);
 Node *stack_nth_node( Node *head ,__u_int n); 
 void stack_summary(Stack *s);   

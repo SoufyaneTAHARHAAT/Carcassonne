@@ -13,6 +13,8 @@ void read_tiles_file(char *filename, Stack *s)
     FILE *file = fopen(filename, "r");
     char content1[10], content2[10], content3[10], content4[10], content5[10];
     check_null((void *)file, "could read the file");
+    // just to skip the first line
+    fscanf(file, "%10[^,],%10[^,],%10[^,],%10[^,],%s\n", content1, content2, content3, content4, content5);
     while (
         fscanf(file, "%10[^,],%10[^,],%10[^,],%10[^,],%s\n", content1, content2, content3, content4, content5) != EOF)
     {
@@ -84,7 +86,7 @@ void stack_show(Stack *s) {
 
 
 
-void stack_mix(Stack *s) {
+void stack_shuffle(Stack *s) {
     srand( time( NULL ) );
     for (int i = 0; i < (int)s->tiles_number; i++)
     {
@@ -129,6 +131,8 @@ void stack_summary(Stack *s) {
     while (temp !=NULL)
     {
         printf(" %d " , temp->t->id_tile);
+        tile_print(temp->t);
+        printf("\n");
         temp = temp->next;
     }
     

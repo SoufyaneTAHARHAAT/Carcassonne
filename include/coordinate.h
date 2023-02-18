@@ -5,8 +5,7 @@
 
 
 struct Coordinate {
-    int x;
-    int y;
+    int x,y;
 };
 typedef struct Coordinate Coordinate;
 

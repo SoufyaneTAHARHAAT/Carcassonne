@@ -11,7 +11,8 @@ char *filename = "docs/list_tiles.csv";
 Stack *s = stack_create();
 Grid *g = grid_create();
 read_tiles_file(filename, s);
-stack_mix(s);
+//tile_print(s->head->t);
+// stack_shuffle(s);
 stack_summary(s);
 Player *p1 = player_create(RED, "zineddine", 26, HUMAN);
 Player *p2 = player_create(GREEN, "soufyane", 26, AI);
@@ -26,7 +27,7 @@ Player *players_arr[5] = {p1, p2, p3, p4, p5};
 */
 Game *gm = game_init(players_arr, g, s, 5);
 for (int i = 0; i < (int)gm->num_players; i++)
-player_show(gm->players[i]);
+//player_show(gm->players[i]);
 
 return (0);
 }
