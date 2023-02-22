@@ -17,7 +17,7 @@ Tile *tile_create(char arr1[], char arr2[], char arr3[], char arr4[], char arr5[
     }
 
     t->id_tile = ++id_indicator; // here we made a debate about starting with 0 or 1 it ended in draw
-    t->tile_state = ON_HOLD;
+    t->tile_state = ON_STACK;
     // print_args(5 , 0 , arr1, arr2, arr3, arr4, arr5);
     for (size_t i = 0; i < 5; i++)
     {

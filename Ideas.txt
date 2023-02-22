@@ -45,3 +45,17 @@ For game_inti function we had problems passing a whole array because assign
 is it better to have an array of pointer to Meepls in meeples_arr inside struct Plyaer 
 or 
 an array of struct of Meeples ???
+
+20/02/2012
+after choosing the (x,y) for a tile to put in the grid 
+==> is (x,y) is EMPTY or OCCPIED 
+==> if EMPTY we loop throught the neighbors of that (x,y) and at least one of them should me OCCPIED
+==> if so we check the compatibility of the borders 
+==> if all border are compatible in only one way we put the tile directly if not we ask the user to rotate the tile. 
+
+
+22/02/2023
+
+Watching so many primegean videos on youtube talking about Rust Result Type and how it helps to improve code and catch error fast
+we dicided to implemnt something similar Resutl Type whis has the Ok variant which means that some rules are being accepted
+if not we return exactly what went wrong so it becomes more explicite better then Null 

@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include "./../include/Grid.h"
+#include "./../include/Open_squares.h"
+
+
+Open_squares * open_squres_init() {
+    // initialize size to 4;
+    Open_squares * os = (Open_squares *)malloc(sizeof(Open_squares));
+    check_null((void *)os , "could not allocate memory for Open Squares");
+    os->arr = (Coordinate *)malloc(sizeof(Coordinate) * 4);
+    check_null((void *)os->arr , "could not allocate arr in struct Open squares");
+
+    os->arr[0].x = ROWS / 2 - 1 ;
+    os->arr[0].y = COLS / 2;
+    os->arr[1].x = ROWS / 2 - 1;
+    os->arr[1].y = COLS / 2 - 1;
+    os->arr[2].x = ROWS / 2; 
+    os->arr[2].y = COLS / 2 + 1; 
+    os->arr[3].x = ROWS / 2 + 1;
+    os->arr[3].y = COLS / 2 + 1;
+    return os;
+}
+
+void open_squares_push(Open_squares *open_squares, Coordinate coordinate) {
+    open_squares->size++;
+    open_squares->arr = (Coordinate*)realloc(open_squares->arr, open_squares->size * sizeof(Coordinate));
+    open_squares->arr[open_squares->size - 1] = coordinate;
+}
+
+
+void open_squares_delete(Open_squares *open_squares, Coordinate coordinate) {
+    for (int i = 0; i < open_squares->size; i++) {
+        if (open_squares->arr[i].x == coordinate.x && open_squares->arr[i].y == coordinate.y) {
+            // Shift all elements after the removed element to the left
+            for (int j = i; j < open_squares->size - 1; j++) {
+                open_squares->arr[j] = open_squares->arr[j+1];
+            }
+            // Decrease the size of the array
+            open_squares->size--;
+            open_squares->arr = (Coordinate*)realloc(open_squares->arr, open_squares->size * sizeof(Coordinate));
+            return;
+        }
+    }
+}

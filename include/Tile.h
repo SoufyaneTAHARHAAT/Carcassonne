@@ -10,8 +10,9 @@
 
 enum State_t
 {
-    PLAYED,
-    ON_HOLD, // STILL IN STACK OF TILES
+    ON_GRID,
+    ON_STACK, // STILL IN STACK OF TILES
+    ON_HAND, // after stack and before grid 
 };
 typedef enum State_t Tile_state;
 

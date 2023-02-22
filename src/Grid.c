@@ -11,12 +11,13 @@ Grid *grid_create()
     check_null((void *)grid, "could not allocate memory for the grid");
     // create special tile of start
     Tile *t = tile_create("route", "ville", "route", "pre", "route");
+    t->tile_state = ON_GRID;
     tile_print(t);
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
         {
-            if ((i == 35) && (j == 35))
+            if ((i == ROWS / 2) && (j == COLS / 2))
             {
                 grid->tab[i][j].square_state = OCCUPIED;
                 grid->tab[i][j].t = t;

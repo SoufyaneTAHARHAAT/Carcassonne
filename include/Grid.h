@@ -8,8 +8,8 @@
 #include "Meeple.h"
 
 
-#define ROWS 72
-#define COLS 72
+#define ROWS 143
+#define COLS 143
 
 enum Square_state_t
 {
