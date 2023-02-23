@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include "./../include/Grid.h"
+#include "./../include/Player.h"
 
 Grid *grid_create()
 {
@@ -19,8 +20,9 @@ Grid *grid_create()
         {
             if ((i == ROWS / 2) && (j == COLS / 2))
             {
-                grid->tab[i][j].square_state = OCCUPIED;
-                grid->tab[i][j].t = t;
+                // grid->tab[i][j].square_state = OCCUPIED;
+                // grid->tab[i][j].t = t;
+                grid_put_tile(grid , t , i , j);
             }
             else
             {
@@ -76,6 +78,7 @@ bool grid_put_meeple(Grid *g, Meeple *mp, Borders cardinal_dir, __u_int x, __u_i
     mp->state = IN_GRID;
     return true;
 }
+
 void grid_show(Grid *g)
 {
     for (int i = 0; i < ROWS; i++)
@@ -93,4 +96,27 @@ void grid_show(Grid *g)
         }
         printf("\n");
     }
+}
+
+
+void grid_cut_show(Grid *g , int row , int col , int dist) {
+
+
+   for (int i = row - dist; i < row + dist; i++)
+    {
+        for (int j = col - dist; j < col + dist; j++)
+        {
+            if (g->tab[i][j].square_state == EMPTY)
+            {
+                printf(" E ");
+            }
+            else
+            {
+                printf(" %d ", g->tab[i][j].t->id_tile);
+            }
+        }
+        printf("\n");
+    } 
+
+    
 }

@@ -34,5 +34,5 @@ Grid *grid_create();
 bool grid_put_tile(Grid *g , Tile *t , __u_int x , __u_int y);
 bool grid_put_meeple(Grid *g , Meeple * mp , Borders cardinal_dir, __u_int x, __u_int y);
 void grid_show(Grid *g); 
-
+void grid_cut_show(Grid *g , int row , int col , int dist);
 #endif

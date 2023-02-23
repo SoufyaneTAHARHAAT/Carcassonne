@@ -7,21 +7,23 @@
 #include "./../include/Open_squares.h"
 
 
-Open_squares * open_squres_init() {
+Open_squares * open_squares_init() {
     // initialize size to 4;
     Open_squares * os = (Open_squares *)malloc(sizeof(Open_squares));
     check_null((void *)os , "could not allocate memory for Open Squares");
     os->arr = (Coordinate *)malloc(sizeof(Coordinate) * 4);
     check_null((void *)os->arr , "could not allocate arr in struct Open squares");
+    os->size = 4;
 
     os->arr[0].x = ROWS / 2 - 1 ;
     os->arr[0].y = COLS / 2;
-    os->arr[1].x = ROWS / 2 - 1;
+    os->arr[1].x = ROWS / 2;
     os->arr[1].y = COLS / 2 - 1;
     os->arr[2].x = ROWS / 2; 
     os->arr[2].y = COLS / 2 + 1; 
     os->arr[3].x = ROWS / 2 + 1;
-    os->arr[3].y = COLS / 2 + 1;
+    os->arr[3].y = COLS / 2;
+    // open_squares_print(os);
     return os;
 }
 
@@ -45,4 +47,15 @@ void open_squares_delete(Open_squares *open_squares, Coordinate coordinate) {
             return;
         }
     }
+}
+
+
+void open_squares_print(Open_squares *os) {
+    printf("size open squares = %d\n" , os->size);
+    for (int i = 0; i < os->size; i++)
+    {
+        printf(" {%d , %d} | " , os->arr[i].x , os->arr[i].y);
+    }
+    
+    printf("\n");
 }

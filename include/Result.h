@@ -5,7 +5,7 @@ enum Result_t {
     OK,
     EMPTY_STACK,
     INVALID_TURN,
-    INVALID_POSTION,
+    INVALID_POSITION,
 };
 
 typedef enum Result_t Result;

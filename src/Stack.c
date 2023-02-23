@@ -68,7 +68,6 @@ Tile * stack_pop(Stack*s) {
     
         Node * temp = s->head;
         s->head = s->head->next;
-        free(temp);
         s->tiles_number--;
         return temp->t;
 }
