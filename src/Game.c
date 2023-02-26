@@ -5,6 +5,7 @@
 #include "./../include/Player.h"
 #include "./../include/Grid.h"
 #include "./../include/Stack.h"
+#include "./../include/Result.h"
 
 
 
@@ -34,10 +35,31 @@ Game * game_init(Player * players_arr[MAX_PLAYERS] , Grid * g , Stack *s , __u_i
     return game;
 }
 
-/*void game_get_players(Player * plyayers_arr[MAX_PLAYERS] , __u_int num_players) {
-    for (int i = 0; i < num_players; i++)
-    {
-        // what am doing does not make any sense
+void print_error(Result result) {
+    switch (result) {
+        case OK:
+            printf("No error.\n");
+            break;
+        case EMPTY_STACK:
+            printf("The stack is empty.\n");
+            break;
+        case INVALID_TURN:
+            printf("Invalid turn.\n");
+            break;
+        case VALID_GRID_POSTION:
+            printf("The position is valid on the grid.\n");
+            break;
+        case INVALID_GRID_POSTION:
+            printf("The position is invalid on the grid.\n");
+            break;
+        case MATCHING_BORDERS:
+            printf("The borders match.\n");
+            break;
+        case UNMATCHING_BORDERS:
+            printf("The borders do not match.\n");
+            break;
+        default:
+            printf("Unknown error.\n");
+            break;
     }
-    
-};*/
+};

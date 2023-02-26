@@ -6,8 +6,6 @@
 #include "./../include/Tile.h"
 
 
-
-
 void read_tiles_file(char *filename, Stack *s)
 {
     FILE *file = fopen(filename, "r");

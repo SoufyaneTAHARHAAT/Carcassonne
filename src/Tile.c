@@ -62,6 +62,19 @@ Tile *tile_create(char arr1[], char arr2[], char arr3[], char arr4[], char arr5[
 }
 
 
+void tile_rotate(Tile *t , __u_int n) {
+    if (n  == 0) {
+        return;
+    }
+    for (size_t i = 1; i <= 3; i++)
+    {
+    Border_land temp = t->borders[0];
+        t->borders[0] = t->borders[1];
+        t->borders[1]= t->borders[2];
+        t->borders[2]= t->borders[3];
+        t->borders[3] = temp; 
+    } 
+}
 
 Landscape compare(int count, int stop, ...)
 {

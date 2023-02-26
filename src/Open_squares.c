@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include "./../include/Grid.h"
+#include "./../include/Result.h"
 #include "./../include/Open_squares.h"
-
 
 Open_squares * open_squares_init() {
     // initialize size to 4;
@@ -47,6 +47,17 @@ void open_squares_delete(Open_squares *open_squares, Coordinate coordinate) {
             return;
         }
     }
+}
+
+Result open_squares_search(Open_squares *os, Coordinate position) {
+    for (int i = 0; i < os->size; i++)
+    {
+        if (position.x == os->arr[i].x && position.y  == os->arr[i].y) {
+            return VALID_GRID_POSTION;
+        }
+    }
+    
+    return INVALID_GRID_POSTION;
 }
 
 

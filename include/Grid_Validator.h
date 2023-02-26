@@ -10,7 +10,8 @@
 #include "coordinate.h"
 #include "Result.h"
 
-Result grid_validate_put_tile(Stack *s , Tile *t , Grid *g , Player *p , Coordinate position);
+Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p, Coordinate position , Open_squares *os);
 
+Result grid_validate_borders(Grid *g, Coordinate position);
 
 #endif

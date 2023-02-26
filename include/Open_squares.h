@@ -3,6 +3,7 @@
 
 
 #include "coordinate.h"
+#include "Result.h"
 
 
 struct Open_squares_t {
@@ -16,6 +17,7 @@ typedef struct Open_squares_t Open_squares;
 Open_squares * open_squares_init();
 void open_squares_push(Open_squares *open_squares, Coordinate coordinate);
 void open_squares_delete(Open_squares *open_squares, Coordinate coordinate);
+Result open_squares_search(Open_squares *os, Coordinate position); 
 void open_squares_print(Open_squares *os);
 
 #endif
