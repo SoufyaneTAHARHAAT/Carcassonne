@@ -8,7 +8,11 @@ target: main.o Stack.o Tile.o Grid.o Game.o Player.o Meeple.o Grid_Validator.o O
 
 run: 
 	$(BIN)/./exe
+
 debug:
+	gdb $(BIN)/./exe
+
+debug-memory:
 	valgrind -s --track-origins=yes --leak-check=full $(BIN)/./out
 
 main.o: src/main.c 

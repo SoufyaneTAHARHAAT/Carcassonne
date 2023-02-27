@@ -5,6 +5,7 @@
 #include "./../include/Game.h"
 #include "./../include/Player.h"
 #include "./../include/Open_squares.h"
+#include "./../include/Grid_Validator.h"
 
 int main(void)
 {
@@ -28,19 +29,39 @@ Player *players_arr[5] = {p1, p2, p3, p4, p5};
 */
 Game *gm = game_init(players_arr, g, s, 5);
 for (int i = 0; i < (int)gm->num_players; i++){
-  player_show(gm->players[i]);
+  // player_show(gm->players[i]);
 }
 Open_squares *os = open_squares_init();
 
-stack_summary(s);
-printf("%d\n" , s->tiles_number);
+// stack_summary(s);
+// printf("%d\n" , s->tiles_number);
 Tile *second = stack_pop(s);
-printf("%d\n" , s->tiles_number);
-stack_summary(s);
+// printf("%d\n" , s->tiles_number);
+// stack_summary(s);
 tile_print(second);
 
-print_
-grid_put_tile(g , second , ROWS / 2 - 1 , COLS / 2 - 1);
+
+Coordinate posT = {70 , 71};
+Coordinate posB = {71 , 70};
+Coordinate posR = {71 , 72};
+Coordinate posL = {72 , 71};
+
+open_squares_print(os);
+// Result resT = grid_validate_put_tile(s , second , g , p1 , posT , os);
+// Result resB = grid_validate_put_tile(s , second , g , p1 , posB , os);
+// Result resR = grid_validate_put_tile(s , second , g , p1 , posR , os);
+// Result resL = grid_validate_put_tile(s , second , g , p1 , posL , os);
+// print_error(resT);
+// print_error(resB);
+// print_error(resR);
+// print_error(resL);
+
+
+grid_put_tile(s , g , second , p1 , posT , os);
+grid_put_tile(s , g , second , p1 , posB , os);
+grid_put_tile(s , g , second , p1 , posR , os);
+grid_put_tile(s , g , second , p1 , posL , os);
+
 
 grid_cut_show(g , ROWS / 2, COLS / 2 , 5);
 

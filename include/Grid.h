@@ -6,7 +6,11 @@
 
 #include "Tile.h"
 #include "Meeple.h"
-
+#include "Player.h"
+#include "Open_squares.h"
+#include "Grid.h"
+#include "Stack.h"
+#include "coordinate.h"
 
 #define ROWS 143
 #define COLS 143
@@ -31,7 +35,7 @@ typedef struct Grid_t Grid;
 
 
 Grid *grid_create();
-bool grid_put_tile(Grid *g , Tile *t , __u_int x , __u_int y);
+bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p, Coordinate position , Open_squares *os); 
 bool grid_put_meeple(Grid *g , Meeple * mp , Borders cardinal_dir, __u_int x, __u_int y);
 void grid_show(Grid *g); 
 void grid_cut_show(Grid *g , int row , int col , int dist);

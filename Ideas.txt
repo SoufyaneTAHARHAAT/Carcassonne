@@ -59,3 +59,9 @@ after choosing the (x,y) for a tile to put in the grid
 Watching so many primegean videos on youtube talking about Rust Result Type and how it helps to improve code and catch error fast
 we dicided to implemnt something similar Resutl Type whis has the Ok variant which means that some rules are being accepted
 if not we return exactly what went wrong so it becomes more explicite better then Null 
+
+26/02/2023
+
+Did the rotation stuff and more validation
+
+27/02/2023

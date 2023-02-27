@@ -62,7 +62,7 @@ Tile *tile_create(char arr1[], char arr2[], char arr3[], char arr4[], char arr5[
 }
 
 
-void tile_rotate(Tile *t , __u_int n) {
+void tile_rotate(Tile *t , int n) {
     if (n  == 0) {
         return;
     }

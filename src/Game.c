@@ -26,11 +26,15 @@ Game * game_init(Player * players_arr[MAX_PLAYERS] , Grid * g , Stack *s , __u_i
     {
         game->players[i] = players_arr[i];
     }
+    // when number of players < MAX_players
     for (int i = (int)num_players; i < MAX_PLAYERS; i++)
     {
         game->players[i] = NULL;
     }
     
+    // make the first player true to true;
+
+    game->players[0]->turn_to_play = true;
     
     return game;
 }
@@ -38,7 +42,7 @@ Game * game_init(Player * players_arr[MAX_PLAYERS] , Grid * g , Stack *s , __u_i
 void print_error(Result result) {
     switch (result) {
         case OK:
-            printf("No error.\n");
+            printf("OK.\n");
             break;
         case EMPTY_STACK:
             printf("The stack is empty.\n");

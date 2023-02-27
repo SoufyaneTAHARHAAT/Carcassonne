@@ -18,9 +18,8 @@ Grid *grid_create() {
   for (int i = 0; i < ROWS; i++) {
     for (int j = 0; j < COLS; j++) {
       if ((i == ROWS / 2) && (j == COLS / 2)) {
-        // grid->tab[i][j].square_state = OCCUPIED;
-        // grid->tab[i][j].t = t;
-        grid_put_tile(grid, t, i, j);
+        grid->tab[i][j].square_state = OCCUPIED;
+        grid->tab[i][j].t = t;
       } else {
         grid->tab[i][j].square_state = EMPTY;
         grid->tab[i][j].t = NULL;
@@ -30,16 +29,15 @@ Grid *grid_create() {
   return grid;
 }
 
-bool grid_put_tile(Grid *g, Tile *t, __u_int x, __u_int y) {
+bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p , Coordinate position , Open_squares *os) {
 
-  // print_error(grid_validate_put_tile(NULL , g , NULL , ))
-
-  if (g->tab[x][y].square_state == EMPTY) {
-    g->tab[x][y].square_state = OCCUPIED;
-    g->tab[x][y].t = t;
+  if (grid_validate_put_tile(s , t , g , p , position , os)  == OK) {
+    print_error(OK);
+    g->tab[position.x][position.y].square_state = OCCUPIED;
+    g->tab[position.x][position.y].t = t;
     return true;
   }
-  printf("square %d %d is already occupied\n", x, y);
+  print_error(UNMATCHING_BORDERS);
   return false;
 }
 
@@ -89,12 +87,19 @@ void grid_show(Grid *g) {
 
 void grid_cut_show(Grid *g, int row, int col, int dist) {
 
+  printf("    ");
+  for (int k = col - dist; k < col + dist; k++)
+  {
+    printf("%d   " , k);
+  }
+  printf("\n");
   for (int i = row - dist; i < row + dist; i++) {
+    printf("%d ", i);
     for (int j = col - dist; j < col + dist; j++) {
       if (g->tab[i][j].square_state == EMPTY) {
-        printf(" E ");
+        printf("  E  ");
       } else {
-        printf(" %d ", g->tab[i][j].t->id_tile);
+        printf("  %d  ", g->tab[i][j].t->id_tile);
       }
     }
     printf("\n");

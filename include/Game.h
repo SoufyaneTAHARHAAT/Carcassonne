@@ -27,5 +27,6 @@ struct Game_t{
 Game * game_init(Player * players_arr[MAX_PLAYERS]  , Grid * g , Stack *s , __u_int num_players);
 
 void game_get_players(Player * players_arr[MAX_PLAYERS]); 
+void print_error(Result result); 
 
 #endif

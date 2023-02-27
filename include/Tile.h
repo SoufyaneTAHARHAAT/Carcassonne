@@ -62,6 +62,6 @@ void tile_print(Tile *t);
 void landscape_print(Tile *t, int l);
 
 // number of times to rotate 1..3 
-void tile_rotate(Tile *t , __u_int n);
+void tile_rotate(Tile *t , int n);
 void check_null(void * n , char * msg); 
 #endif
