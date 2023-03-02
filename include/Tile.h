@@ -33,8 +33,7 @@ enum Landscape_t
     CLOISTER, // THE ONE THAT NEED TO BE SURROUNDED BU 8 TILES PRE
     FIELD,    // ABBAYE
     SHIELD,   // BLASON
-    VILLAGE
-    
+    VILLAGE,
 };
 typedef enum Landscape_t Landscape;
 

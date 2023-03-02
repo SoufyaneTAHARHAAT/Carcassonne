@@ -6,6 +6,25 @@
 #include "Result.h"
 
 
+
+
+
+// struct  {
+//     Coordinate coor;
+//     Edge land *EL;
+// } 
+
+// /*
+//     [
+//     {x0 , y0 , {right = route} }, 
+//     {x1 , y1  , {left = free , top = free , right = pre , bottom = free} },
+//     {X2 , Y2 , {left = free , top = free , right = route , bottom = free} },
+//     {X3 , Y3 , {left = free , top = village , right = route , bottom = pre}  }
+//     ];
+// */
+
+
+
 struct Open_squares_t {
     Coordinate *arr;
     int size;
@@ -21,3 +40,14 @@ Result open_squares_search(Open_squares *os, Coordinate position);
 void open_squares_print(Open_squares *os);
 
 #endif
+
+
+
+
+
+
+
+
+
+
+

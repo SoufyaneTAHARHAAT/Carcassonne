@@ -64,4 +64,9 @@ if not we return exactly what went wrong so it becomes more explicite better the
 
 Did the rotation stuff and more validation
 
-27/02/2023
+02/03/2023
+Our philosophy is to force valid action then the user chooses Not the user chooses and we validate;
+
+first we thought only about struct OPEN_SQUARES having an array of valid coordiantes.
+So we said if we tought about caluculating early valid postions why not early mat borders also.
+this will make us either genuis or just making things more and more ........
