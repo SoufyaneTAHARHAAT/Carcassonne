@@ -38,6 +38,7 @@ enum Landscape_t
 typedef enum Landscape_t Landscape;
 
 struct Border_land_t
+
 {
     Borders border;
     Landscape landscape;

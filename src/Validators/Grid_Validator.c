@@ -24,17 +24,17 @@ Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p,
     return INVALID_TURN;
   }
 
-  // check if positiion is included on open Saquares Array
+  // // check if positiion is included on open Saquares Array
 
-  if ((Result)open_squares_search(os, position) == INVALID_GRID_POSTION) {
-    return INVALID_GRID_POSTION;
-  }
+  // if ((Result)open_squares_search(os, position) == INVALID_GRID_POSTION) {
+  //   return INVALID_GRID_POSTION;
+  // }
 
-  // check if all borders are matching
+  // // check if all borders are matching
 
-  if ((Result)grid_validate_borders(g, t, position) == UNMATCHING_BORDERS) {
-    return UNMATCHING_BORDERS;
-  }
+  // if ((Result)grid_validate_borders(g, t, position) == UNMATCHING_BORDERS) {
+  //   return UNMATCHING_BORDERS;
+  // }
 
   return OK;
 }

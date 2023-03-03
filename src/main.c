@@ -1,11 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "./../include/Game.h"
 #include "./../include/Grid.h"
 #include "./../include/Grid_Validator.h"
 #include "./../include/Open_squares.h"
 #include "./../include/Player.h"
 #include "./../include/Stack.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int main(void) {
   char *filename = "docs/list_tiles.csv";
@@ -33,8 +33,10 @@ int main(void) {
     // player_show(gm->players[i]);
   }
   Open_squares *os = open_squares_init();
-
-  // stack_summary(s);
+  Square_info is;
+  is.coor.x = 200;
+  is.coor.y = 400;
+  open_squares_push(os, is);
   // printf("%d\n" , s->tiles_number);
   Tile *second = stack_pop(s);
   // printf("%d\n" , s->tiles_number);
@@ -44,7 +46,9 @@ int main(void) {
   Coordinate posR = {71, 72};
   Coordinate posL = {72, 71};
 
-  // open_squares_print(os);
+  open_squares_print(os);
+  open_squares_delete(os, is);
+  open_squares_print(os);
   // Result resT = grid_validate_put_tile(s , second , g , p1 , posT , os);
   // Result resB = grid_validate_put_tile(s , second , g , p1 , posB , os);
   // Result resR = grid_validate_put_tile(s , second , g , p1 , posR , os);
@@ -55,13 +59,13 @@ int main(void) {
   // print_error(resL);
 
   // tile_rotate(second, 2);
-  tile_print(second);
+  // tile_print(second);
   // grid_put_tile(s, g, second, p1, posT, os);
-  grid_put_tile(s, g, second, p1, posB, os);
+  // grid_put_tile(s, g, second, p1, posB, os);
   // grid_put_tile(s, g, second, p1, posR, os);
   // grid_put_tile(s, g, second, p1, posL, os);
 
-  grid_cut_show(g, ROWS / 2, COLS / 2, 5);
+  // grid_cut_show(g, ROWS / 2, COLS / 2, 5);
 
   // tile_rotate(s->head->t , 2);
   // tile_print(s->head->t);
