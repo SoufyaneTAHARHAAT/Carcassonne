@@ -6,23 +6,6 @@
 #include "Result.h"
 #include "Tile.h"
 
-
-
-
-// struct  {
-//     Coordinate coor;
-//     Edge land *EL;
-// } 
-
-// /*
-//     [
-//     {x0 , y0 , {right = route} }, 
-//     {x1 , y1  , {left = free , top = free , right = pre , bottom = free} },
-//     {X2 , Y2 , {left = free , top = free , right = route , bottom = free} },
-//     {X3 , Y3 , {left = free , top = village , right = route , bottom = pre}  }
-//     ];
-// */
-
 struct Edge_land_t
 {
     Borders border;
@@ -33,7 +16,7 @@ typedef struct Edge_land_t Edge_land;
 
 struct Square_info_t {
   Edge_land * edge_land_arr;
-
+  int size;
   Coordinate coor;
 };
 typedef struct Square_info_t Square_info;
@@ -46,9 +29,15 @@ typedef struct Open_squares_t Open_squares;
 
 
 Open_squares *open_squares_init(); 
-void open_squares_push(Open_squares *open_squares, Square_info info_square); 
+
+void open_squares_push(Open_squares *open_squares, Square_info info_square);
+
+void square_info_push_edge_land(Square_info *si); 
+
 void open_squares_delete(Open_squares *open_squares, Square_info square);
+
 Result open_squares_search(Open_squares *os, Square_info square);
+
 void open_squares_print(Open_squares *os); 
 #endif
 
