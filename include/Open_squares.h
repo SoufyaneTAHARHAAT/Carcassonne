@@ -30,9 +30,11 @@ typedef struct Open_squares_t Open_squares;
 
 Open_squares *open_squares_init(); 
 
-void open_squares_push(Open_squares *open_squares, Square_info info_square);
+void open_squares_push(Open_squares *open_squares, Square_info si);
 
-void square_info_push_edge_land(Square_info *si); 
+void square_info_push_edge_land(Open_squares *os , int x , int y , Borders b , Landscape l); 
+
+void square_info_delete_edge_land(Open_squares *os , int x , int y, Borders b); 
 
 void open_squares_delete(Open_squares *open_squares, Square_info square);
 

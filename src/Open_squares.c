@@ -4,10 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./../include/Open_squares.h"
 #include "./../include/Grid.h"
+#include "./../include/Open_squares.h"
 #include "./../include/Result.h"
-
 
 Open_squares *open_squares_init() {
   Open_squares *os = (Open_squares *)malloc(sizeof(Open_squares));
@@ -51,16 +50,50 @@ Open_squares *open_squares_init() {
   return os;
 }
 
-void open_squares_push(Open_squares *open_squares, Square_info info_square) {
+void open_squares_push(Open_squares *open_squares, Square_info si) {
   open_squares->size++;
   open_squares->arr = (Square_info *)realloc(
       open_squares->arr, open_squares->size * sizeof(Square_info));
-  open_squares->arr[open_squares->size - 1] = info_square;
+  open_squares->arr[open_squares->size - 1] = si;
 }
 
-void square_info_push_edge_land(Square_info *si) {
+void square_info_push_edge_land(Open_squares *os, int x, int y, Borders b,
+                                Landscape l) {
+
+  for (int i = 0; i < os->size; i++) {
+    if (os->arr[i].coor.x == x && os->arr[i].coor.y == y) {
+      os->arr[i].size++;
+      os->arr[i].edge_land_arr = (Edge_land *)realloc(
+          os->arr[i].edge_land_arr, os->arr[i].size * sizeof(Edge_land));
+      os->arr[i].edge_land_arr[os->arr[i].size - 1].border = b;
+      os->arr[i].edge_land_arr[os->arr[i].size - 1].landscape = l;
+      break;
+    }
+  }
 }
 
+void square_info_delete_edge_land(Open_squares *os, int x, int y, Borders b) {
+  int index;
+  for (int i = 0; i < os->size; i++) {
+    if (os->arr[i].coor.x == x && os->arr[i].coor.y == y) {
+      index = i;
+      // Shift all elements after the removed element to the left
+      for (int j = 0; j < os->arr[i].size; j++) {
+        if (os->arr[i].edge_land_arr[j].border == b) {
+          for (int k = j; k < os->arr[i].size - 1; k++) {
+            os->arr[i].edge_land_arr[k] = os->arr[i].edge_land_arr[k + 1];
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  os->arr[index].size--;
+  os->arr[index].edge_land_arr = (Edge_land *)realloc(
+      os->arr[index].edge_land_arr, os->arr[index].size * sizeof(Edge_land));
+  return;
+}
 void open_squares_delete(Open_squares *open_squares, Square_info square) {
   for (int i = 0; i < open_squares->size; i++) {
     if (open_squares->arr[i].coor.x == square.coor.x &&
@@ -107,37 +140,36 @@ void open_squares_print(Open_squares *os) {
         printf("LEFT-> ");
         break;
       case RIGHT:
-          printf("RIGHT-> ");
+        printf("RIGHT-> ");
         break;
       case CENTER:
         printf("CENTER-> ");
         break;
       }
-     
-    switch (os->arr[i].edge_land_arr[j].landscape)
-    {
-    case CITY:
+
+      switch (os->arr[i].edge_land_arr[j].landscape) {
+      case CITY:
         printf("CITY");
         break;
-    case FIELD:
+      case FIELD:
         printf("FILD");
         break;
-    case CLOISTER:
+      case CLOISTER:
         printf("CLST");
         break;
-    case SHIELD:
+      case SHIELD:
         printf("SHLD");
         break;
-    case ROAD:
+      case ROAD:
         printf("ROAD");
         break;
-    case VILLAGE:
+      case VILLAGE:
         printf("VLGE");
         break;
-    default:
+      default:
         break;
-    }
- printf(" ] \n");
+      }
+      printf(" ] \n");
       j++;
     }
   }

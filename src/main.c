@@ -8,6 +8,7 @@
 #include "./../include/Stack.h"
 
 int main(void) {
+  printf("hello wolld\n");
   char *filename = "docs/list_tiles.csv";
   Stack *s = stack_create();
   Grid *g = grid_create();
@@ -46,8 +47,18 @@ int main(void) {
   Coordinate posR = {71, 72};
   Coordinate posL = {72, 71};
 
-  open_squares_print(os);
-  open_squares_delete(os, is);
+  // open_squares_print(os);
+  square_info_push_edge_land(os, 200, 400, TOP, ROAD);
+  square_info_push_edge_land(os, 200, 400, BOTTOM, CITY);
+  square_info_push_edge_land(os, 200, 400, RIGHT, CLOISTER);
+  square_info_push_edge_land(os, 200, 400, LEFT, SHIELD);
+  // open_squares_print(os);
+
+  square_info_delete_edge_land(os, 200, 400, RIGHT);
+  square_info_delete_edge_land(os, 200, 400, LEFT);
+  square_info_delete_edge_land(os, 200, 400, BOTTOM);
+  square_info_delete_edge_land(os, 200, 400, TOP);
+  square_info_delete_edge_land(os, 71, 72, LEFT);
   open_squares_print(os);
   // Result resT = grid_validate_put_tile(s , second , g , p1 , posT , os);
   // Result resB = grid_validate_put_tile(s , second , g , p1 , posB , os);
