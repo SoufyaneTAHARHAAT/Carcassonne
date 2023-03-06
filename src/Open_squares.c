@@ -45,7 +45,7 @@ Open_squares *open_squares_init() {
   os->arr[3].coor.y = COLS / 2;
   os->arr[3].edge_land_arr = (Edge_land *)malloc(sizeof(Edge_land) * 1);
   os->arr[3].edge_land_arr[0].border = TOP;
-  os->arr[3].edge_land_arr[0].landscape = CLOISTER;
+  os->arr[3].edge_land_arr[0].landscape = FIELD;
   os->arr[3].size = 1;
   return os;
 }

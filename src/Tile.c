@@ -113,12 +113,12 @@ Landscape compare(int count, int stop, ...)
             else if (strcmp("abbaye", argument) == 0)
             {
                 // printf("abbaye");
-                return FIELD;
+                return CLOISTER;
             }
             else if (strcmp("pre", argument) == 0)
             {
                 // printf("pre");
-                return CLOISTER;
+                return FIELD;
             }
             break;
         }
