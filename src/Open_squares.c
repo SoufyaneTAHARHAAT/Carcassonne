@@ -20,80 +20,80 @@ Open_squares *open_squares_init() {
   // CONFIGURE THE INFO FOR SQUARE ON THE LEFT TO THE SPECIAL TILE
   os->arr[0].coor.x = ROWS / 2;
   os->arr[0].coor.y = COLS / 2 - 1;
-  os->arr[0].edge_land_arr = (Edge_land *)malloc(sizeof(Edge_land) * 1);
-  os->arr[0].edge_land_arr[0].border = RIGHT;
-  os->arr[0].edge_land_arr[0].landscape = ROAD;
-  os->arr[0].size = 1;
+  os->arr[0].edge_land_arr[2].border = RIGHT;
+  os->arr[0].edge_land_arr[2].landscape = ROAD;
+  os->arr[0].edge_land_arr[0].border = LEFT;
+  os->arr[0].edge_land_arr[0].landscape = FREE;
+  os->arr[0].edge_land_arr[1].border = TOP;
+  os->arr[0].edge_land_arr[1].landscape = FREE;
+  os->arr[0].edge_land_arr[3].border = BOTTOM;
+  os->arr[0].edge_land_arr[3].landscape = FREE;
   // CONFIGURE THE INFO FOR SQUARE ON THE TOP TO THE SPECIAL TILE
   os->arr[1].coor.x = ROWS / 2 - 1;
   os->arr[1].coor.y = COLS / 2;
-  os->arr[1].edge_land_arr = (Edge_land *)malloc(sizeof(Edge_land) * 1);
-  os->arr[1].edge_land_arr[0].border = BOTTOM;
-  os->arr[1].edge_land_arr[0].landscape = VILLAGE;
-  os->arr[1].size = 1;
+  os->arr[1].edge_land_arr[2].border = RIGHT;
+  os->arr[1].edge_land_arr[2].landscape = FREE;
+  os->arr[1].edge_land_arr[0].border = LEFT;
+  os->arr[1].edge_land_arr[0].landscape = FREE;
+  os->arr[1].edge_land_arr[1].border = TOP;
+  os->arr[1].edge_land_arr[1].landscape = FREE;
+  os->arr[1].edge_land_arr[3].border = BOTTOM;
+  os->arr[1].edge_land_arr[3].landscape = VILLAGE;
 
   // CONFIGURE THE INFO FOR SQUARE ON THE RIGHT TO THE SPECIAL TILE
   os->arr[2].coor.x = ROWS / 2;
   os->arr[2].coor.y = COLS / 2 + 1;
-  os->arr[2].edge_land_arr = (Edge_land *)malloc(sizeof(Edge_land) * 1);
   os->arr[2].edge_land_arr[0].border = LEFT;
   os->arr[2].edge_land_arr[0].landscape = ROAD;
-  os->arr[2].size = 1;
+  os->arr[2].edge_land_arr[1].border = TOP;
+  os->arr[2].edge_land_arr[1].landscape = FREE;
+  os->arr[2].edge_land_arr[2].border = RIGHT;
+  os->arr[2].edge_land_arr[2].landscape = FREE;
+  os->arr[2].edge_land_arr[3].border = BOTTOM;
+  os->arr[2].edge_land_arr[3].landscape = FREE;
 
   // CONFIGURE THE INFO FOR SQUARE ON THE BOTTOM TO THE SPECIAL TILE
   os->arr[3].coor.x = ROWS / 2 + 1;
   os->arr[3].coor.y = COLS / 2;
-  os->arr[3].edge_land_arr = (Edge_land *)malloc(sizeof(Edge_land) * 1);
-  os->arr[3].edge_land_arr[0].border = TOP;
-  os->arr[3].edge_land_arr[0].landscape = FIELD;
-  os->arr[3].size = 1;
+  os->arr[3].edge_land_arr[1].border = TOP;
+  os->arr[3].edge_land_arr[1].landscape = FIELD;
+  os->arr[3].edge_land_arr[0].border = LEFT;
+  os->arr[3].edge_land_arr[0].landscape = FREE;
+  os->arr[3].edge_land_arr[2].border = RIGHT;
+  os->arr[3].edge_land_arr[2].landscape = FREE;
+  os->arr[3].edge_land_arr[3].border = BOTTOM;
+  os->arr[3].edge_land_arr[3].landscape = FREE;
   return os;
 }
 
-void open_squares_push(Open_squares *open_squares, Square_info si) {
-  open_squares->size++;
-  open_squares->arr = (Square_info *)realloc(
-      open_squares->arr, open_squares->size * sizeof(Square_info));
-  open_squares->arr[open_squares->size - 1] = si;
+void open_squares_push(Open_squares *os, Square_info si) {
+  os->size++;
+  os->arr = (Square_info *)realloc(os->arr, os->size * sizeof(Square_info));
+  os->arr[os->size - 1] = si;
 }
 
 void square_info_push_edge_land(Open_squares *os, int x, int y, Borders b,
                                 Landscape l) {
 
   for (int i = 0; i < os->size; i++) {
+
     if (os->arr[i].coor.x == x && os->arr[i].coor.y == y) {
-      os->arr[i].size++;
-      os->arr[i].edge_land_arr = (Edge_land *)realloc(
-          os->arr[i].edge_land_arr, os->arr[i].size * sizeof(Edge_land));
-      os->arr[i].edge_land_arr[os->arr[i].size - 1].border = b;
-      os->arr[i].edge_land_arr[os->arr[i].size - 1].landscape = l;
-      break;
+
+      os->arr[i].edge_land_arr[b].landscape = l;
     }
   }
 }
 
 void square_info_delete_edge_land(Open_squares *os, int x, int y, Borders b) {
-  int index;
   for (int i = 0; i < os->size; i++) {
+
     if (os->arr[i].coor.x == x && os->arr[i].coor.y == y) {
-      index = i;
-      // Shift all elements after the removed element to the left
-      for (int j = 0; j < os->arr[i].size; j++) {
-        if (os->arr[i].edge_land_arr[j].border == b) {
-          for (int k = j; k < os->arr[i].size - 1; k++) {
-            os->arr[i].edge_land_arr[k] = os->arr[i].edge_land_arr[k + 1];
-          }
-          break;
-        }
-      }
+
+      os->arr[i].edge_land_arr[b].landscape = FREE;
     }
   }
-
-  os->arr[index].size--;
-  os->arr[index].edge_land_arr = (Edge_land *)realloc(
-      os->arr[index].edge_land_arr, os->arr[index].size * sizeof(Edge_land));
-  return;
 }
+
 void open_squares_delete(Open_squares *open_squares, Square_info square) {
   for (int i = 0; i < open_squares->size; i++) {
     if (open_squares->arr[i].coor.x == square.coor.x &&
@@ -126,9 +126,7 @@ void open_squares_print(Open_squares *os) {
   printf("size open squares = %d\n", os->size);
   for (int i = 0; i < os->size; i++) {
     printf(" {%d , %d } ", os->arr[i].coor.x, os->arr[i].coor.y);
-    int j = 0;
-    while (j < os->arr[i].size) {
-      printf("[ ");
+    for (int j = 0; j < 4; j++) {
       switch (os->arr[i].edge_land_arr[j].border) {
       case TOP:
         printf("TOP-> ");
@@ -149,29 +147,31 @@ void open_squares_print(Open_squares *os) {
 
       switch (os->arr[i].edge_land_arr[j].landscape) {
       case CITY:
-        printf("CITY");
+        printf("CITY, ");
         break;
       case FIELD:
-        printf("FILD");
+        printf("FILD, ");
         break;
       case CLOISTER:
-        printf("CLST");
+        printf("CLST, ");
         break;
       case SHIELD:
-        printf("SHLD");
+        printf("SHLD, ");
         break;
       case ROAD:
-        printf("ROAD");
+        printf("ROAD, ");
         break;
       case VILLAGE:
-        printf("VLGE");
+        printf("VLGE, ");
+        break;
+      case FREE:
+        printf("FREE, ");
         break;
       default:
         break;
       }
-      printf(" ] \n");
-      j++;
     }
+    printf(" \n");
   }
 
   printf("\n");
