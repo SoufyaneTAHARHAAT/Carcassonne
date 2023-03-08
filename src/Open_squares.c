@@ -7,6 +7,7 @@
 #include "./../include/Grid.h"
 #include "./../include/Open_squares.h"
 #include "./../include/Result.h"
+#include "./../include/Grid.h"
 
 Open_squares *open_squares_init() {
   Open_squares *os = (Open_squares *)malloc(sizeof(Open_squares));
@@ -120,6 +121,34 @@ Result open_squares_search(Open_squares *os, Square_info square) {
   }
 
   return INVALID_GRID_POSTION;
+}
+
+
+
+
+// x and y to the coors of the already putt tile
+
+// once we put the tile on the grid we add new coords and update the conditions of old ones
+void open_squares_update(Grid *g ,Open_squares *os , int x , int y) {
+  // first we unlock the neighbours of x , y square if they are not occupied already
+
+  // left square
+
+  if (os)
+  {
+    /* code */
+  }
+  
+
+  // top square
+
+  // right square
+
+  // bottom square
+  
+
+  // we update the conditions
+
 }
 
 void open_squares_print(Open_squares *os) {

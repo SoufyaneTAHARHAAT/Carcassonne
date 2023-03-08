@@ -33,5 +33,6 @@ int main(void) {
     // player_show(gm->players[i]);
   }
   Open_squares *os = open_squares_init();
+  open_squares_print(os);
   return (0);
 }

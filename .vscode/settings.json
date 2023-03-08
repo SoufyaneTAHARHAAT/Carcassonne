@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.ejs": "html",
-        "stack.h": "c"
+        "stack.h": "c",
+        "open_squares.h": "c"
     }
 }
