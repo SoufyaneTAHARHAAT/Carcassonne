@@ -1,16 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #ifndef GRID_H
 #define GRID_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "Tile.h"
 #include "Meeple.h"
 #include "Player.h"
-#include "Open_squares.h"
-#include "Grid.h"
 #include "Stack.h"
 #include "coordinate.h"
+#include "Open_squares.h"
 
 #define ROWS 143
 #define COLS 143

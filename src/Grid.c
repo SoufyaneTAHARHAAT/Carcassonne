@@ -1,13 +1,13 @@
-#include "./../include/Grid.h"
-#include "./../include/Player.h"
-#include "./../include/Game.h"
-#include "./../include/Grid_Validator.h"
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "./../include/Grid.h"
+#include "./../include/Player.h"
+#include "./../include/Game.h"
+#include "./../include/Grid_Validator.h"
 Grid *grid_create() {
   Grid *grid = (Grid *)malloc(sizeof(Grid));
   check_null((void *)grid, "could not allocate memory for the grid");

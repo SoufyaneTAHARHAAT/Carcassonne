@@ -7,7 +7,6 @@
 #include "./../include/Grid.h"
 #include "./../include/Open_squares.h"
 #include "./../include/Result.h"
-#include "./../include/Grid.h"
 
 Open_squares *open_squares_init() {
   Open_squares *os = (Open_squares *)malloc(sizeof(Open_squares));
@@ -123,32 +122,95 @@ Result open_squares_search(Open_squares *os, Square_info square) {
   return INVALID_GRID_POSTION;
 }
 
-
-
-
 // x and y to the coors of the already putt tile
+// once we put the tile on the grid we add new coords and update the conditions
+// of old ones
+void open_squares_update(Grid *g, Open_squares *os, int x, int y) {
+  // first we unlock the neighbours of x , y square if they are not occupied
+  // already
 
-// once we put the tile on the grid we add new coords and update the conditions of old ones
-void open_squares_update(Grid *g ,Open_squares *os , int x , int y) {
-  // first we unlock the neighbours of x , y square if they are not occupied already
+  Square_info si;
+  si.coor.x = x;
+  si.coor.y = y;
+
+  // we remove the already put tile from the open_squares
+
+  open_squares_delete(os, si);
 
   // left square
 
-  if (os)
-  {
-    /* code */
+  if (g->tab[x][y - 1].square_state == EMPTY) {
+    Square_info square;
+    square.coor.x = x;
+    square.coor.y = y - 1;
+    square.edge_land_arr[0].border = LEFT;
+    square.edge_land_arr[1].border = TOP;
+    square.edge_land_arr[2].border = RIGHT;
+    square.edge_land_arr[3].border = BOTTOM;
+    for (int i = 0; i < 4; i++) {
+      square.edge_land_arr[i].landscape = FREE;
+    }
+    
+    square.edge_land_arr[RIGHT].landscape = g->tab[x][y].t->borders[LEFT].landscape;
+
+    open_squares_push(os, square);
   }
-  
 
   // top square
 
+  if (g->tab[x - 1][y].square_state == EMPTY) {
+    Square_info square;
+    square.coor.x = x - 1;
+    square.coor.y = y;
+    square.edge_land_arr[0].border = LEFT;
+    square.edge_land_arr[1].border = TOP;
+    square.edge_land_arr[2].border = RIGHT;
+    square.edge_land_arr[3].border = BOTTOM;
+    for (int i = 0; i < 4; i++) {
+      square.edge_land_arr[i].landscape = FREE;
+    }
+
+    square.edge_land_arr[BOTTOM].landscape = g->tab[x][y].t->borders[TOP].landscape;
+    open_squares_push(os, square);
+  }
+
   // right square
 
+  if (g->tab[x][y + 1].square_state == EMPTY) {
+    Square_info square;
+    square.coor.x = x;
+    square.coor.y = y + 1;
+    square.edge_land_arr[0].border = LEFT;
+    square.edge_land_arr[1].border = TOP;
+    square.edge_land_arr[2].border = RIGHT;
+    square.edge_land_arr[3].border = BOTTOM;
+    for (int i = 0; i < 4; i++) {
+      square.edge_land_arr[i].landscape = FREE;
+    }
+
+    square.edge_land_arr[LEFT].landscape = g->tab[x][y].t->borders[RIGHT].landscape;
+    open_squares_push(os, square);
+  }
+
   // bottom square
-  
+
+  if (g->tab[x + 1][y].square_state == EMPTY) {
+    Square_info square;
+    square.coor.x = x + 1;
+    square.coor.y = y;
+    square.edge_land_arr[0].border = LEFT;
+    square.edge_land_arr[1].border = TOP;
+    square.edge_land_arr[2].border = RIGHT;
+    square.edge_land_arr[3].border = BOTTOM;
+    for (int i = 0; i < 4; i++) {
+      square.edge_land_arr[i].landscape = FREE;
+    }
+
+    square.edge_land_arr[TOP].landscape = g->tab[x][y].t->borders[BOTTOM].landscape;
+    open_squares_push(os, square);
+  }
 
   // we update the conditions
-
 }
 
 void open_squares_print(Open_squares *os) {
