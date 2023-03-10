@@ -1,4 +1,3 @@
-
 #include "./../include/Game.h"
 #include "./../include/Grid.h"
 #include "./../include/Player.h"
@@ -36,6 +35,23 @@ Game *game_init(Player *players_arr[MAX_PLAYERS], Grid *g, Stack *s,
 
   return game;
 }
+
+// suggest open_sqaures with mathing Tiles
+Coordinate game_suggest_open_squares(Open_squares *os) {
+  int choice;
+  Coordinate pos;
+  printf("choose where you want to put your Tile\n");
+  for(int  i = 0; i < os->size ; i++) {
+    printf("type %d for  { %d , %d }\t", i , os->arr[i].coor.x , os->arr[i].coor.y);
+    printf("\n");
+  }
+  scanf("%d" , &choice);
+  pos.x = os->arr[choice].coor.x;
+  pos.y = os->arr[choice].coor.y;
+  return pos;
+}
+
+
 
 void print_error(Result result) {
   switch (result) {

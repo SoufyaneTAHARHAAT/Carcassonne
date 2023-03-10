@@ -34,7 +34,7 @@ typedef struct Grid_t Grid;
 
 
 Grid *grid_create();
-bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p, Coordinate position , Open_squares *os); 
+bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p, int x, int y, Open_squares *os); 
 bool grid_put_meeple(Grid *g , Meeple * mp , Borders cardinal_dir, __u_int x, __u_int y);
 void grid_show(Grid *g); 
 void grid_cut_show(Grid *g , int row , int col , int dist);

@@ -11,9 +11,9 @@
 #include "coordinate.h"
 #include "Result.h"
 
-Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p, Coordinate position , Open_squares *os);
+Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p, int x , int y, Open_squares *os);
 
-Result grid_validate_borders(Grid *g, Tile *t , Coordinate position);
+Result grid_validate_borders(Grid *g, Tile *t, int x, int y);
 
 
 Result grid_validate_left_border(Grid *g , Tile *t , Coordinate pos) ;

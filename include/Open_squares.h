@@ -23,6 +23,8 @@ struct Open_squares_t {
 };
 typedef struct Open_squares_t Open_squares;
 
+
+
 struct Grid_t; // forward declaration of Grid struct
 typedef struct Grid_t Grid;
 
@@ -42,5 +44,8 @@ Result open_squares_search(Open_squares *os, Square_info square);
 void open_squares_print(Open_squares *os);
 
 void open_squares_update(Grid *g, Open_squares *os, int x, int y);
+
+
+Coordinate * open_squares_cpm_tile(Open_squares *os, Tile *t);
 
 #endif

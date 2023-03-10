@@ -10,8 +10,7 @@
 #include "./../../include/Result.h"
 #include "./../../include/Stack.h"
 #include "./../../include/coordinate.h"
-Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p,
-                              Coordinate position, Open_squares *os) {
+Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p, int x, int y, Open_squares *os) {
   // check if stack is empty
 
   if (s->tiles_number == 0) {
@@ -23,19 +22,6 @@ Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p,
   if (!p->turn_to_play) {
     return INVALID_TURN;
   }
-
-  // // check if positiion is included on open Saquares Array
-
-  // if ((Result)open_squares_search(os, position) == INVALID_GRID_POSTION) {
-  //   return INVALID_GRID_POSTION;
-  // }
-
-  // // check if all borders are matching
-
-  // if ((Result)grid_validate_borders(g, t, position) == UNMATCHING_BORDERS) {
-  //   return UNMATCHING_BORDERS;
-  // }
-
   return OK;
 }
 
@@ -43,9 +29,7 @@ Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p,
  * We need to ckeck some cases later like if we are in the corners
  */
 
-Result grid_validate_borders(Grid *g, Tile *t, Coordinate position) {
-  int x = position.x;
-  int y = position.y;
+Result grid_validate_borders(Grid *g, Tile *t, int x , int y) {
   // LEFT with RIGHT
   if (g->tab[x][y - 1].square_state == OCCUPIED) {
     if (g->tab[x][y - 1].t->borders[2].landscape != t->borders[0].landscape) {

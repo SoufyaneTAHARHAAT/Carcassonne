@@ -29,12 +29,12 @@ Grid *grid_create() {
   return grid;
 }
 
-bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p , Coordinate position , Open_squares *os) {
+bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p , int x , int y, Open_squares *os) {
 
-  if (grid_validate_put_tile(s , t , g , p , position , os)  == OK) {
+  if (grid_validate_put_tile(s , t , g , p , x, y, os)  == OK) {
     print_error(OK);
-    g->tab[position.x][position.y].square_state = OCCUPIED;
-    g->tab[position.x][position.y].t = t;
+    g->tab[x][y].square_state = OCCUPIED;
+    g->tab[x][y].t = t;
     return true;
   }
   print_error(UNMATCHING_BORDERS);

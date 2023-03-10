@@ -35,23 +35,16 @@ int main(void) {
   }
   Open_squares *os = open_squares_init();
   // grid_cut_show(g, 71, 71, 5);
-  // open_squares_print(os);
-  
-  Tile *t = stack_pop(s);
-  Tile *t2 = stack_pop(s);
-  tile_print(t);
-  tile_print(t2);
-
-  Coordinate pos = {71 , 72};
-  grid_put_tile(s, g, t, p1, pos, os);
-  open_squares_update(g, os, 71, 72);
-  // open_squares_print(os);
-  // grid_cut_show(g, 71, 71, 5);
-
-  Coordinate pos1 = {71 , 73};
-  grid_put_tile(s, g, t2, p1, pos1, os);
-  open_squares_update(g, os, 71, 73);
   open_squares_print(os);
-  grid_cut_show(g, 71, 71, 5);
+  
+  while (true){ 
+    Tile *t = stack_pop(s);
+    tile_print(t);
+    Coordinate  pos = game_suggest_open_squares(os);
+    int x = pos.x, y = pos.y;
+    grid_put_tile(s, g, t, p1, x, y, os); 
+    open_squares_update(g, os,  x,  y);
+    grid_cut_show(g, 71, 71, 5);
+  }
   return (0);
 }
