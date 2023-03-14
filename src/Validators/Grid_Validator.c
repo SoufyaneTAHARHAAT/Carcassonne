@@ -10,6 +10,7 @@
 #include "./../../include/Result.h"
 #include "./../../include/Stack.h"
 #include "./../../include/coordinate.h"
+
 Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p, int x, int y, Open_squares *os) {
   // check if stack is empty
 
@@ -25,47 +26,4 @@ Result grid_validate_put_tile(Stack *s, Tile *t, Grid *g, Player *p, int x, int 
   return OK;
 }
 
-/*
- * We need to ckeck some cases later like if we are in the corners
- */
 
-Result grid_validate_borders(Grid *g, Tile *t, int x , int y) {
-  // LEFT with RIGHT
-  if (g->tab[x][y - 1].square_state == OCCUPIED) {
-    if (g->tab[x][y - 1].t->borders[2].landscape != t->borders[0].landscape) {
-      printf("tile to put has landscape on the left as : ");
-      landscape_print(t, 0);
-      printf("\n");
-      return UNMATCHING_BORDERS;
-    }
-  }
-  // TOP with BOTTOM
-  if (g->tab[x - 1][y].square_state == OCCUPIED) {
-    if (g->tab[x - 1][y].t->borders[3].landscape != t->borders[1].landscape) {
-      printf("tile to put has landscape on the top as : ");
-      landscape_print(t, 1);
-      printf("\n");
-      return UNMATCHING_BORDERS;
-    }
-  }
-  // RIGHT WITH LEFT
-  if (g->tab[x][y + 1].square_state == OCCUPIED) {
-    if (g->tab[x][y + 1].t->borders[0].landscape != t->borders[2].landscape) {
-      printf("tile to put has landscape on the right as ");
-      landscape_print(t, 2);
-      printf("\n");
-      return UNMATCHING_BORDERS;
-    }
-  }
-  // BOTTOM WITH TOP
-  if (g->tab[x + 1][y].square_state == OCCUPIED) {
-    if (g->tab[x + 1][y].t->borders[1].landscape != t->borders[3].landscape) {
-      printf("tile to put has landscape on the top as bottom ");
-      landscape_print(t, 3);
-      printf("\n");
-      return UNMATCHING_BORDERS;
-    }
-  }
-
-  return MATCHING_BORDERS;
-}

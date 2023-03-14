@@ -3,8 +3,8 @@ CFLAGS = -Wall -Wextra  -pedantic -std=c11 -g
 LDFLAGS = -lm
 BIN = bin
 
-target: main.o Stack.o Tile.o Grid.o Game.o Player.o Meeple.o Grid_Validator.o Open_squares.o
-	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o $(BIN)/Grid.o $(BIN)/Player.o $(BIN)/Meeple.o $(BIN)/Game.o $(BIN)/Grid_Validator.o $(BIN)/Open_squares.o -o $(BIN)/exe $(LDFLAGS)
+target: main.o Stack.o Tile.o Grid.o Game.o Player.o Meeple.o Grid_Validator.o Open_squares.o Valid_squares.o
+	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o $(BIN)/Grid.o $(BIN)/Player.o $(BIN)/Meeple.o $(BIN)/Game.o $(BIN)/Grid_Validator.o $(BIN)/Open_squares.o $(BIN)/Valid_squares.o -o $(BIN)/exe $(LDFLAGS)
 
 run: 
 	$(BIN)/./exe
@@ -43,6 +43,10 @@ Grid_Validator.o: src/Validators/Grid_Validator.c
 
 Open_squares.o: src/Open_squares.c
 	$(CC) $(CFLAGS) -c src/Open_squares.c -o $(BIN)/Open_squares.o
+
+Valid_squares.o: src/Valid_squares.c
+	$(CC) $(CFLAGS) -c src/Valid_squares.c -o $(BIN)/Valid_squares.o
+
 clean:
 	rm -f $(BIN)/*.o target
 

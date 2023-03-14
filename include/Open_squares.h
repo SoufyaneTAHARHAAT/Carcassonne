@@ -1,6 +1,7 @@
 #ifndef OPEN_SQUARES_H
 #define OPEN_SQUARES_H
 
+#include "Grid.h"
 #include "Result.h"
 #include "Tile.h"
 #include "coordinate.h"
@@ -32,8 +33,7 @@ Open_squares *open_squares_init();
 
 void open_squares_push(Open_squares *os, Square_info si);
 
-void square_info_push_edge_land(Open_squares *os, int x, int y, Borders b,
-                                Landscape l);
+void square_info_push_edge_land(Open_squares *os, int x, int y, Borders b,Landscape l);
 
 void square_info_delete_edge_land(Open_squares *os, int x, int y, Borders b);
 
@@ -44,8 +44,5 @@ Result open_squares_search(Open_squares *os, Square_info square);
 void open_squares_print(Open_squares *os);
 
 void open_squares_update(Grid *g, Open_squares *os, int x, int y);
-
-
-Coordinate * open_squares_cpm_tile(Open_squares *os, Tile *t);
 
 #endif
