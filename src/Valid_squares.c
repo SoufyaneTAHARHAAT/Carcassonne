@@ -20,15 +20,19 @@ Valid_squares *valid_squares_init() {
     Oprientation to the vs->arr 
 */
 
-void valid_squres_update(Valid_squares *vs, Open_squares *os , Tile *t) {
+void valid_squares_update(Valid_squares *vs, Open_squares *os , Tile *t) {
 
+    // we loop through the open squares and compare each one to the tile Edges
     for (int i = 0; i < os->size; i++)
     {
 
-        are_borders_matching(os->arr[i].edge_land_arr , t->borders);
+        int * arr = are_borders_matching(os->arr[i].edge_land_arr , t->borders);
+        // vs->arr[i].orientation = *arr;
 
     }
     
+
+    // we must free the memory for int * arr; later nchhlhz
 }
 
 /*
@@ -42,9 +46,11 @@ void valid_squres_update(Valid_squares *vs, Open_squares *os , Tile *t) {
     if there is only two condtions 
 */
 
-int are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5]) {
+int * are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5]) {
     int n_matches = 0;
     bool is_match = true;
+    int *arr = (int *)malloc(sizeof(int));
+    check_null((void *)arr , "could not allocate memory for array border matching");
 
     Landscape tile_ladscape_copy[4] = {
         tile_borders[0].landscape,
@@ -53,8 +59,8 @@ int are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5
         tile_borders[3].landscape
     };
 
-    // conpare all cases
-    for (int i = 0; i < 3; i++)
+    // conpare all tile positions with orietation
+    for (int i = 0; i < 4; i++)
     {
         is_match = true;
         // compare both arrays
@@ -69,13 +75,15 @@ int are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5
             }
             
         }
+
+        if (is_match) arr[i] = 1;
+        else arr[i] = 0;
         
-        if (is_match) n_matches++;
         // shift the array
         shift_array(tile_ladscape_copy , 4);
     }
 
-    return n_matches;
+    return arr;
 }
 
 void shift_array(Landscape arr[] , int size) {

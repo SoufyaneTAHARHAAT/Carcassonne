@@ -6,7 +6,8 @@
 
 
 
-typedef struct Borders_state_t Borders_state;
+// typedef struct Borders_state_t Borders_state;
+
 
 struct Square_Orientation_t {
     Coordinate coor;
@@ -28,8 +29,8 @@ typedef struct Valid_squares_t Valid_squares;
 
 Valid_squares *valid_squares_init();
 
-void valid_squres_update(Valid_squares *vs, Open_squares *os , Tile *t);
-int are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5]);
+void valid_squares_update(Valid_squares *vs, Open_squares *os , Tile *t);
+int  *are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5]);
 void shift_array(Landscape arr[] , int size);
 
 #endif
