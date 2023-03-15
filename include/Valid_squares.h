@@ -33,6 +33,7 @@ Valid_squares *valid_squares_init();
 void valid_squares_update(Valid_squares *vs, Open_squares *os , Tile *t);
 int  *are_borders_matching(Edge_land edge_land_arr[4] , Border_land tile_borders[5]);
 
+void print_tile_copy(Landscape tile_ladscape_copy[]); 
 void valid_squares_print(Valid_squares *vs); 
 void valid_squares_push(Valid_squares *vs, Square_Orientation so);
 void shift_array(Landscape arr[] , int size);

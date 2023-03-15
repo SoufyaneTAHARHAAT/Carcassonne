@@ -2,6 +2,7 @@
 #include "./../include/Grid.h"
 #include "./../include/Open_squares.h"
 #include "./../include/Result.h"
+#include <stdio.h>
 
 Valid_squares *valid_squares_init() {
   Valid_squares *vs = (Valid_squares *)malloc(sizeof(Valid_squares));
@@ -28,6 +29,7 @@ void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t) {
     
     printf("calling are_borders_matching function for os.arr[%d] on x = %d, y =  %d \n" , i , os->arr[i].coor.x , os->arr[i].coor.y);
     int *arr = are_borders_matching(os->arr[i].edge_land_arr, t->borders);
+  printf("adrress of arr from out side are_borders_matching is %p\n", (void *)arr);
     // check if the array contains at least 1 matching possiblity
     printf("arr resume after calling are are_borders_matching function \n");
     for (int i = 0; i < 4; i++) {
@@ -52,7 +54,7 @@ void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t) {
       vs_index++;
       is_there_one =false;
     } else {
-      free(arr);
+      // free(arr);
       continue;
     }
   }
@@ -73,16 +75,19 @@ void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t) {
 int *are_borders_matching(Edge_land edge_land_arr[4],
                           Border_land tile_borders[5]) {
   bool is_match = true;
-  int *arr = (int *)calloc(4 , sizeof(int) * 4);
+  int *arr = (int *)malloc(sizeof(int) * 4);
   check_null((void *)arr,
              "could not allocate memory for array border matching");
 
   Landscape tile_ladscape_copy[4] = {
       tile_borders[0].landscape, tile_borders[1].landscape,
       tile_borders[2].landscape, tile_borders[3].landscape};
-
+  
+  printf("adrress of arr from are_borders_matching is %p\n", arr);
   // conpare all tile positions with orietation
   for (int i = 0; i < 4; i++) {
+    printf("tile copy print\n");
+    print_tile_copy(tile_ladscape_copy);
     printf("i = %d \n" , i);
     is_match = true;
     // compare both arrays
@@ -102,21 +107,25 @@ int *are_borders_matching(Edge_land edge_land_arr[4],
       }
     }
 
-    if (is_match){
+    if (is_match)
+    {
       printf("affection 1 to arr[%d] \n" , i);
-      arr[i] = 1;}
-    else{
+      arr[i] = 1;
+    }
+    else
+    {
       printf("affection 0 to arr[%d] \n" , i);
-      arr[i] = 0;}
+      arr[i] = 0;
+    }
 
     // shift the array
 
-    // shift_array(tile_ladscape_copy, 5);
-    Landscape temp = tile_ladscape_copy[3];
-    tile_ladscape_copy[0] = tile_ladscape_copy[1];
-    tile_ladscape_copy[1] = tile_ladscape_copy[2];
-    tile_ladscape_copy[2] = tile_ladscape_copy[3];
-    tile_ladscape_copy[3] = temp;
+    shift_array(tile_ladscape_copy, 4);
+    // Landscape temp = tile_ladscape_copy[3];
+    // tile_ladscape_copy[3] = tile_ladscape_copy[2];
+    // tile_ladscape_copy[2] = tile_ladscape_copy[1];
+    // tile_ladscape_copy[1] = tile_ladscape_copy[0];
+    // tile_ladscape_copy[3] = temp;
   }
 
   return arr;
@@ -130,16 +139,16 @@ void valid_squares_push(Valid_squares *vs, Square_Orientation so){
 
 }
 
-// void shift_array(Landscape *arr, int size) {
-//   printf("calliign shift array\n");
-//   Landscape temp = arr[size - 1];
+void shift_array(Landscape *arr, int size) {
+  printf("calliign shift array\n");
+  Landscape temp = arr[size - 1];
 
-//   for (int i = size - 1; i > 0; i--) {
-//     arr[i] = arr[i - 1];
-//   }
+  for (int i = size - 1; i > 0; i--) {
+    arr[i] = arr[i - 1];
+  }
 
-//   arr[0] = temp;
-// }
+  arr[0] = temp;
+}
 
 void valid_squares_print(Valid_squares *vs) {
   printf("size valid squares = %d\n", vs->size);
@@ -151,3 +160,35 @@ void valid_squares_print(Valid_squares *vs) {
     printf("\n");
   }
 }
+
+void print_tile_copy(Landscape tile_ladscape_copy[]) {
+  for (int i = 0; i < 4; i++) {
+  switch (tile_ladscape_copy[i]){
+      case CITY:
+        printf("CITY, ");
+        break;
+      case FIELD:
+        printf("FILD, ");
+        break;
+      case CLOISTER:
+        printf("CLST, ");
+        break;
+      case SHIELD:
+        printf("SHLD, ");
+        break;
+      case ROAD:
+        printf("ROAD, ");
+        break;
+      case VILLAGE:
+        printf("VLGE, ");
+        break;
+      case FREE:
+        printf("FREE, ");
+        break;
+      default:
+        break;
+      }
+  }
+  printf("\n");
+}
+
