@@ -3,6 +3,7 @@
 #include "./../include/Player.h"
 #include "./../include/Result.h"
 #include "./../include/Stack.h"
+#include "./../include/Valid_squares.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -37,17 +38,17 @@ Game *game_init(Player *players_arr[MAX_PLAYERS], Grid *g, Stack *s,
 }
 
 // suggest open_sqaures with mathing Tiles
-Coordinate game_suggest_open_squares(Open_squares *os) {
+Coordinate game_suggest_valid_squares(Valid_squares *vs) {
   int choice;
   Coordinate pos;
   printf("choose where you want to put your Tile\n");
-  for(int  i = 0; i < os->size ; i++) {
-    printf("type %d for  { %d , %d }\t", i , os->arr[i].coor.x , os->arr[i].coor.y);
+  for(int  i = 0; i < vs->size ; i++) {
+    printf("type %d for  { %d , %d }\t", i , vs->arr[i].coor.x , vs->arr[i].coor.y);
     printf("\n");
   }
   scanf("%d" , &choice);
-  pos.x = os->arr[choice].coor.x;
-  pos.y = os->arr[choice].coor.y;
+  pos.x = vs->arr[choice].coor.x;
+  pos.y = vs->arr[choice].coor.y;
   return pos;
 }
 

@@ -32,6 +32,10 @@ struct Grid_t{
 };
 typedef struct Grid_t Grid;
 
+struct Open_squares_t; // forward declaration of Grid struct
+typedef struct Open_squares_t Open_squares;
+
+
 
 Grid *grid_create();
 bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p, int x, int y, Open_squares *os); 

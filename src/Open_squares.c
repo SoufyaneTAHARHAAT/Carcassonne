@@ -38,7 +38,7 @@ Open_squares *open_squares_init() {
   os->arr[1].edge_land_arr[1].border = TOP;
   os->arr[1].edge_land_arr[1].landscape = FREE;
   os->arr[1].edge_land_arr[3].border = BOTTOM;
-  os->arr[1].edge_land_arr[3].landscape = VILLAGE;
+  os->arr[1].edge_land_arr[3].landscape = CITY;
 
   // CONFIGURE THE INFO FOR SQUARE ON THE RIGHT TO THE SPECIAL TILE
   os->arr[2].coor.x = ROWS / 2;

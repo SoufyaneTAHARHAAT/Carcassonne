@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./../include/Grid.h"
-#include "./../include/Open_squares.h"
 #include "./../include/Game.h"
+#include "./../include/Grid.h"
 #include "./../include/Grid_Validator.h"
+#include "./../include/Open_squares.h"
 #include "./../include/Player.h"
 #include "./../include/Stack.h"
+#include "./../include/Valid_squares.h"
 
 int main(void) {
   char *filename = "docs/list_tiles.csv";
@@ -30,20 +31,22 @@ int main(void) {
    */
   Game *gm = game_init(players_arr, g, s, 5);
   for (int i = 0; i < (int)gm->num_players; i++) {
-  
+
     // player_show(gm->players[i]);
   }
   Open_squares *os = open_squares_init();
+  Valid_squares *vs = valid_squares_init();
   // grid_cut_show(g, 71, 71, 5);
   open_squares_print(os);
-  
-  while (true){ 
+  while (true) {
     Tile *t = stack_pop(s);
     tile_print(t);
-    Coordinate  pos = game_suggest_open_squares(os);
+    valid_squares_update(vs, os, t);
+    valid_squares_print(vs);
+    Coordinate pos = game_suggest_valid_squares(vs);
     int x = pos.x, y = pos.y;
-    grid_put_tile(s, g, t, p1, x, y, os); 
-    open_squares_update(g, os,  x,  y);
+    grid_put_tile(s, g, t, p1, x, y, os);
+    open_squares_update(g, os, x, y);
     grid_cut_show(g, 71, 71, 5);
   }
   return (0);

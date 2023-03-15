@@ -1,8 +1,8 @@
 #ifndef OPEN_SQUARES_H
 #define OPEN_SQUARES_H
 
-#include "Grid.h"
 #include "Result.h"
+#include "Grid.h"
 #include "Tile.h"
 #include "coordinate.h"
 

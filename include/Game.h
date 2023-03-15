@@ -5,6 +5,7 @@
 #include "Grid.h"
 #include "Stack.h"
 #include "coordinate.h"
+#include "Valid_squares.h"
 
 #define MAX_PLAYERS 5
 
@@ -26,7 +27,7 @@ struct Game_t{
  
 
 Game * game_init(Player * players_arr[MAX_PLAYERS]  , Grid * g , Stack *s , __u_int num_players);
-Coordinate game_suggest_open_squares(Open_squares *os);
+Coordinate game_suggest_valid_squares(Valid_squares *vs);
 void game_get_players(Player * players_arr[MAX_PLAYERS]); 
 void print_error(Result result); 
 
