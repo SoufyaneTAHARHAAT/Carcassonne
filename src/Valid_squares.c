@@ -4,7 +4,8 @@
 #include "./../include/Result.h"
 #include <stdio.h>
 
-Valid_squares *valid_squares_init() {
+Valid_squares *valid_squares_init()
+{
   Valid_squares *vs = (Valid_squares *)malloc(sizeof(Valid_squares));
   check_null((void *)vs, "could not allocate memory for Valid_squares struct");
   vs->arr = NULL;
@@ -21,39 +22,47 @@ Valid_squares *valid_squares_init() {
    Square Oprientation to the vs->arr
 */
 
-void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t) {
+void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t)
+{
   // we loop through the open squares and compare each one to the tile Edges
-  int vs_index = 0;
   bool is_there_one = false;
-  for (int i = 0; i < os->size; i++) {
-    
-    printf("calling are_borders_matching function for os.arr[%d] on x = %d, y =  %d \n" , i , os->arr[i].coor.x , os->arr[i].coor.y);
-    int *arr = are_borders_matching(os->arr[i].edge_land_arr, t->borders);
-  printf("adrress of arr from out side are_borders_matching is %p\n", (void *)arr);
+  for (int i = 0; i < os->size; i++)
+  {
+
+    int *arr = (int *)malloc(sizeof(int) * 4);    
+    are_borders_matching(arr, os->arr[i].edge_land_arr, t->borders);
+
     // check if the array contains at least 1 matching possiblity
-    printf("arr resume after calling are are_borders_matching function \n");
-    for (int i = 0; i < 4; i++) {
-      printf("arr[%d] = %d \n" , i , arr[i]);
-      if (arr[i] == 1) {
+    for (int k = 0; k < 4; k++)
+    {
+      printf("arr[%d] = %d \n", k, arr[k]);
+      if (arr[k] == 1)
+      {
         is_there_one = true;
         break;
       }
     }
 
     // if bordrs matching we push a squar eorietation to Valid Squres;
-    if (is_there_one) {
+    if (is_there_one)
+    {
       int possible_fits = 0;
       Square_Orientation temp;
-      temp.coor.x = os->arr[vs_index].coor.x;
-      temp.coor.y = os->arr[vs_index].coor.y;
+      temp.coor.x = os->arr[i].coor.x;
+      temp.coor.y = os->arr[i].coor.y;
 
-      for (int i = 0 ; i < 4; i++){ if(arr[i] == 1) possible_fits++;}
+      for (int m = 0; m < 4; m++)
+      {
+        if (arr[m] == 1)
+          possible_fits++;
+      }
       temp.orientation = arr;
       temp.possible_fits = possible_fits;
       valid_squares_push(vs, temp);
-      vs_index++;
-      is_there_one =false;
-    } else {
+      is_there_one = false;
+    }
+    else
+    {
       // free(arr);
       continue;
     }
@@ -72,49 +81,39 @@ void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t) {
     if there is only two condtions
 */
 
-int *are_borders_matching(Edge_land edge_land_arr[4],
-                          Border_land tile_borders[5]) {
+void are_borders_matching(int *arr, Edge_land edge_land_arr[4], Border_land tile_borders[5])
+{
   bool is_match = true;
-  int *arr = (int *)malloc(sizeof(int) * 4);
-  check_null((void *)arr,
-             "could not allocate memory for array border matching");
-
   Landscape tile_ladscape_copy[4] = {
       tile_borders[0].landscape, tile_borders[1].landscape,
       tile_borders[2].landscape, tile_borders[3].landscape};
-  
-  printf("adrress of arr from are_borders_matching is %p\n", arr);
   // conpare all tile positions with orietation
-  for (int i = 0; i < 4; i++) {
-    printf("tile copy print\n");
+  for (int i = 0; i < 4; i++)
+  {
     print_tile_copy(tile_ladscape_copy);
-    printf("i = %d \n" , i);
     is_match = true;
     // compare both arrays
-    for (int j = 0; j < 4; j++) {
-      if (edge_land_arr[j].landscape == FREE){
-        printf("free condition on j = %d \n" , j);
+    for (int j = 0; j < 4; j++)
+    {
+      if (edge_land_arr[j].landscape == FREE)
+      {
         // continue;
       }
-      else {
-        if (edge_land_arr[j].landscape != tile_ladscape_copy[j]) {
-        printf("diffrent borders on j = %d \n" , j);
+      else
+      {
+        if (edge_land_arr[j].landscape != tile_ladscape_copy[j])
+        {
           is_match = false;
-        }
-        else {
-          printf("mathcing borders on j = %d \n", j);
         }
       }
     }
 
     if (is_match)
     {
-      printf("affection 1 to arr[%d] \n" , i);
       arr[i] = 1;
     }
     else
     {
-      printf("affection 0 to arr[%d] \n" , i);
       arr[i] = 0;
     }
 
@@ -127,68 +126,70 @@ int *are_borders_matching(Edge_land edge_land_arr[4],
     // tile_ladscape_copy[1] = tile_ladscape_copy[0];
     // tile_ladscape_copy[3] = temp;
   }
-
-  return arr;
 }
 
-
-void valid_squares_push(Valid_squares *vs, Square_Orientation so){
+void valid_squares_push(Valid_squares *vs, Square_Orientation so)
+{
   vs->size++;
-  vs->arr = (Square_Orientation*)realloc(vs->arr,vs->size * sizeof(Square_Orientation));
+  vs->arr = (Square_Orientation *)realloc(vs->arr, vs->size * sizeof(Square_Orientation));
   vs->arr[vs->size - 1] = so;
-
 }
 
-void shift_array(Landscape *arr, int size) {
-  printf("calliign shift array\n");
+void shift_array(Landscape *arr, int size)
+{
   Landscape temp = arr[size - 1];
 
-  for (int i = size - 1; i > 0; i--) {
+  for (int i = size - 1; i > 0; i--)
+  {
     arr[i] = arr[i - 1];
   }
 
   arr[0] = temp;
 }
 
-void valid_squares_print(Valid_squares *vs) {
-  printf("size valid squares = %d\n", vs->size);
-  for (int i = 0; i < vs->size; i++) {
+void valid_squares_print(Valid_squares *vs)
+{
+  for (int i = 0; i < vs->size; i++)
+  {
     printf(" {%d , %d } ", vs->arr[i].coor.x, vs->arr[i].coor.y);
-    for (int j = 0; j < 4; j++) {
-      printf (" %d " , vs->arr[i].orientation[j]);
+    for (int j = 0; j < 4; j++)
+    {
+      printf(" %d ", vs->arr[i].orientation[j]);
     }
     printf("\n");
   }
 }
 
-void print_tile_copy(Landscape tile_ladscape_copy[]) {
-  for (int i = 0; i < 4; i++) {
-  switch (tile_ladscape_copy[i]){
-      case CITY:
-        printf("CITY, ");
-        break;
-      case FIELD:
-        printf("FILD, ");
-        break;
-      case CLOISTER:
-        printf("CLST, ");
-        break;
-      case SHIELD:
-        printf("SHLD, ");
-        break;
-      case ROAD:
-        printf("ROAD, ");
-        break;
-      case VILLAGE:
-        printf("VLGE, ");
-        break;
-      case FREE:
-        printf("FREE, ");
-        break;
-      default:
-        break;
-      }
+void print_tile_copy(Landscape tile_ladscape_copy[])
+{
+  for (int i = 0; i < 4; i++)
+  {
+    switch (tile_ladscape_copy[i])
+    {
+    case CITY:
+      printf("CITY, ");
+      break;
+    case FIELD:
+      printf("FILD, ");
+      break;
+    case CLOISTER:
+      printf("CLST, ");
+      break;
+    case SHIELD:
+      printf("SHLD, ");
+      break;
+    case ROAD:
+      printf("ROAD, ");
+      break;
+    case VILLAGE:
+      printf("VLGE, ");
+      break;
+    case FREE:
+      printf("FREE, ");
+      break;
+    default:
+      break;
+    }
   }
   printf("\n");
 }
-
