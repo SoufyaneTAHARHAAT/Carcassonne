@@ -42,17 +42,60 @@ Coordinate game_suggest_valid_squares(Valid_squares *vs) {
   int choice;
   Coordinate pos;
   printf("choose where you want to put your Tile\n");
-  for(int  i = 0; i < vs->size ; i++) {
-    printf("type %d for  { %d , %d }\t", i , vs->arr[i].coor.x , vs->arr[i].coor.y);
+  for (int i = 0; i < vs->size; i++) {
+    printf("type %d for  { %d , %d }\t", i, vs->arr[i].coor.x,
+           vs->arr[i].coor.y);
     printf("\n");
   }
-  scanf("%d" , &choice);
+  scanf("%d", &choice);
+
   pos.x = vs->arr[choice].coor.x;
   pos.y = vs->arr[choice].coor.y;
   return pos;
 }
 
+/*
+ * return how many times the user want a tile to be rotated;
+ * in case there is so many possible_fits
+ * if there is only one possible way we return 0;
+ * */
+int game_suggest_tile_rotation(Valid_squares *vs, int x, int y) {
+  int i = 0;
+  int choice = 0;
+  for (i = 0; i < vs->size; i++) {
+    if (vs->arr[i].coor.x == x && vs->arr[i].coor.y == y)
+      break;
+  }
 
+  if (vs->arr[i].possible_fits > 1) {
+    printf("choose  how many times to rotate the tile \n");
+    if (vs->arr[i].orientation[0] == 1) {
+      printf("type 0 to keep the tile as it is\n");
+    }
+    if (vs->arr[i].orientation[1] == 1) {
+
+      printf("type 1 to rotate the tile ONE time\n");
+    }
+    if (vs->arr[i].orientation[2] == 1) {
+      printf("type 2 to rotate the tile TWO times\n");
+    }
+
+    if (vs->arr[i].orientation[3] == 1) {
+      printf("type 3 to rotate the tile THREE times\n");
+    }
+    scanf("%d", &choice);
+    return choice;
+  } else {
+    printf("there is only one valid way to put the tile \n");
+    for (int j = 0; j < 4; j++) {
+      if (vs->arr[i].orientation[j] == 1) {
+        return j;
+      }
+    }
+  }
+  // we can never reach this far but just to keep the compiler silent
+  return 0;
+}
 
 void print_error(Result result) {
   switch (result) {

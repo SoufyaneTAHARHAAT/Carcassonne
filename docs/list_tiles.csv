@@ -16,7 +16,6 @@ pre,pre,pre,pre,abbaye
 pre,ville,ville,pre,pre
 route,route,ville,route,village
 pre,blason,pre,blason,blason
-route,ville,route,pre,route
 pre,ville,route,route,route
 blason,blason,route,route,blason
 ville,ville,pre,ville,ville
@@ -70,3 +69,4 @@ blason,blason,blason,route,blason
 route,route,pre,pre,route
 abbaye,abbaye,abbaye,route,abbaye
 pre,ville,pre,ville,pre
+route,ville,route,pre,route

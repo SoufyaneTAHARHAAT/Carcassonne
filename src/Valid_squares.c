@@ -35,7 +35,6 @@ void valid_squares_update(Valid_squares *vs, Open_squares *os, Tile *t)
     // check if the array contains at least 1 matching possiblity
     for (int k = 0; k < 4; k++)
     {
-      printf("arr[%d] = %d \n", k, arr[k]);
       if (arr[k] == 1)
       {
         is_there_one = true;
@@ -90,7 +89,6 @@ void are_borders_matching(int *arr, Edge_land edge_land_arr[4], Border_land tile
   // conpare all tile positions with orietation
   for (int i = 0; i < 4; i++)
   {
-    print_tile_copy(tile_ladscape_copy);
     is_match = true;
     // compare both arrays
     for (int j = 0; j < 4; j++)
@@ -120,11 +118,6 @@ void are_borders_matching(int *arr, Edge_land edge_land_arr[4], Border_land tile
     // shift the array
 
     shift_array(tile_ladscape_copy, 4);
-    // Landscape temp = tile_ladscape_copy[3];
-    // tile_ladscape_copy[3] = tile_ladscape_copy[2];
-    // tile_ladscape_copy[2] = tile_ladscape_copy[1];
-    // tile_ladscape_copy[1] = tile_ladscape_copy[0];
-    // tile_ladscape_copy[3] = temp;
   }
 }
 
@@ -133,6 +126,13 @@ void valid_squares_push(Valid_squares *vs, Square_Orientation so)
   vs->size++;
   vs->arr = (Square_Orientation *)realloc(vs->arr, vs->size * sizeof(Square_Orientation));
   vs->arr[vs->size - 1] = so;
+}
+
+
+void valid_square_destory(Valid_squares *vs) {
+  free(vs->arr);
+  vs->size = 0;
+  vs->arr = NULL; 
 }
 
 void shift_array(Landscape *arr, int size)
@@ -149,9 +149,11 @@ void shift_array(Landscape *arr, int size)
 
 void valid_squares_print(Valid_squares *vs)
 {
+  printf("Valid squares size is %d\n", vs->size);
   for (int i = 0; i < vs->size; i++)
   {
-    printf(" {%d , %d } ", vs->arr[i].coor.x, vs->arr[i].coor.y);
+    printf(" {%d , %d } [%d] ", vs->arr[i].coor.x, vs->arr[i].coor.y , vs->arr[i].possible_fits);
+    
     for (int j = 0; j < 4; j++)
     {
       printf(" %d ", vs->arr[i].orientation[j]);

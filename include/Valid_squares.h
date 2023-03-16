@@ -36,6 +36,7 @@ void are_borders_matching(int *arr , Edge_land edge_land_arr[4] , Border_land ti
 void print_tile_copy(Landscape tile_ladscape_copy[]); 
 void valid_squares_print(Valid_squares *vs); 
 void valid_squares_push(Valid_squares *vs, Square_Orientation so);
+void valid_square_destory(Valid_squares *vs); 
 void shift_array(Landscape arr[] , int size);
 
 #endif

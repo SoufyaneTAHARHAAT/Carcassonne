@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "./../include/Game.h"
 #include "./../include/Grid.h"
 #include "./../include/Grid_Validator.h"
@@ -7,6 +5,8 @@
 #include "./../include/Player.h"
 #include "./../include/Stack.h"
 #include "./../include/Valid_squares.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(void) {
   char *filename = "docs/list_tiles.csv";
@@ -45,6 +45,12 @@ int main(void) {
     valid_squares_print(vs);
     Coordinate pos = game_suggest_valid_squares(vs);
     int x = pos.x, y = pos.y;
+    int num_rotation = game_suggest_tile_rotation(vs, x, y);
+    tile_rotate(t, num_rotation);
+    tile_print(t);
+    valid_square_destory(vs);
+    valid_squares_print(vs);
+    break;
     grid_put_tile(s, g, t, p1, x, y, os);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, 71, 71, 5);
