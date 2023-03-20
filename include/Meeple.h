@@ -4,6 +4,11 @@
 #include "coordinate.h"
 #include "Tile.h"
 
+
+struct Border_land_t;
+typedef struct Border_land_t Border_land;
+
+
 // create enum with IN and OUT
 enum Meeple_State_t {
     IN_GRID,
@@ -25,7 +30,6 @@ struct Meeple {
     Meeple_state state;
     Coordinate position;
     Color color;
-    // Borders z; // x y and z
 };
 
 typedef struct Meeple Meeple;

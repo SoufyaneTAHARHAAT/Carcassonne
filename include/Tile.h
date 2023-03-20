@@ -1,9 +1,9 @@
 #ifndef TILE_H
 #define TILE_H
 
+#include <stdbool.h>
 #include "Meeple.h"
 #include "coordinate.h"
-#include <stdbool.h>
 
 #define MAX_TILES 72
 

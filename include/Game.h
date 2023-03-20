@@ -29,6 +29,7 @@ struct Game_t{
 Game * game_init(Player * players_arr[MAX_PLAYERS]  , Grid * g , Stack *s , __u_int num_players);
 Coordinate game_suggest_valid_squares(Valid_squares *vs);
 int game_suggest_tile_rotation(Valid_squares *vs, int x, int y); 
+int game_suggest_meeple(Player *p);
 void game_get_players(Player * players_arr[MAX_PLAYERS]); 
 void print_error(Result result); 
 

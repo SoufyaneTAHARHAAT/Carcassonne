@@ -91,5 +91,9 @@ OPEN_SQUARES is used after putting a tile successfully on the grid
 Valid_squares will be used to after popping a tile from  the stack
 
 n = Number of possible ways we can put the tile on x , y coordiantes where : 1 <= n <= 4;  
-valid squares = [{x1 , y1, n} , {x2, y2, n}]
+valid squares = [{x1 , y1, n [1, 0 , 0 , 1]} , {x2, y2, n , [1 , 1 ,0 , 0]}]
 ---------------------------
+
+17/03/2023
+we need to initialize 8 meeples for every player.
+MEEPLES_NUM 7 or 8 ?

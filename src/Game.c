@@ -97,6 +97,24 @@ int game_suggest_tile_rotation(Valid_squares *vs, int x, int y) {
   return 0;
 }
 
+int game_suggest_meeple(Player *p) {
+  char c;
+  int choice = -1;
+  printf("do you want to put a meeple: n for NO y for yes?\n");
+  scanf("%c" , &c);
+
+  if (c == 'y') {
+    printf("to put the Meeple on LEFT   type 0\n");
+    printf("to put the Meeple on TOP    type 1\n");
+    printf("to put the Meeple on RIGHT  type 2\n");
+    printf("to put the Meeple on BOTTOM type 3\n");
+    printf("to put the Meeple on CENTER type 4\n");
+    scanf("%d", &choice);
+    return choice;
+  }
+  return -1;
+}
+
 void print_error(Result result) {
   switch (result) {
   case OK:

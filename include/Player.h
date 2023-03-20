@@ -4,7 +4,7 @@
 #include "Meeple.h"
 #include "Tile.h"
 
-#define MEEPLES_NUM 8
+#define MEEPLES_NUM 7 // it was 8 changed to 7
 
 enum Player_category{
     HUMAN,
@@ -21,14 +21,18 @@ struct Player_t {
     unsigned short score;
     Tile* tiles_history; // to consider later nchllh
     Player_category player_cat;
-    Meeple *meeples_arr[MEEPLES_NUM]; //arr of meeples
+    Meeple *meeples_arr_out_grid[MEEPLES_NUM]; //arr of meeples that are out of the grid
+    Meeple *meeples_arr_in_grid[MEEPLES_NUM]; //arr of meeples that are in of the grid
+    int num_meeples_out_grid; // 7;
+    int num_meeples_in_grid; // 0
 };
 typedef struct Player_t Player;
 
 // create an instance of Player struct
 Player * player_create(Color player_color  , char *name , short age , Player_category player_cat);
 
-
+void player_move_meeple_to_grid(Player *p , int x, int y , Borders border);
+void player_move_meeple_out_grid(Player *p);
 
 // print function  
 void player_show(Player *p);
