@@ -40,6 +40,7 @@ struct Border_land_t
   Borders border;
   Landscape landscape;
   bool meepled;
+  
 };
 typedef struct Border_land_t Border_land;
 

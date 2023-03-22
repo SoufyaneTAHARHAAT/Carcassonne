@@ -97,3 +97,9 @@ valid squares = [{x1 , y1, n [1, 0 , 0 , 1]} , {x2, y2, n , [1 , 1 ,0 , 0]}]
 17/03/2023
 we need to initialize 8 meeples for every player.
 MEEPLES_NUM 7 or 8 ?
+
+
+20/03/2023
+
+soufyane suggested to create a recursive function to know if we can put a meeple or not.
+zineddine suggested to add another attribute in Border_land struct "is_attached"

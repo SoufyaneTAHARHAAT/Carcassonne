@@ -44,8 +44,8 @@ int main(void) {
     int num_rotation = game_suggest_tile_rotation(vs, x, y);
     tile_rotate(t, num_rotation);
     tile_print(t);
-    int put_meeple = game_suggest_meeple(players_arr[player_index_turn]);
-   break;
+    // int put_meeple = game_suggest_meeple(players_arr[player_index_turn]);
+  //  break;
     grid_put_tile(s, g, t, p1, x, y, os);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, 71, 71, 5);
