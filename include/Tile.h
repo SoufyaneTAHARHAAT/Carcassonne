@@ -2,10 +2,12 @@
 #define TILE_H
 
 #include <stdbool.h>
-#include "Meeple.h"
+// #include "Meeple.h"
 #include "coordinate.h"
 
 #define MAX_TILES 72
+#define SPECIAL_TILE_X_POS 71
+#define SPECIAL_TILE_Y_POS 71
 
 enum State_t {
   ON_GRID,
@@ -55,6 +57,8 @@ typedef struct Tile_t Tile;
 Tile *tile_create(char arr1[], char arr2[], char arr3[], char arr4[],
                   char arr5[]);
 Landscape compare(int count, int stop, ...);
+
+
 void tile_print(Tile *t);
 void landscape_print(Tile *t, int l);
 

@@ -9,6 +9,8 @@ enum Result_t {
     INVALID_GRID_POSTION,
     MATCHING_BORDERS,
     UNMATCHING_BORDERS,
+    UPDATED_ROADS, 
+    NOT_UPDATED_ROADS
 };
 
 typedef enum Result_t Result;

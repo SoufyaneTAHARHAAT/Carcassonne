@@ -32,7 +32,7 @@ int main(void) {
   int player_index_turn = 0;
   Open_squares *os = open_squares_init();
   Valid_squares *vs = valid_squares_init();
-  // grid_cut_show(g, 71, 71, 5);
+    // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   open_squares_print(os);
   while (true) {
     Tile *t = stack_pop(s);
@@ -48,7 +48,7 @@ int main(void) {
   //  break;
     grid_put_tile(s, g, t, p1, x, y, os);
     open_squares_update(g, os, x, y);
-    grid_cut_show(g, 71, 71, 5);
+    grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   }
   return (0);
 }

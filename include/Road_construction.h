@@ -14,29 +14,47 @@
 #include "./../include/Result.h"
 #include "./../include/coordinate.h"
 
-struct Node_t {
-    Borders border;
-    Coordinate pos;
+struct r_node_t {
+   Borders border;
+   Coordinate pos;
+  struct r_node_t *next;
+  struct r_node_t *prev;
 };
-struct struct Node_t Node;
+typedef struct r_node_t r_node;
 
-struct road_double_list_t {
-    Node *node;
+struct Double_linked_list_info_t
+{
+  r_node *origine;
+  r_node * head;
+  r_node * tail;
 };
-typedef struct road_double_list_t road_double_list;
+typedef struct Double_linked_list_info_t Double_linked_list_info;
 
 struct Road_t
 {
-    road_double_list *origine; // pointer to double linked liset
-    bool conquered; // true means road is takes can not put a meeple
-    Player * owners; // array of players
-    int *num_meeples; // array for num_meeples for every player
+    Double_linked_list_info *dll; // pointer to road node the doubly linked list  
+    bool conquered; // true means road is taken can not put a meeple
+    Player *owners[5]; // array of players
+    int num_meeples[5]; // array for num_meeples for every player
 };
+typedef struct Road_t Road;
 
 
-struct Road_construction_t {
-    Road * arr;
+struct Roads_construction_t {
+    Road ** arr;
 };
-typedef struct Road_construction_t Road_construction;
+typedef struct Roads_construction_t Roads_construction;
 
+Roads_construction * roads_construction_init();
+
+Road * roads_construction_add_road(Borders b, int x, int y);
+Double_linked_list_info * double_linked_list_info_create(); 
+void double_linked_list_append_in_beg(r_node** head , Borders B , int x, int y);
+void double_linked_list_append_in_end(r_node** tail, Borders B , int x, int y);
+
+// function to return the number of road in a tile;
+int get_tile_number_of_roads(Tile *t);
+
+void check_neighbors(Grid *g,Tile *t,  int x, int y, Borders tab[4]);
+bool is_center_road(Tile *t);
 #endif

@@ -4,9 +4,7 @@ LDFLAGS = -lm
 BIN = bin
 
 target: main.o Stack.o Tile.o Grid.o Game.o Player.o Meeple.o Grid_Validator.o Open_squares.o Valid_squares.o Road_construction.o
-	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o $(BIN)/Grid.o $(BIN)/Player.o $(BIN)/Meeple.o
-	$(BIN)/Game.o $(BIN)/Grid_Validator.o $(BIN)/Open_squares.o $(BIN)/Road_construction.o
-	$(BIN)/Valid_squares.o -o $(BIN)/exe $(LDFLAGS)
+	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o $(BIN)/Grid.o $(BIN)/Player.o $(BIN)/Meeple.o $(BIN)/Game.o $(BIN)/Grid_Validator.o $(BIN)/Open_squares.o $(BIN)/Road_construction.o $(BIN)/Valid_squares.o -o $(BIN)/exe $(LDFLAGS)
 
 run: 
 	$(BIN)/./exe
