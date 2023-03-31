@@ -19,19 +19,50 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
   // 1 means that right border fo the first neighbor contains a road 
   Borders are_neighbors_roads[4] = {0 , 0 , 0, 0}; 
   
+  bool temp = false;
   check_neighbors(g, t, x, y, are_neighbors_roads);
-
+  Borders b = LEFT;
   switch (num_road) {
+    // if there is a road we add it an exsting one 
+    // otherwise create a new Road;
     case 1:
-      
+    // we look through the neighbor
+    // becuase we are in case: 1 am sure there is only one road
 
+      for(int i = 0; i < 4; i++)
+      {
+        if (are_neighbors_roads[i] == 1)
+          {
+            b = i;
+            break;
+          }
+         if (i == 3) temp = true;
+      }
+      
+      // we add the current road to an existing Roads_construction;
+      // we must find the to wich part we add the current Road;
+      if (!temp)
+      {
+          Road * road = roads_construction_search_road(rd, x, y);
+          if (road->dll->head->pos.x == x && road->dll->tail->pos.y)
+           double_linked_list_append_in_beg(&road->dll->head, b, x, y); 
+          else double_linked_list_append_in_end(&road->dll->tail, b, x, y);
+      }
+      // we create a new Road;
+      else {
+        roads_construction_add_road(b, x, y);
+      }
+    
+    break;
     case 2:
 
 
+    break;
     case 3:
     
-
+    break;
     case 4:
+    break;
   }  
 }
 
@@ -43,6 +74,7 @@ Roads_construction * roads_construction_init()
   // becuase the specail tile already contains a special tile we can crate a Road
   road_cons->arr = malloc(sizeof(Road *)); 
   road_cons->arr[0] = roads_construction_add_road(CENTER, SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS);
+  road_cons->size = 1;
   return road_cons;
 }
 
@@ -68,6 +100,29 @@ Road * roads_construction_add_road(Borders b, int x, int y)
 
   return rd;
 }
+
+
+// search in all Roads and return a road that goes through x and y coordinates
+// of course we need to check only the head and th tail
+Road * roads_construction_search_road(Roads_construction *rd, int x, int y)
+{
+
+ Road **ptr_roads = rd->arr; 
+
+  for(int i = 0; i < rd->size; i++) {
+
+    if ((ptr_roads[i]->dll->head->pos.x == x && ptr_roads[i]->dll->head->pos.y == y) ||
+        (ptr_roads[i]->dll->tail->pos.y == x && ptr_roads[i]->dll->tail->pos.y == y) )
+      {
+          return ptr_roads[i];
+      }
+  }
+
+  return NULL; 
+
+}
+
+
 
 Double_linked_list_info * double_linked_list_info_create() {
   Double_linked_list_info *dll = (Double_linked_list_info *)malloc(sizeof(Double_linked_list_info));
@@ -159,7 +214,7 @@ bool is_center_road(Tile *t) {
 void check_neighbors(Grid *g,Tile *t,  int x, int y, Borders tab[4])
 {
   // check the left 
-  if (g->tab[x][y - 1].square_state != EMPTY) tab[0] = 1;   
+  if (g->tab[x][y - 1].square_state != EMPTY) tab[0] = 1; // there is  road   
 
   // check the top
   if (g->tab[x - 1][y].square_state != EMPTY) tab[1] = 1;
