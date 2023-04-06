@@ -6,8 +6,7 @@
 #include <stdlib.h>
 
 // x and y for the last put Tile
-Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
-                                 int x, int y)
+Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y)
 {
 
   int num_road = get_tile_number_of_roads(t);
@@ -20,7 +19,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
   Borders are_neighbors_roads[4] = {0, 0, 0, 0};
 
   bool temp = false;
-  check_neighbors(g, t, x, y, are_neighbors_roads);
+  check_neighbors(g, x, y, are_neighbors_roads);
   Borders b = LEFT;
   Road *road;
   switch (num_road)
@@ -84,7 +83,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
       {
         if (are_neighbors_roads[i] == 1)
         {
-          !all_zeros;
+          all_zeros = false;
           switch (i)
           {
           case 0:
@@ -195,16 +194,15 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
         switch (first_index_one)
         {
         case 0:
-        {
+        
           road = roads_construction_search_road(rd, x, y - 1);
           if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-        }
-
+        break;
         case 1:
-        {
+        
           {
             road = roads_construction_search_road(rd, x - 1, y);
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
@@ -212,17 +210,17 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
             else
               double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
           }
-        }
+        break;
         case 2:
-        {
+        
           road = roads_construction_search_road(rd, x, y + 1);
           if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
-        }
+        break;
         case 3:
-        {
+        
           {
             road = roads_construction_search_road(rd, x, y + 1);
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
@@ -230,21 +228,21 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
             else
               double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
           }
-        }
+        break;
         }
         switch (second_index_one)
         {
         case 0:
-        {
+        
           road = roads_construction_search_road(rd, x, y - 1);
           if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-        }
+        break;
 
         case 1:
-        {
+        
           {
             road = roads_construction_search_road(rd, x - 1, y);
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
@@ -252,17 +250,17 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
             else
               double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
           }
-        }
+        break;
         case 2:
-        {
+        
           road = roads_construction_search_road(rd, x, y + 1);
           if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
-        }
+        break;
         case 3:
-        {
+        
           {
             road = roads_construction_search_road(rd, x, y + 1);
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
@@ -270,7 +268,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
             else
               double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
           }
-        }
+        break;
         }
       }
       // we create a new road and attach a a border to anotehr Road
@@ -279,16 +277,16 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
         switch (first_index_one)
         {
         case 0:
-        {
+        
           road = roads_construction_search_road(rd, x, y - 1);
           if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-        }
+        break;
 
         case 1:
-        {
+        
           {
             road = roads_construction_search_road(rd, x - 1, y);
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
@@ -296,49 +294,98 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t,
             else
               double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
           }
-        }
+        break;
         case 2:
-        {
+        
           road = roads_construction_search_road(rd, x, y + 1);
           if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
-        }
+        break;
         case 3:
-        {
+        
           {
-            road = roads_construction_search_road(rd, x, y + 1);
+            road = roads_construction_search_road(rd, x + 1, y);
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
-              double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+              double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
             else
-              double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+              double_linked_list_append_in_end(&road->dll->tail, BOTTOM, x, y);
           }
         }
-        }
-      
+
         // create a new road
-        for (int i = 0 ; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
           if (g->tab[x][y].t->borders[i].landscape == ROAD && i != first_index_one)
           {
             roads_construction_add_road(i, x, y);
             rd->size++;
           }
         }
-    
       }
     }
   }
-
+break;
   // 3 roads means the center is not road
   case 3:
+  case 4:
+  {
+    for (int i = 0; i < 4; i++)
     {
-
+      if (g->tab[x][y].t->borders[i].landscape == ROAD)
+      {
+        if (are_neighbors_roads[i] == 0)
+        {
+          roads_construction_add_road(i, x, y);
+          rd->size++;
+        }
+        else
+        {
+          switch (i)
+          {
+          case 0:
+            road = roads_construction_search_road(rd, x, y - 1);
+            if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
+              double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+            else
+              double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+            break;
+          case 1:
+          
+            {
+              road = roads_construction_search_road(rd, x - 1, y);
+              if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
+                double_linked_list_append_in_beg(&road->dll->head, TOP, x, y);
+              else
+                double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
+            }
+          break;
+          case 2:
+          
+            road = roads_construction_search_road(rd, x, y + 1);
+            if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
+              double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
+            else
+              double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
+          break;
+          case 3:
+          
+            {
+              road = roads_construction_search_road(rd, x, y + 1);
+              if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
+                double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+              else
+                double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+            }
+          break;
+          }
+        }
+      }
     }
-  
-  case 4: 
-    break;
   }
+  }
+  return UPDATED_ROADS;
 }
 
 Roads_construction *roads_construction_init()
@@ -458,8 +505,7 @@ void double_linked_list_append_in_end(r_node **tail, Borders B, int x, int y)
   (*tail)->next = new_node;
   *tail = new_node;
 }
-void double_linked_list_append_in_origin(Double_linked_list_info *dll,
-                                         Borders B, int x, int y)
+void double_linked_list_append_in_origin(Double_linked_list_info *dll, Borders B, int x, int y)
 {
   r_node *new_node = (r_node *)malloc(sizeof(r_node));
   check_null((void *)new_node, "could not allocate memory for new_node in "
@@ -496,7 +542,7 @@ int get_tile_number_of_roads(Tile *t)
 
 bool is_center_road(Tile *t) { return t->borders[4].landscape == ROAD; }
 
-void check_neighbors(Grid *g, Tile *t, int x, int y, Borders tab[4])
+void check_neighbors(Grid *g, int x, int y, Borders tab[4])
 {
   // check the left
   if (g->tab[x][y - 1].square_state != EMPTY)
@@ -516,27 +562,3 @@ void check_neighbors(Grid *g, Tile *t, int x, int y, Borders tab[4])
     tab[3] = 1;
 }
 
-void double_linked_list_append_in_origin(Double_linked_list_info *dll,
-                                         Borders B, int x, int y)
-{
-  r_node *new_node = (r_node *)malloc(sizeof(r_node));
-  check_null((void *)new_node, "could not allocate memory for new_node in "
-                               "double_linked_list_append_in_origin");
-
-  new_node->border = B;
-  new_node->pos.x = x;
-  new_node->pos.y = y;
-  new_node->next = dll->origine;
-  new_node->prev = NULL;
-
-  if (dll->origine != NULL)
-  { // If the list is not empty
-    dll->origine->prev = new_node;
-  }
-  else
-  { // If the list is empty
-    dll->tail = new_node;
-  }
-
-  dll->origine = new_node;
-}

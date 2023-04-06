@@ -57,11 +57,12 @@ Road * roads_construction_search_road(Roads_construction *rd, int x, int y);
 
 void double_linked_list_append_in_beg(r_node** head , Borders B , int x, int y);
 void double_linked_list_append_in_end(r_node** tail, Borders B , int x, int y);
+void double_linked_list_append_in_origin(Double_linked_list_info *dll, Borders B, int x, int y);
 
 // function to return the number of road in a tile;
 int get_tile_number_of_roads(Tile *t);
 
-void check_neighbors(Grid *g,Tile *t,  int x, int y, Borders tab[4]);
+void check_neighbors(Grid *g, int x, int y, Borders tab[4]);
 bool is_center_road(Tile *t);
 
 #endif
