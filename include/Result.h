@@ -10,7 +10,8 @@ enum Result_t {
     MATCHING_BORDERS,
     UNMATCHING_BORDERS,
     UPDATED_ROADS, 
-    NOT_UPDATED_ROADS
+    NOT_UPDATED_ROADS,
+    CONQUERED_ROAD,
 };
 
 typedef enum Result_t Result;

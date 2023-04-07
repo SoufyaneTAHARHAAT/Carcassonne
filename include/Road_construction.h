@@ -49,6 +49,7 @@ struct Roads_construction_t {
 typedef struct Roads_construction_t Roads_construction;
 
 Roads_construction * roads_construction_init();
+Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y);
 
 Road * roads_construction_add_road(Borders b, int x, int y);
 Double_linked_list_info * double_linked_list_info_create(); 
@@ -61,8 +62,8 @@ void double_linked_list_append_in_origin(Double_linked_list_info *dll, Borders B
 
 // function to return the number of road in a tile;
 int get_tile_number_of_roads(Tile *t);
-
 void check_neighbors(Grid *g, int x, int y, Borders tab[4]);
 bool is_center_road(Tile *t);
+
 
 #endif

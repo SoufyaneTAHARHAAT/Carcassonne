@@ -9,7 +9,7 @@
 void read_tiles_file(char *filename, Stack *s) {
   FILE *file = fopen(filename, "r");
   char content1[10], content2[10], content3[10], content4[10], content5[10];
-  check_null((void *)file, "could read the file");
+  check_null((void *)file, "could not read the file");
   // just to skip the first line
   fscanf(file, "%10[^,],%10[^,],%10[^,],%10[^,],%s\n", content1, content2,
          content3, content4, content5);
@@ -18,9 +18,7 @@ void read_tiles_file(char *filename, Stack *s) {
     Tile *t = tile_create(content1, content2, content3, content4, content5);
     // show_tile(*t);
     stack_push(s, t);
-    ;
   }
-
   fclose(file);
 }
 

@@ -7,6 +7,7 @@
 #include "./../include/Player.h"
 #include "./../include/Stack.h"
 #include "./../include/Valid_squares.h"
+#include "./../include/Road_construction.h"
 
 int main(void) {
   char *filename = "docs/list_tiles.csv";
@@ -32,10 +33,13 @@ int main(void) {
   int player_index_turn = 0;
   Open_squares *os = open_squares_init();
   Valid_squares *vs = valid_squares_init();
-    // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
-  open_squares_print(os);
+  Roads_construction *rd = roads_construction_init();
+  // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
+  // open_squares_print(os);
   while (true) {
     Tile *t = stack_pop(s);
+    // stack_show(s);
+    printf("\n\tTILE POPPED FROM STACK\n");
     tile_print(t);
     valid_squares_update(vs, os, t);
     valid_squares_print(vs);
@@ -43,10 +47,13 @@ int main(void) {
     int x = pos.x, y = pos.y;
     int num_rotation = game_suggest_tile_rotation(vs, x, y);
     tile_rotate(t, num_rotation);
+    printf("\n\tTILE AFTER ROTATION\n");
     tile_print(t);
-    // int put_meeple = game_suggest_meeple(players_arr[player_index_turn]);
-  //  break;
     grid_put_tile(s, g, t, p1, x, y, os);
+    int put_meeple = game_suggest_meeple(players_arr[player_index_turn]);
+    Result rs = roads_construction_update(rd, g, t, x , y);
+    print_error(rs);
+    Roads_construction_print(rd);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   }

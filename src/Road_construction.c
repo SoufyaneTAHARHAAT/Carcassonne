@@ -8,7 +8,9 @@
 // x and y for the last put Tile
 Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y)
 {
-
+  // if (roads_construction_search_road(rd , x , y) != NULL) {
+  //   return CONQUERED_ROAD;
+  // }
   int num_road = get_tile_number_of_roads(t);
   bool center_is_road = is_center_road(t);
   if (num_road == 0)
@@ -20,6 +22,9 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
 
   bool temp = false;
   check_neighbors(g, x, y, are_neighbors_roads);
+  printf("are_neighbors_roads array  %d %d %d %d\n" ,are_neighbors_roads[0], are_neighbors_roads[1],
+     are_neighbors_roads[2], are_neighbors_roads[3]);
+  
   Borders b = LEFT;
   Road *road;
   switch (num_road)
@@ -29,6 +34,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
   case 1:
     // we look through the neighbor
     // becuase we are in case: 1 am sure there is only one road
+    printf("case 1: ONE road in the tile\n");
     for (int i = 0; i < 4; i++)
     {
       if (are_neighbors_roads[i] == 1)
@@ -58,6 +64,9 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
       case BOTTOM:
         road = roads_construction_search_road(rd, x + 1, y);
         break;
+      case CENTER:
+        printf("something went bad\n");
+        exit(EXIT_FAILURE);
       }
       if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
         double_linked_list_append_in_beg(&road->dll->head, b, x, y);
@@ -75,9 +84,11 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
   case 2: // case of the tile having two roads
   {
     // center is road => means one continious road
+    printf("case 2 : Two road in the tile\n");
     int pos_x = 0, pos_y = 0;
     if (center_is_road)
     {
+      printf("case center is road\n");
       bool all_zeros = true;
       for (int i = 0; i < 4; i++)
       {
@@ -103,8 +114,10 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
             pos_y = y;
             break;
           }
+          printf("searching for road on pos x = %d and y = %d \n", pos_x , pos_y);
           road = roads_construction_search_road(rd, pos_x, pos_y);
-          if (road->dll->head->pos.x == x && road->dll->tail->pos.y)
+          if (road == NULL) printf("am scruid\n");
+          if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
             double_linked_list_append_in_beg(&road->dll->head, i, x, y);
           else
             double_linked_list_append_in_end(&road->dll->tail, i, x, y);
@@ -115,20 +128,25 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
       // we may want to insert all borders I guess
       if (all_zeros)
       {
+        printf("wow all zeros\n");
         if (g->tab[x][y].t->borders[0].landscape == ROAD)
         {
-          roads_construction_add_road(LEFT, x, y);
+          printf("add road on the left \n");
+          Road *temp_road = roads_construction_add_road(LEFT, x, y);
         }
         if (g->tab[x][y].t->borders[1].landscape == ROAD)
         {
+          printf("add road on the top \n");
           roads_construction_add_road(TOP, x, y);
         }
         if (g->tab[x][y].t->borders[2].landscape == ROAD)
         {
+          printf("add road on the right\n");
           roads_construction_add_road(RIGHT, x, y);
         }
         if (g->tab[x][y].t->borders[3].landscape == ROAD)
         {
+          printf("add road on the BOTTOM\n");
           roads_construction_add_road(BOTTOM, x, y);
         }
       }
@@ -326,11 +344,12 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
       }
     }
   }
-break;
+  break;
   // 3 roads means the center is not road
   case 3:
   case 4:
   {
+    printf("case 3 or 4 : three/ four roads in the tile\n");
     for (int i = 0; i < 4; i++)
     {
       if (g->tab[x][y].t->borders[i].landscape == ROAD)
@@ -397,8 +416,7 @@ Roads_construction *roads_construction_init()
   // becuase the specail tile already contains a special tile we can crate a
   // Road
   road_cons->arr = malloc(sizeof(Road *));
-  road_cons->arr[0] = roads_construction_add_road(CENTER, SPECIAL_TILE_X_POS,
-                                                  SPECIAL_TILE_Y_POS);
+  road_cons->arr[0] = roads_construction_add_road(CENTER, SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS);
   road_cons->size = 1;
   return road_cons;
 }
@@ -406,6 +424,7 @@ Roads_construction *roads_construction_init()
 // must to forget to add the pointers to every plyer
 Road *roads_construction_add_road(Borders b, int x, int y)
 {
+  printf("calling roads_construction_add_road\n");
   Road *rd = (Road *)malloc(sizeof(Road));
   check_null((void *)rd, "could not allocate memory for Road struct");
   // create the double linked list
@@ -545,20 +564,51 @@ bool is_center_road(Tile *t) { return t->borders[4].landscape == ROAD; }
 void check_neighbors(Grid *g, int x, int y, Borders tab[4])
 {
   // check the left
-  if (g->tab[x][y - 1].square_state != EMPTY)
+  if (g->tab[x][y - 1].square_state != EMPTY && g->tab[x][y - 1].t->borders[2].landscape == ROAD)
     tab[0] = 1; // there is  road
 
   // check the top
-  if (g->tab[x - 1][y].square_state != EMPTY)
+  if (g->tab[x - 1][y].square_state != EMPTY && g->tab[x - 1][y].t->borders[3].landscape == ROAD)
     tab[1] = 1;
 
   // check the right
 
-  if (g->tab[x][y + 1].square_state != EMPTY)
+  if (g->tab[x][y + 1].square_state != EMPTY && g->tab[x][y + 1].t->borders[0].landscape == ROAD)
     tab[2] = 1;
 
   // check the bottom
-  if (g->tab[x + 1][y].square_state != EMPTY)
+  if (g->tab[x + 1][y].square_state != EMPTY && g->tab[x + 1][y - 1].t->borders[1].landscape == ROAD)
     tab[3] = 1;
 }
 
+void Roads_construction_print(Roads_construction *roads_construction) {
+    printf("Roads construction information:\n");
+    printf("Number of roads: %d\n", roads_construction->size);
+    printf("--------------------------------------\n");
+
+    for (int i = 0; i < roads_construction->size; i++) {
+        Road *road = roads_construction->arr[i];
+
+        printf("Road %d:\n", i+1);
+        printf("Conquered: %s\n", road->conquered ? "Yes" : "No");
+
+        printf("Owners:\n");
+        for (int j = 0; j < 5; j++) {
+            if (road->owners[j] != NULL) {
+                printf("\t%s (%d meeples)\n", road->owners[j]->name, road->num_meeples[j]);
+            }
+        }
+
+        printf("Nodes:\n");
+        Double_linked_list_info *dll = road->dll;
+        r_node *node = dll->origine;
+
+        while (node != NULL) {
+            printf("\tPosition: (%d, %d)\n", node->pos.x, node->pos.y);
+            printf("\t ROAD on border", node->border);
+            printf("--------------------------------------\n");
+
+            node = node->next;
+        }
+    }
+}

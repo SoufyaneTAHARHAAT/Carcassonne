@@ -100,8 +100,8 @@ int game_suggest_tile_rotation(Valid_squares *vs, int x, int y) {
 int game_suggest_meeple(Player *p) {
   char c;
   int choice = -1;
-  printf("do you want to put a meeple: n for NO y for yes?\n");
-  scanf("%c" , &c);
+  printf("=> Do you want to put a meeple: n for NO y for yes?:  ");
+  scanf("\n%c" , &c);
 
   if (c == 'y') {
     printf("to put the Meeple on LEFT   type 0\n");
@@ -138,7 +138,16 @@ void print_error(Result result) {
   case UNMATCHING_BORDERS:
     printf("The borders do not match.\n");
     break;
+  case CONQUERED_ROAD:
+    printf("can not put meeple on that square the raod alreay conquered");
+    break;
+  case UPDATED_ROADS:
+    printf("Updated roads");
+    break;
   default:
+  case NOT_UPDATED_ROADS:
+    printf("no need to update roads\n");
+    break;
     printf("Unknown error.\n");
     break;
   }
