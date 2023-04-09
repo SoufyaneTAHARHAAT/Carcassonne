@@ -34,6 +34,8 @@ int main(void) {
   Open_squares *os = open_squares_init();
   Valid_squares *vs = valid_squares_init();
   Roads_construction *rd = roads_construction_init();
+  Roads_construction_print(rd);
+  printf("--------------------------------------------------\n");
   // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   // open_squares_print(os);
   while (true) {

@@ -76,7 +76,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
     // we create a new Road;
     else
     {
-      roads_construction_add_road(b, x, y);
+      roads_construction_add_road(rd , b, x, y);
       rd->size++;
     }
 
@@ -117,10 +117,14 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
           printf("searching for road on pos x = %d and y = %d \n", pos_x , pos_y);
           road = roads_construction_search_road(rd, pos_x, pos_y);
           if (road == NULL) printf("am scruid\n");
-          if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
+          if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y){
+            printf("inserting in the head\n");
             double_linked_list_append_in_beg(&road->dll->head, i, x, y);
-          else
+          }
+          else{
+            printf("inserting in the tail\n");
             double_linked_list_append_in_end(&road->dll->tail, i, x, y);
+          }
         }
       }
       // in case we have all zeros int the array of are_neighbors_roads
@@ -129,25 +133,19 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
       if (all_zeros)
       {
         printf("wow all zeros\n");
-        if (g->tab[x][y].t->borders[0].landscape == ROAD)
-        {
-          printf("add road on the left \n");
-          Road *temp_road = roads_construction_add_road(LEFT, x, y);
-        }
-        if (g->tab[x][y].t->borders[1].landscape == ROAD)
-        {
-          printf("add road on the top \n");
-          roads_construction_add_road(TOP, x, y);
-        }
-        if (g->tab[x][y].t->borders[2].landscape == ROAD)
-        {
-          printf("add road on the right\n");
-          roads_construction_add_road(RIGHT, x, y);
-        }
-        if (g->tab[x][y].t->borders[3].landscape == ROAD)
-        {
-          printf("add road on the BOTTOM\n");
-          roads_construction_add_road(BOTTOM, x, y);
+        Road *temp_road = roads_construction_add_road(rd , CENTER, x, y);
+        bool in_end = false;
+        for (int i = 0; i < 4; i++){
+          if (g->tab[x][y].t->borders[i].landscape == ROAD)
+          {
+            double_linked_list_append_in_beg(&temp_road->dll->head , i , x, y);
+            in_end = true;
+            continue;
+          }
+          if ( g->tab[x][y].t->borders[i].landscape == ROAD && in_end) {
+            double_linked_list_append_in_end(&temp_road->dll->tail , i , x, y);
+            break;
+          }
         }
       }
     }
@@ -179,28 +177,28 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         switch (g->tab[x][y].t->borders[0].landscape)
         {
         case ROAD:
-          roads_construction_add_road(LEFT, x, y);
+          roads_construction_add_road(rd , LEFT, x, y);
         default:
           break;
         }
         switch (g->tab[x][y].t->borders[1].landscape)
         {
         case ROAD:
-          roads_construction_add_road(TOP, x, y);
+          roads_construction_add_road(rd , TOP, x, y);
         default:
           break;
         }
         switch (g->tab[x][y].t->borders[2].landscape)
         {
         case ROAD:
-          roads_construction_add_road(RIGHT, x, y);
+          roads_construction_add_road(rd , RIGHT, x, y);
         default:
           break;
         }
         switch (g->tab[x][y].t->borders[3].landscape)
         {
         case ROAD:
-          roads_construction_add_road(BOTTOM, x, y);
+          roads_construction_add_road(rd, BOTTOM, x, y);
         default:
           break;
         }
@@ -337,7 +335,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         {
           if (g->tab[x][y].t->borders[i].landscape == ROAD && i != first_index_one)
           {
-            roads_construction_add_road(i, x, y);
+            roads_construction_add_road(rd , i, x, y);
             rd->size++;
           }
         }
@@ -356,7 +354,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
       {
         if (are_neighbors_roads[i] == 0)
         {
-          roads_construction_add_road(i, x, y);
+          roads_construction_add_road(rd, i, x, y);
           rd->size++;
         }
         else
@@ -410,19 +408,40 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
 Roads_construction *roads_construction_init()
 {
   Roads_construction *road_cons =
-      (Roads_construction *)malloc(sizeof(Roads_construction));
+  (Roads_construction *)malloc(sizeof(Roads_construction));
   check_null((void *)road_cons,
              "could not allocate memory for Roads_construction struct");
   // becuase the specail tile already contains a special tile we can crate a
   // Road
   road_cons->arr = malloc(sizeof(Road *));
-  road_cons->arr[0] = roads_construction_add_road(CENTER, SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS);
+  // road_cons->arr[0] = roads_construction_add_road(CENTER, SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS);
+  Road *rd = (Road *)malloc(sizeof(Road));
+  check_null((void *)rd, "could not allocate memory for Road struct");
+  // create the double linked list
+  rd->dll = double_linked_list_info_create();
+
+  r_node *node = (r_node *)malloc(sizeof(r_node));
+
+  node->border = CENTER;
+  node->pos.x = SPECIAL_TILE_X_POS;
+  node->pos.y = SPECIAL_TILE_Y_POS;
+  node->next = node->prev = NULL;
+
+  rd->dll->origine = node;
+  rd->dll->head = node;
+  rd->dll->tail = node;
+  rd->conquered = false;
+  
+  double_linked_list_append_in_beg(&rd->dll->head , LEFT  , SPECIAL_TILE_X_POS , SPECIAL_TILE_Y_POS);
+  double_linked_list_append_in_end(&rd->dll->tail , RIGHT  , SPECIAL_TILE_X_POS , SPECIAL_TILE_Y_POS);
+
+  road_cons->arr[0] = rd;
   road_cons->size = 1;
   return road_cons;
 }
 
 // must to forget to add the pointers to every plyer
-Road *roads_construction_add_road(Borders b, int x, int y)
+Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y)
 {
   printf("calling roads_construction_add_road\n");
   Road *rd = (Road *)malloc(sizeof(Road));
@@ -441,6 +460,10 @@ Road *roads_construction_add_road(Borders b, int x, int y)
   rd->dll->head = node;
   rd->dll->tail = node;
   rd->conquered = false;
+
+  R->size++;
+  R->arr = (Road**)realloc(R->arr, R->size * sizeof(Road*));
+  R->arr[R->size-1] = rd;
 
   return rd;
 }
@@ -469,8 +492,8 @@ Road *roads_construction_search_road(Roads_construction *rd, int x, int y)
 
 Double_linked_list_info *double_linked_list_info_create()
 {
-  Double_linked_list_info *dll =
-      (Double_linked_list_info *)malloc(sizeof(Double_linked_list_info));
+  Double_linked_list_info *dll = (Double_linked_list_info *)malloc(sizeof(Double_linked_list_info));
+  check_null((void *)dll, "could not allocate memory for Double_linked_list_info");
   dll->origine = NULL;
   dll->head = NULL;
   dll->tail = NULL;
@@ -479,9 +502,9 @@ Double_linked_list_info *double_linked_list_info_create()
 
 void double_linked_list_append_in_beg(r_node **head, Borders B, int x, int y)
 {
+  if (head == NULL) printf("attention head is null \n");
   r_node *new_node = (r_node *)malloc(sizeof(r_node));
-  check_null((void *)new_node, "could not allocate memory for new_node in "
-                               "double_linked_list_append_in_beg");
+  check_null((void *)new_node, "could not allocate memory for new_node in double_linked_list_append_in_beg");
 
   new_node->border = B;
   new_node->pos.x = x;
@@ -504,8 +527,7 @@ void double_linked_list_append_in_beg(r_node **head, Borders B, int x, int y)
 void double_linked_list_append_in_end(r_node **tail, Borders B, int x, int y)
 {
   r_node *new_node = (r_node *)malloc(sizeof(r_node));
-  check_null((void *)new_node, "could not allocate memory for new_node in "
-                               "double_linked_list_append_in_beg");
+  check_null((void *)new_node, "could not allocate memory for new_node in double_linked_list_append_in_beg");
 
   new_node->border = B;
   new_node->pos.x = x;
@@ -601,11 +623,11 @@ void Roads_construction_print(Roads_construction *roads_construction) {
 
         printf("Nodes:\n");
         Double_linked_list_info *dll = road->dll;
-        r_node *node = dll->origine;
+        r_node *node = dll->head;
 
         while (node != NULL) {
             printf("\tPosition: (%d, %d)\n", node->pos.x, node->pos.y);
-            printf("\t ROAD on border", node->border);
+            printf("\t ROAD on border %d \n", node->border);
             printf("--------------------------------------\n");
 
             node = node->next;
