@@ -56,8 +56,9 @@ int main(void) {
     Result rs = roads_construction_update(rd, g, t, x , y);
     print_error(rs);
     Roads_construction_print(rd);
+    valid_square_destory(vs);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
-  }
+   }
   return (0);
 }

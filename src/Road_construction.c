@@ -355,7 +355,6 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         if (are_neighbors_roads[i] == 0)
         {
           roads_construction_add_road(rd, i, x, y);
-          rd->size++;
         }
         else
         {
@@ -363,6 +362,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
           {
           case 0:
             road = roads_construction_search_road(rd, x, y - 1);
+            if (road == NULL) printf("am screwd on case 0\n");
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
               double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
             else
@@ -372,6 +372,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
           
             {
               road = roads_construction_search_road(rd, x - 1, y);
+              if (road == NULL) printf("am screwd on case 1\n");
               if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
                 double_linked_list_append_in_beg(&road->dll->head, TOP, x, y);
               else
@@ -381,19 +382,20 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
           case 2:
           
             road = roads_construction_search_road(rd, x, y + 1);
+            if (road == NULL) printf("am screwd on case 2\n");
             if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
               double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
             else
               double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
           break;
           case 3:
-          
             {
-              road = roads_construction_search_road(rd, x, y + 1);
+              road = roads_construction_search_road(rd, x + 1, y);
+              if (road == NULL) printf("am screwd on case 3\n");
               if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
-                double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+                double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
               else
-                double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+                double_linked_list_append_in_end(&road->dll->tail, BOTTOM, x, y);
             }
           break;
           }
@@ -440,7 +442,7 @@ Roads_construction *roads_construction_init()
   return road_cons;
 }
 
-// must to forget to add the pointers to every plyer
+// must not forget to add the pointers to every plyer
 Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y)
 {
   printf("calling roads_construction_add_road\n");
@@ -478,10 +480,8 @@ Road *roads_construction_search_road(Roads_construction *rd, int x, int y)
   for (int i = 0; i < rd->size; i++)
   {
 
-    if ((ptr_roads[i]->dll->head->pos.x == x &&
-         ptr_roads[i]->dll->head->pos.y == y) ||
-        (ptr_roads[i]->dll->tail->pos.y == x &&
-         ptr_roads[i]->dll->tail->pos.y == y))
+    if ((ptr_roads[i]->dll->head->pos.x == x && ptr_roads[i]->dll->head->pos.y == y) ||
+        (ptr_roads[i]->dll->tail->pos.x == x && ptr_roads[i]->dll->tail->pos.y == y))
     {
       return ptr_roads[i];
     }
