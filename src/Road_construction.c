@@ -422,6 +422,14 @@ Roads_construction *roads_construction_init()
   // create the double linked list
   rd->dll = double_linked_list_info_create();
 
+  // no owners by default
+  for (int i = 0; i < 5; i++)
+  {
+    rd->owners[i] = NULL;
+    rd->num_meeples[i] = 0;
+  }
+  
+
   r_node *node = (r_node *)malloc(sizeof(r_node));
 
   node->border = CENTER;
@@ -502,9 +510,15 @@ void roads_construction_conquere_road(Roads_construction *rd, Player *p,int inde
   Road *road = roads_construction_search_road(rd , x , y);
 
   if (road != NULL) {
+    if (road->conquered){
+      printf("road is already conquered can not put a  meeple\n");
+      return;
+    }
     road->conquered = true;
     road->owners[index_player] = p;
     road->num_meeples[index_player]++;
+  }else {
+    printf("OOOOOOOOOOOOOOPS SOMETHING WENT WORONG\n");
   }
 }
 

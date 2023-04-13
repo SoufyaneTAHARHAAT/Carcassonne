@@ -103,3 +103,10 @@ MEEPLES_NUM 7 or 8 ?
 
 soufyane suggested to create a recursive function to know if we can put a meeple or not.
 zineddine suggested to add another attribute in Border_land struct "is_attached"
+
+
+13/04/2023
+// Meeple *meeples_arr_out_grid[MEEPLES_NUM]; //arr of meeples that are out of the grid
+// Meeple *meeples_arr_in_grid[MEEPLES_NUM]; //arr of meeples that are in the grid
+
+why array for meeples why not positions simpler 

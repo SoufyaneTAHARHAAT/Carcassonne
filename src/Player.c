@@ -29,16 +29,13 @@ Player *player_create(Color player_color, char *name, short age, Player_category
     p->tiles_history = NULL;
 
     // because one Meeple will be used to indicate score
+    Coordinate pos = {-1 , -1};
     for (int i = 0; i < MEEPLES_NUM; i++)
     {
-        p->meeples_arr_out_grid[i] = meeple_create(player_color);
+        p->meeples_arr[i] = pos;
     }
-
-    // in the  start all meeples are out of the grid
-    for (int i = 0; i < MEEPLES_NUM; i++)
-    {
-        p->meeples_arr_in_grid[i] = NULL;
-    }
+    p->num_meeples_in_grid = 0;
+    p->num_meeples_out_grid = 7;
     return p;
 }
 
@@ -69,14 +66,8 @@ void player_move_meeple_to_grid(Grid *g, Player *p, int x, int y, Borders border
         break;
     }
 
-    // add one meeple to the be in the grid
-    p->meeples_arr_in_grid[p->num_meeples_in_grid]->position.x = x;
-    p->meeples_arr_in_grid[p->num_meeples_in_grid]->position.y = y;
-    p->meeples_arr_in_grid[p->num_meeples_in_grid]->state = IN_GRID;
-
-    // remove one one meeple from the array
-    p->meeples_arr_out_grid[p->num_meeples_out_grid - 1] = NULL;
-
+    p->meeples_arr[p->num_meeples_in_grid].x = x;
+    p->meeples_arr[p->num_meeples_in_grid].y = y;
     p->num_meeples_in_grid++;
     p->num_meeples_out_grid--;
 }
@@ -124,22 +115,9 @@ void player_show(Player *p)
 
     for (int i = 0; i < MEEPLES_NUM; i++)
     {
-        if (p->meeples_arr_out_grid[i] != NULL)
-        {
-            printf("Meeple n:%d, position:{%d , %d} ", i + 1, p->meeples_arr_out_grid[i]->position.x, p->meeples_arr_out_grid[i]->position.y);
-            printf("OUT_GRID \n");
-        }
+        printf("Meeple n:%d, position:{%d , %d} ", i + 1, p->meeples_arr[i].x, p->meeples_arr[i].y);
     }
-
-    for (int i = 0; i < MEEPLES_NUM; i++)
-    {
-        if (p->meeples_arr_in_grid[i] != NULL)
-        {
-            printf("Meeple n:%d, position:{%d , %d} ", i + 1, p->meeples_arr_in_grid[i]->position.x, p->meeples_arr_in_grid[i]->position.y);
-            printf("IN_GRID \n");
-        }
-    }
-
+    printf("\n");
     if (p->turn_to_play)
         printf("turn to play: true\n");
     else

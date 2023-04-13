@@ -34,7 +34,7 @@ int main(void) {
   Open_squares *os = open_squares_init();
   Valid_squares *vs = valid_squares_init();
   Roads_construction *rd = roads_construction_init();
-  Roads_construction_print(rd);
+  // Roads_construction_print(rd);
   printf("--------------------------------------------------\n");
   // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   // open_squares_print(os);
@@ -63,7 +63,6 @@ int main(void) {
     /*------- END SUGGEST TILE ROTATION ----------*/
 
     grid_put_tile(s, g, t, players_arr[player_index_turn], x, y, os);
-
     /*------- START SUGGEST TO PUT MEEPLE ----------*/
     Result rs = roads_construction_update(rd, g, t, x , y);
     int put_meeple_on = game_suggest_meeple();

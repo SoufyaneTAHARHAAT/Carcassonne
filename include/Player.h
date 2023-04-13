@@ -22,8 +22,9 @@ struct Player_t {
     unsigned short score;
     Tile* tiles_history; // to consider later nchllh
     Player_category player_cat;
-    Meeple *meeples_arr_out_grid[MEEPLES_NUM]; //arr of meeples that are out of the grid
-    Meeple *meeples_arr_in_grid[MEEPLES_NUM]; //arr of meeples that are in the grid
+    // Meeple *meeples_arr_out_grid[MEEPLES_NUM]; //arr of meeples that are out of the grid
+    // Meeple *meeples_arr_in_grid[MEEPLES_NUM]; //arr of meeples that are in the grid
+    Coordinate meeples_arr[7];
     int num_meeples_out_grid; // 7
     int num_meeples_in_grid; // 0
 };
