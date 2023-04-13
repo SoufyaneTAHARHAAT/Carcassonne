@@ -39,26 +39,49 @@ int main(void) {
   // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   // open_squares_print(os);
   while (true) {
+    /* SHOW  INFO ABOUT THE GAME */
+    player_show(players_arr[player_index_turn]);
+    /*------- START POP STACK FROM THE TILE ----------*/
     Tile *t = stack_pop(s);
     // stack_show(s);
     printf("\n\tTILE POPPED FROM STACK\n");
     tile_print(t);
+    /*------- END POP STACK FROM THE TILE ----------*/
+
+    /*------- START SUGGEST VALID SQUARES ----------*/
     valid_squares_update(vs, os, t);
     valid_squares_print(vs);
     Coordinate pos = game_suggest_valid_squares(vs);
     int x = pos.x, y = pos.y;
+    /*------- END SUGGEST VALID SQUARES ----------*/
+
+    /*------- START SUGGEST TILE ROTATION ----------*/
     int num_rotation = game_suggest_tile_rotation(vs, x, y);
     tile_rotate(t, num_rotation);
     printf("\n\tTILE AFTER ROTATION\n");
     tile_print(t);
-    grid_put_tile(s, g, t, p1, x, y, os);
-    int put_meeple = game_suggest_meeple(players_arr[player_index_turn]);
+    /*------- END SUGGEST TILE ROTATION ----------*/
+
+    grid_put_tile(s, g, t, players_arr[player_index_turn], x, y, os);
+
+    /*------- START SUGGEST TO PUT MEEPLE ----------*/
     Result rs = roads_construction_update(rd, g, t, x , y);
+    int put_meeple_on = game_suggest_meeple();
+    if (put_meeple_on != -1) {
+      roads_construction_conquere_road(rd , players_arr[player_index_turn] , player_index_turn, x , y);
+      player_move_meeple_to_grid(g, players_arr[player_index_turn], x , y , (Borders)put_meeple_on);
+    }
+
     print_error(rs);
     Roads_construction_print(rd);
+    /*------- END SUGGEST TO PUT MEEPLE ----------*/
+
+
     valid_square_destory(vs);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
+
+    player_index_turn++;
    }
   return (0);
 }

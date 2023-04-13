@@ -35,11 +35,17 @@ typedef struct Grid_t Grid;
 struct Open_squares_t; // forward declaration of Grid struct
 typedef struct Open_squares_t Open_squares;
 
-
+typedef struct Player_t Player; // forward declaration of Player struct
 
 Grid *grid_create();
 bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p, int x, int y, Open_squares *os); 
-bool grid_put_meeple(Grid *g , Meeple * mp , Borders cardinal_dir, __u_int x, __u_int y);
 void grid_show(Grid *g); 
 void grid_cut_show(Grid *g , int row , int col , int dist);
+
+
+
+void grid_cut_show_row(Grid *g, int row, int col);
+// char * print_landscape_v2(Square_state empty, Landscape i);
+// void grid_cut_show_v2(Grid *g, int row, int col)
 #endif
+

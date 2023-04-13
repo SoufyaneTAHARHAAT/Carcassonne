@@ -97,7 +97,7 @@ int game_suggest_tile_rotation(Valid_squares *vs, int x, int y) {
   return 0;
 }
 
-int game_suggest_meeple(Player *p) {
+int game_suggest_meeple() {
   char c;
   int choice = -1;
   printf("=> Do you want to put a meeple: n for NO y for yes?:  ");

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "./../include/Player.h"
 #include "./../include/Meeple.h"
+#include "./../include/Grid.h"
 // verstile
 int id_player_indicator = 0;
 
@@ -17,27 +18,71 @@ Player *player_create(Color player_color, char *name, short age, Player_category
     p->score = 0;
     switch (player_cat)
     {
-        case HUMAN:
-            p->player_cat = HUMAN;
-            break;
-        case AI:
-            p->player_cat = AI;
-        default:
-            break;
+    case HUMAN:
+        p->player_cat = HUMAN;
+        break;
+    case AI:
+        p->player_cat = AI;
+    default:
+        break;
     }
     p->tiles_history = NULL;
+
     // because one Meeple will be used to indicate score
     for (int i = 0; i < MEEPLES_NUM; i++)
     {
         p->meeples_arr_out_grid[i] = meeple_create(player_color);
     }
-    
+
     // in the  start all meeples are out of the grid
     for (int i = 0; i < MEEPLES_NUM; i++)
     {
         p->meeples_arr_in_grid[i] = NULL;
     }
     return p;
+}
+
+void player_move_meeple_to_grid(Grid *g, Player *p, int x, int y, Borders border){
+    if (g->tab[x][y].square_state == EMPTY){
+        printf("this is not supposed to happen\n");
+        exit(EXIT_FAILURE);
+    }
+
+    switch (border)
+    {
+    case LEFT:
+        g->tab[x][y].t->borders[0].meepled = true;
+        break;
+    case TOP:
+        g->tab[x][y].t->borders[1].meepled = true;
+        break;
+    case RIGHT:
+        g->tab[x][y].t->borders[2].meepled = true;
+        break;
+    case BOTTOM:
+        g->tab[x][y].t->borders[3].meepled = true;
+        break;
+    case CENTER:
+        g->tab[x][y].t->borders[4].meepled = true;
+        break;
+    default:
+        break;
+    }
+
+    // add one meeple to the be in the grid
+    p->meeples_arr_in_grid[p->num_meeples_in_grid]->position.x = x;
+    p->meeples_arr_in_grid[p->num_meeples_in_grid]->position.y = y;
+    p->meeples_arr_in_grid[p->num_meeples_in_grid]->state = IN_GRID;
+
+    // remove one one meeple from the array
+    p->meeples_arr_out_grid[p->num_meeples_out_grid - 1] = NULL;
+
+    p->num_meeples_in_grid++;
+    p->num_meeples_out_grid--;
+}
+
+void player_move_meeple_out_grid(Player *p)
+{
 }
 
 void player_show(Player *p)
@@ -79,21 +124,24 @@ void player_show(Player *p)
 
     for (int i = 0; i < MEEPLES_NUM; i++)
     {
-        if (p->meeples_arr_out_grid[i] != NULL) {
-        printf("Meeple n:%d, position:{%d , %d} " , i+1 , p->meeples_arr_out_grid[i]->position.x , p->meeples_arr_out_grid[i]->position.y);
-        printf("OUT_GRID \n");
-      }
-    }
-    
-  
-    for (int i = 0; i < MEEPLES_NUM; i++)
-    {
-        if (p->meeples_arr_in_grid[i] != NULL) {
-        printf("Meeple n:%d, position:{%d , %d} " , i+1 , p->meeples_arr_in_grid[i]->position.x , p->meeples_arr_in_grid[i]->position.y);
-        printf("IN_GRID \n");
-      }
+        if (p->meeples_arr_out_grid[i] != NULL)
+        {
+            printf("Meeple n:%d, position:{%d , %d} ", i + 1, p->meeples_arr_out_grid[i]->position.x, p->meeples_arr_out_grid[i]->position.y);
+            printf("OUT_GRID \n");
+        }
     }
 
-    if (p->turn_to_play) printf("turn to play: true\n");
-    else printf("turn to play: false\n");
+    for (int i = 0; i < MEEPLES_NUM; i++)
+    {
+        if (p->meeples_arr_in_grid[i] != NULL)
+        {
+            printf("Meeple n:%d, position:{%d , %d} ", i + 1, p->meeples_arr_in_grid[i]->position.x, p->meeples_arr_in_grid[i]->position.y);
+            printf("IN_GRID \n");
+        }
+    }
+
+    if (p->turn_to_play)
+        printf("turn to play: true\n");
+    else
+        printf("turn to play: false\n");
 }

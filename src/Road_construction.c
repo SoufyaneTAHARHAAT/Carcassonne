@@ -463,6 +463,13 @@ Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y
   rd->dll->tail = node;
   rd->conquered = false;
 
+  // by defalut no player owns the road yet
+  for (int i = 0; i < 5; i++) rd->owners[i] = NULL;
+  
+  // by default every player has 0 meeples roea
+  for (int i = 0; i < 5; i++) rd->num_meeples[i] = 0;
+  
+
   R->size++;
   R->arr = (Road**)realloc(R->arr, R->size * sizeof(Road*));
   R->arr[R->size-1] = rd;
@@ -489,6 +496,18 @@ Road *roads_construction_search_road(Roads_construction *rd, int x, int y)
 
   return NULL;
 }
+
+
+void roads_construction_conquere_road(Roads_construction *rd, Player *p,int index_player ,  int x, int y){
+  Road *road = roads_construction_search_road(rd , x , y);
+
+  if (road != NULL) {
+    road->conquered = true;
+    road->owners[index_player] = p;
+    road->num_meeples[index_player]++;
+  }
+}
+
 
 Double_linked_list_info *double_linked_list_info_create()
 {

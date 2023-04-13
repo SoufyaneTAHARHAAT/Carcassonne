@@ -51,13 +51,14 @@ typedef struct Roads_construction_t Roads_construction;
 Roads_construction * roads_construction_init();
 Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y);
 Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y);
+Road * roads_construction_search_road(Roads_construction *rd, int x, int y); 
+void roads_construction_conquere_road(Roads_construction *rd, Player *p, int index_player, int x, int y);
+
 void Roads_construction_print(Roads_construction *roads_construction);
-/*Road * roads_construction_add_road(Borders b, int x, int y);*/
 
 
 Double_linked_list_info * double_linked_list_info_create(); 
 
-Road * roads_construction_search_road(Roads_construction *rd, int x, int y); 
 
 void double_linked_list_append_in_beg(r_node** head , Borders B , int x, int y);
 void double_linked_list_append_in_end(r_node** tail, Borders B , int x, int y);

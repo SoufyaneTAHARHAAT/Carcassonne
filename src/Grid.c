@@ -41,36 +41,6 @@ bool grid_put_tile(Stack * s, Grid *g, Tile *t, Player *p , int x , int y, Open_
   return false;
 }
 
-bool grid_put_meeple(Grid *g, Meeple *mp, Borders cardinal_dir, __u_int x,
-                     __u_int y) {
-  if (g->tab[x][y].square_state == EMPTY)
-    return false; // No need for it;
-
-  switch (cardinal_dir) {
-  case LEFT:
-    g->tab[x][y].t->borders[0].meepled = true;
-    break;
-  case TOP:
-    g->tab[x][y].t->borders[1].meepled = true;
-    break;
-  case RIGHT:
-    g->tab[x][y].t->borders[2].meepled = true;
-    break;
-  case BOTTOM:
-    g->tab[x][y].t->borders[3].meepled = true;
-    break;
-  case CENTER:
-    g->tab[x][y].t->borders[4].meepled = true;
-    break;
-  default:
-    break;
-  }
-
-  mp->position.x = x;
-  mp->position.y = y;
-  mp->state = IN_GRID;
-  return true;
-}
 
 void grid_show(Grid *g) {
   for (int i = 0; i < ROWS; i++) {
@@ -105,3 +75,85 @@ void grid_cut_show(Grid *g, int row, int col, int dist) {
     printf("\n");
   }
 }
+
+// void grid_cut_show_v2(Grid *g, int row, int col) {
+//   for (int i = 0; i < row + 5; i++)
+//   {
+//     grid_cut_show_row(g , row , col);
+//   }
+  
+// }
+
+
+// void grid_cut_show_row(Grid *g, int row, int col) {
+
+//   int i;
+//   if (g->tab[row][row].t != NULL) i = 0;
+
+//   printf("------------------------------------------------------------\n");
+//   printf("%s\t\t%s\t\t%s\t\t%s\t\t%s\n", 
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col].t->borders[TOP].landscape),
+//                     print_landscape_v2(g->tab[row][col + 1].square_state, g->tab[row][col + 1].t->borders[TOP].landscape),
+//                     print_landscape_v2(g->tab[row][col + 2].square_state, g->tab[row][col + 2].t->borders[TOP].landscape),
+//                     print_landscape_v2(g->tab[row][col + 3].square_state, g->tab[row][col + 3].t->borders[TOP].landscape), 
+//                     print_landscape_v2(g->tab[row][col + 4].square_state, g->tab[row][col + 4].t->borders[TOP].landscape));
+  
+//   printf("%s\t%s\t%s",print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col].t->borders[LEFT].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col].t->borders[CENTER].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col].t->borders[RIGHT].landscape));
+
+//   printf("%s\t%s\t%s",print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 1].t->borders[LEFT].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 1].t->borders[CENTER].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 1].t->borders[RIGHT].landscape));
+  
+//   printf("%s\t%s\t%s",print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 2].t->borders[LEFT].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 2].t->borders[CENTER].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 2].t->borders[RIGHT].landscape));
+
+//   printf("%s\t%s\t%s",print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 3].t->borders[LEFT].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 3].t->borders[CENTER].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 3].t->borders[RIGHT].landscape));
+
+//   printf("%s\t%s\t%s\n",print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 4].t->borders[LEFT].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 4].t->borders[CENTER].landscape),
+//                     print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col + 4].t->borders[RIGHT].landscape));
+
+
+//   printf("%s\t\t%s\t\t%s\t\t%s\t\t%s\n", print_landscape_v2(g->tab[row][col].square_state, g->tab[row][col].t->borders[BOTTOM].landscape),
+//                     print_landscape_v2(g->tab[row][col + 1].square_state, g->tab[row][col + 1].t->borders[BOTTOM].landscape),
+//                     print_landscape_v2(g->tab[row][col + 2].square_state, g->tab[row][col + 2].t->borders[BOTTOM].landscape),
+//                     print_landscape_v2(g->tab[row][col + 3].square_state, g->tab[row][col + 3].t->borders[BOTTOM].landscape), 
+//                     print_landscape_v2(g->tab[row][col + 4].square_state, g->tab[row][col + 4].t->borders[BOTTOM].landscape));
+
+
+//   printf("------------------------------------------------------------\n");
+  
+// }
+
+// char * print_landscape_v2(Square_state empty, Landscape i){
+//   if (empty) return "NUL";
+
+//   switch (i) {
+//   case CITY:
+//     return "CTY";
+//     break;
+//   case FIELD:
+//     return "FLD";
+//     break;
+//   case CLOISTER:
+//     return "CLS";
+//     break;
+//   case SHIELD:
+//     return "SHL";
+//     break;
+//   case ROAD:
+//     return "ROD";
+//     break;
+//   case VILLAGE:
+//     return "VLG";
+//     break;
+//   default:
+//     break;
+//   }
+
+// }
