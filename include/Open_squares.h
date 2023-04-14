@@ -45,4 +45,8 @@ void open_squares_print(Open_squares *os);
 
 void open_squares_update(Grid *g, Open_squares *os, int x, int y);
 
+void open_squares_merge(Open_squares *os , int a , int b);
+
+void open_squares_find_dupplicates(Open_squares *os , int *a , int *b);
+
 #endif

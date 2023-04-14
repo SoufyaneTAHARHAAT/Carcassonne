@@ -44,6 +44,7 @@ pre,ville,route,route,route
 pre,pre,pre,pre,abbaye
 route,pre,route,pre,route
 pre,blason,pre,blason,blason
+blason,blason,blason,route,blason
 pre,route,route,pre,route
 pre,route,pre,route,route
 pre,route,pre,route,route
@@ -66,7 +67,6 @@ route,route,ville,route,village
 route,route,pre,pre,route
 route,route,route,route,village
 ville,ville,route,route,route
-blason,blason,blason,route,blason
 route,route,pre,pre,route
 pre,pre,pre,route,abbaye
 pre,ville,pre,ville,pre

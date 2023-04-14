@@ -110,3 +110,19 @@ zineddine suggested to add another attribute in Border_land struct "is_attached"
 // Meeple *meeples_arr_in_grid[MEEPLES_NUM]; //arr of meeples that are in the grid
 
 why array for meeples why not positions simpler 
+
+
+open_squares_update I think when we put a tile and unlock new positions we neech to check if that new open square
+does not exist 
+or we can retreive the two dupplicates and merge the two open_squares conditions
+
+
+size open squares = 8
+ {71 , 72 } LEFT-> ROAD, TOP-> FREE, RIGHT-> FREE, BOTTOM-> FREE,  
+ {72 , 71 } LEFT-> FREE, TOP-> FILD, RIGHT-> FREE, BOTTOM-> FREE,  
+ {70 , 70 } LEFT-> FREE, TOP-> FREE, RIGHT-> FILD, BOTTOM-> FREE,  
+ {69 , 71 } LEFT-> FREE, TOP-> FREE, RIGHT-> FREE, BOTTOM-> CITY,  
+ {70 , 72 } LEFT-> FILD, TOP-> FREE, RIGHT-> FREE, BOTTOM-> FREE,  
+ {71 , 69 } LEFT-> FREE, TOP-> FREE, RIGHT-> FILD, BOTTOM-> FREE,  
+ {70 , 70 } LEFT-> FREE, TOP-> FREE, RIGHT-> FREE, BOTTOM-> FILD,  
+ {72 , 70 } LEFT-> FREE, TOP-> FILD, RIGHT-> FREE, BOTTOM-> FREE,

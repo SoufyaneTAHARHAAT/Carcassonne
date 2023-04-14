@@ -8,10 +8,13 @@
 // x and y for the last put Tile
 Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y)
 {
-  // if (roads_construction_search_road(rd , x , y) != NULL) {
-  //   return CONQUERED_ROAD;
-  // }
+  // printf("calling roads_construction_update\n");
+  if (roads_construction_search_road(rd , x , y) != NULL) {
+    return CONQUERED_ROAD;
+  }
+
   int num_road = get_tile_number_of_roads(t);
+  printf("number of roads is the tile is  %d \n", num_road);
   bool center_is_road = is_center_road(t);
   if (num_road == 0)
     return NOT_UPDATED_ROADS;
@@ -65,7 +68,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         road = roads_construction_search_road(rd, x + 1, y);
         break;
       case CENTER:
-        printf("something went bad\n");
+        printf("something went bad on roads construction update \n");
         exit(EXIT_FAILURE);
       }
       if (road->dll->head->pos.x == x && road->dll->tail->pos.y == y)
@@ -627,12 +630,11 @@ void check_neighbors(Grid *g, int x, int y, Borders tab[4])
     tab[1] = 1;
 
   // check the right
-
   if (g->tab[x][y + 1].square_state != EMPTY && g->tab[x][y + 1].t->borders[0].landscape == ROAD)
     tab[2] = 1;
 
   // check the bottom
-  if (g->tab[x + 1][y].square_state != EMPTY && g->tab[x + 1][y - 1].t->borders[1].landscape == ROAD)
+  if (g->tab[x + 1][y].square_state != EMPTY && g->tab[x + 1][y].t->borders[1].landscape == ROAD)
     tab[3] = 1;
 }
 

@@ -40,8 +40,10 @@ int main(void) {
   // open_squares_print(os);
   while (true) {
     /* SHOW  INFO ABOUT THE GAME */
-    player_show(players_arr[player_index_turn]);
+    // player_show(players_arr[player_index_turn]);
     /*------- START POP STACK FROM THE TILE ----------*/
+    open_squares_print(os);
+    
     Tile *t = stack_pop(s);
     // stack_show(s);
     printf("\n\tTILE POPPED FROM STACK\n");
@@ -65,13 +67,14 @@ int main(void) {
     grid_put_tile(s, g, t, players_arr[player_index_turn], x, y, os);
     /*------- START SUGGEST TO PUT MEEPLE ----------*/
     Result rs = roads_construction_update(rd, g, t, x , y);
+    print_error(rs);
+
     int put_meeple_on = game_suggest_meeple();
     if (put_meeple_on != -1) {
       roads_construction_conquere_road(rd , players_arr[player_index_turn] , player_index_turn, x , y);
       player_move_meeple_to_grid(g, players_arr[player_index_turn], x , y , (Borders)put_meeple_on);
     }
 
-    print_error(rs);
     Roads_construction_print(rd);
     /*------- END SUGGEST TO PUT MEEPLE ----------*/
 
@@ -81,6 +84,7 @@ int main(void) {
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
 
     player_index_turn++;
+    if (player_index_turn == gm->num_players) player_index_turn = 0;
    }
   return (0);
 }
