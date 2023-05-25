@@ -44,8 +44,8 @@ void grid_cut_show(Grid *g , int row , int col , int dist);
 
 
 
-void grid_cut_show_row(Grid *g, int row, int col);
-// char * print_landscape_v2(Square_state empty, Landscape i);
-// void grid_cut_show_v2(Grid *g, int row, int col)
+void grid_cut_show_v2(Grid *g, int row, int col);
+char * print_landscape_v2(Landscape i);
+void grid_cut_show_v3(Grid *g);
 #endif
 

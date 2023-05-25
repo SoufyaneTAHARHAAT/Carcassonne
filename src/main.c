@@ -13,6 +13,11 @@ int main(void) {
   char *filename = "docs/list_tiles.csv";
   Stack *s = stack_create();
   Grid *g = grid_create();
+
+  grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
+  grid_cut_show_v3(g);  
+  // exit(0);
+
   read_tiles_file(filename, s);
   // tile_print(s->head->t);
   //  stack_shuffle(s);
