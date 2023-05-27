@@ -15,7 +15,7 @@ int main(void) {
   Grid *g = grid_create();
 
   grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
-  grid_cut_show_v3(g);  
+  grid_cut_show_v3(g, SPECIAL_TILE_X_POS - 4, SPECIAL_TILE_X_POS - 4, 8);  
   // exit(0);
 
   read_tiles_file(filename, s);
@@ -87,6 +87,8 @@ int main(void) {
     valid_square_destory(vs);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
+    grid_cut_show_v3(g, SPECIAL_TILE_X_POS - 4, SPECIAL_TILE_X_POS - 4, 8);  
+
 
     player_index_turn++;
     if (player_index_turn == gm->num_players) player_index_turn = 0;

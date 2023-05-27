@@ -195,70 +195,108 @@ void grid_cut_show_v2(Grid *g, int row, int col)
 }
 */
 char * print_landscape_v2(Landscape i)
-{
+{ 
   switch (i)
   {
   case CITY:
-    return "CTY";
+    return ANSI_COLOR_RED "CTY" ANSI_COLOR_RESET;
     break;
   case FIELD:
-    return "FLD";
+    return ANSI_COLOR_GREEN "FLD" ANSI_COLOR_RESET;
     break;
   case CLOISTER:
-    return "CLS";
+    return ANSI_COLOR_YELLOW "CLS" ANSI_COLOR_RESET;
     break;
   case SHIELD:
-    return "SHL";
+    return ANSI_COLOR_BLUE "SHL" ANSI_COLOR_RESET;
     break;
   case ROAD:
-    return "ROD";
+    return ANSI_COLOR_MAGENTA "ROD" ANSI_COLOR_RESET;
     break;
   case VILLAGE:
-    return "VLG";
+    return ANSI_COLOR_CYAN "VLG" ANSI_COLOR_RESET;
     break;
   default:
     break;
   }
 }
 
-void grid_cut_show_v3(Grid *g)
+void grid_cut_show_v3(Grid *g, int row, int col, int dist)
 {
 
-  for (int i = 70; i < 73; i++)
+  for (int i = row; i < row + dist; i++)
   {
-    for (int j = 70; j < 71; j++)
+    for (int j = col; j < col + 1; j++)
     {
       for (int k = 0; k < 3; k++)
       {
         // we print the landscape of the top border
         if (k == 0)
         {
-          printf("\t%s\t\t\t%s\t\t\t%s\n",
-                 g->tab[i][j].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j].t->borders[TOP].landscape),
+          printf("\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n",
+                 g->tab[i][j + 0].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 0].t->borders[TOP].landscape),
                  g->tab[i][j + 1].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 1].t->borders[TOP].landscape),
-                 g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[TOP].landscape));
+                 g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[TOP].landscape),
+                 g->tab[i][j + 3].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 3].t->borders[TOP].landscape),
+                 g->tab[i][j + 4].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 4].t->borders[TOP].landscape),
+                 g->tab[i][j + 5].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 5].t->borders[TOP].landscape),
+                 g->tab[i][j + 6].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 6].t->borders[TOP].landscape),
+                 g->tab[i][j + 7].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 7].t->borders[TOP].landscape),
+                 g->tab[i][j + 8].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 8].t->borders[TOP].landscape),
+                 g->tab[i][j + 9].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 9].t->borders[TOP].landscape)
+                 );
+                 
         }
 
         if (k == 1)
         {
-          printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
-                 g->tab[i][j].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j].t->borders[LEFT].landscape),
-                 g->tab[i][j].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j].t->borders[CENTER].landscape),
-                 g->tab[i][j].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j].t->borders[RIGHT].landscape),
+          printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+                 g->tab[i][j + 0].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 0].t->borders[LEFT].landscape),
+                 g->tab[i][j + 0].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 0].t->borders[CENTER].landscape),
+                 g->tab[i][j + 0].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 0].t->borders[RIGHT].landscape),
                  g->tab[i][j + 1].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 1].t->borders[LEFT].landscape),
                  g->tab[i][j + 1].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 1].t->borders[CENTER].landscape),
                  g->tab[i][j + 1].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 1].t->borders[RIGHT].landscape),
                  g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[LEFT].landscape),
                  g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[CENTER].landscape),
-                 g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[RIGHT].landscape));
+                 g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 3].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 3].t->borders[LEFT].landscape),
+                 g->tab[i][j + 3].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 3].t->borders[CENTER].landscape),
+                 g->tab[i][j + 3].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 3].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 4].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 4].t->borders[LEFT].landscape),
+                 g->tab[i][j + 4].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 4].t->borders[CENTER].landscape),
+                 g->tab[i][j + 4].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 4].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 5].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 5].t->borders[LEFT].landscape),
+                 g->tab[i][j + 5].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 5].t->borders[CENTER].landscape),
+                 g->tab[i][j + 5].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 5].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 6].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 6].t->borders[LEFT].landscape),
+                 g->tab[i][j + 6].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 6].t->borders[CENTER].landscape),
+                 g->tab[i][j + 6].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 6].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 7].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 7].t->borders[LEFT].landscape),
+                 g->tab[i][j + 7].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 7].t->borders[CENTER].landscape),
+                 g->tab[i][j + 7].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 7].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 8].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 8].t->borders[LEFT].landscape),
+                 g->tab[i][j + 8].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 8].t->borders[CENTER].landscape),
+                 g->tab[i][j + 8].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 8].t->borders[RIGHT].landscape),
+                 g->tab[i][j + 9].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 9].t->borders[LEFT].landscape),
+                 g->tab[i][j + 9].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 9].t->borders[CENTER].landscape),
+                 g->tab[i][j + 9].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 9].t->borders[RIGHT].landscape)
+                 );
         }
 
         if (k == 2)
         {
-          printf("\t%s\t\t\t%s\t\t\t%s\n\n",
-                 g->tab[i][j].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j].t->borders[BOTTOM].landscape),
+          printf("\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n\n",
+                 g->tab[i][j + 0].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 0].t->borders[BOTTOM].landscape),
                  g->tab[i][j + 1].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 1].t->borders[BOTTOM].landscape),
-                 g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[BOTTOM].landscape));
+                 g->tab[i][j + 2].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 2].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 3].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 3].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 4].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 4].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 5].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 5].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 6].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 6].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 7].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 7].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 8].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 8].t->borders[BOTTOM].landscape),
+                 g->tab[i][j + 9].t == NULL ? "NUL" : print_landscape_v2(g->tab[i][j + 9].t->borders[BOTTOM].landscape));
         }
       }
     }
