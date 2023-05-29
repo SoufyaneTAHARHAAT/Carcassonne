@@ -49,6 +49,62 @@ bool grid_put_tile(Stack *s, Grid *g, Tile *t, Player *p, int x, int y, Open_squ
   return false;
 }
 
+
+
+bool isRoadComplete(Grid *g, int x, int y, bool isStart, bool isEnd) {
+  Square *currentSquare = &g->tab[x][y];
+  Tile *currentTile = currentSquare->t;
+  printf("test on tile %d %d\n", x, y);
+
+  // Check if the current square is empty or the tile is not a road
+  if (currentSquare->square_state != OCCUPIED || currentTile->borders[CENTER].landscape == ROAD) {
+    return false;
+  }
+
+  // Mark the current square as visited
+  currentSquare->square_state = EMPTY;
+
+  // Check if the current square is the start or end of the road
+  if (isStart) {
+    isStart = false;
+  }
+  if (isEnd) {
+    isEnd = false;
+  }
+  if (currentTile->borders[LEFT].landscape == VILLAGE || currentTile->borders[LEFT].landscape == CLOISTER) {
+    isStart = true;
+  }
+  if (currentTile->borders[RIGHT].landscape == VILLAGE || currentTile->borders[RIGHT].landscape == CLOISTER) {
+    isEnd = true;
+  }
+
+  // Check the neighboring squares
+  bool isComplete = true;
+  int dx[] = {-1, 1, 0, 0};  // Offsets for left, right, up, down
+  int dy[] = {0, 0, -1, 1};
+  for (int i = 0; i < 4; i++) {
+    printf("int the loop");
+    int newX = x + dx[i];
+    int newY = y + dy[i];
+
+    // Check if the neighboring square is within bounds
+    if (newX >= 0 && newX < ROWS && newY >= 0 && newY < COLS) {
+      // Recursively check the neighboring square if it forms part of the road
+      if (isRoadComplete(g, newX, newY, isStart, isEnd)) {
+        isComplete = true;
+      }
+    }
+  }
+
+  // Check if both ends of the road are villages or cloisters
+  if (isStart && isEnd) {
+    return isComplete;
+  } else {
+    return false;
+  }
+}
+
+
 void grid_show(Grid *g)
 {
   for (int i = 0; i < ROWS; i++)

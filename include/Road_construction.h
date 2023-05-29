@@ -51,15 +51,13 @@ typedef struct Roads_construction_t Roads_construction;
 Roads_construction * roads_construction_init();
 Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y);
 Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y);
-Road * roads_construction_search_road(Roads_construction *rd, int x, int y); 
+Road * roads_construction_search_road(Roads_construction *rd, int x, int y, Borders b); 
 void roads_construction_conquere_road(Roads_construction *rd, Player *p, int index_player, int x, int y);
 
 void Roads_construction_print(Roads_construction *roads_construction);
 
 
 Double_linked_list_info * double_linked_list_info_create(); 
-
-
 void double_linked_list_append_in_beg(r_node** head , Borders B , int x, int y);
 void double_linked_list_append_in_end(r_node** tail, Borders B , int x, int y);
 void double_linked_list_append_in_origin(Double_linked_list_info *dll, Borders B, int x, int y);
@@ -68,6 +66,9 @@ void double_linked_list_append_in_origin(Double_linked_list_info *dll, Borders B
 int get_tile_number_of_roads(Tile *t);
 void check_neighbors(Grid *g, int x, int y, Borders tab[4]);
 bool is_center_road(Tile *t);
+void Roads_construction_get_connected_roads(Roads_construction *rd);
+
+
 
 
 #endif

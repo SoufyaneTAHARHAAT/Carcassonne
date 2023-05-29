@@ -83,13 +83,17 @@ int main(void) {
     Roads_construction_print(rd);
     /*------- END SUGGEST TO PUT MEEPLE ----------*/
 
-
     valid_square_destory(vs);
     open_squares_update(g, os, x, y);
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
     grid_cut_show_v3(g, SPECIAL_TILE_X_POS - 4, SPECIAL_TILE_X_POS - 4, 8);  
 
-
+    if (isRoadComplete(g,  SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS, false, false)) {
+      printf("Road is complete\n");
+      // player_add_score(players_arr[player_index_turn], 1);
+    }else {
+      printf("Road is not complete\n");
+    }
     player_index_turn++;
     if (player_index_turn == gm->num_players) player_index_turn = 0;
    }
