@@ -3,8 +3,8 @@ CFLAGS = -Wall -Wextra  -pedantic -std=c11 -g
 LDFLAGS = -lm
 BIN = bin
 
-target: main.o Stack.o Tile.o Grid.o Game.o Player.o Meeple.o Grid_Validator.o Open_squares.o Valid_squares.o Road_construction.o
-	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o $(BIN)/Grid.o $(BIN)/Player.o $(BIN)/Meeple.o $(BIN)/Game.o $(BIN)/Grid_Validator.o $(BIN)/Open_squares.o $(BIN)/Road_construction.o $(BIN)/Valid_squares.o -o $(BIN)/exe $(LDFLAGS)
+target: main.o Stack.o Tile.o Grid.o Game.o Player.o Meeple.o Grid_Validator.o Open_squares.o Valid_squares.o Road_construction.o City.o
+	$(CC) $(BIN)/main.o $(BIN)/Stack.o $(BIN)/Tile.o $(BIN)/Grid.o $(BIN)/Player.o $(BIN)/Meeple.o $(BIN)/Game.o $(BIN)/Grid_Validator.o $(BIN)/Open_squares.o $(BIN)/Road_construction.o $(BIN)/Valid_squares.o $(BIN)/City.o -o  $(BIN)/exe $(LDFLAGS)
 
 run: 
 	$(BIN)/./exe
@@ -14,6 +14,8 @@ debug:
 
 debug-memory:
 	valgrind -s --track-origins=yes --leak-check=full $(BIN)/./out
+
+
 
 main.o: src/main.c 
 	$(CC) $(CFLAGS) -c src/main.c -o $(BIN)/main.o
@@ -50,6 +52,9 @@ Valid_squares.o: src/Valid_squares.c
 Road_construction.o:
 	$(CC) $(CFLAGS) -c src/Road_construction.c -o $(BIN)/Road_construction.o
 
+
+City.o:
+	$(CC) $(CFLAGS) -c src/City.c -o $(BIN)/City.o
 
 clean:
 	rm -f $(BIN)/*.o target

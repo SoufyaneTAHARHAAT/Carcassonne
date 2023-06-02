@@ -480,7 +480,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
                 break;
               case 1:
               {
-                road = roads_construction_searchROD_road(rd, x - 1, y, BOTTOM);
+                road = roads_construction_search_road(rd, x - 1, y, BOTTOM);
                 if (road == NULL)
                   printf("am scruid\n");
                 else
@@ -497,7 +497,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
                   printf("am scruid\n");
                 else
                 {
-                  double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
+                  double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y); // TODO: check if it is right
                   printf("inserting in the head\n");
                 };
                 break;
@@ -785,6 +785,8 @@ void Roads_construction_print(Roads_construction *roads_construction)
 
     while (node != NULL)
     {
+      if(node == dll->head) printf("\tHead\n");
+      if(node == dll->tail) printf("\tTail\n");
       printf("\tPosition: (%d, %d)\n", node->pos.x, node->pos.y);
       printf("\t ROAD on border %d \n", node->border);
       printf("--------------------------------------\n");

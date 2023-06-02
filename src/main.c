@@ -43,6 +43,13 @@ int main(void) {
   printf("--------------------------------------------------\n");
   // grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
   // open_squares_print(os);
+
+
+  Coordinate visited_tiles[MAX_TILES];
+  for (int i = 0; i < MAX_TILES; i++) {
+    visited_tiles[i].x = -1;
+    visited_tiles[i].y = -1;
+  }
   while (true) {
     /* SHOW  INFO ABOUT THE GAME */
     // player_show(players_arr[player_index_turn]);
@@ -94,6 +101,14 @@ int main(void) {
     }else {
       printf("Road is not complete\n");
     }
+
+    if (is_city_complete(g, x, y, visited_tiles)) {
+        printf("City is complete\n");
+    } else {
+        printf("City is not complete\n");
+    }
+
+    
     player_index_turn++;
     if (player_index_turn == gm->num_players) player_index_turn = 0;
    }
