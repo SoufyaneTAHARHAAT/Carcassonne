@@ -14,6 +14,13 @@
 #include "./../include/Result.h"
 #include "./../include/coordinate.h"
 
+// create an enum for containing head and tail
+enum reference_t {
+  HEAD,
+  TAIL,
+};
+typedef enum reference_t reference;
+
 struct r_node_t {
    Borders border;
    Coordinate pos;
@@ -48,12 +55,18 @@ struct Roads_construction_t {
 };
 typedef struct Roads_construction_t Roads_construction;
 
+
+struct road_search_result_t {
+    Road *road;
+    reference ref;
+};
+typedef struct road_search_result_t road_search_result;
+
 Roads_construction * roads_construction_init();
 Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y);
 Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y);
-Road * roads_construction_search_road(Roads_construction *rd, int x, int y, Borders b); 
+road_search_result * roads_construction_search_road(Roads_construction *rd, int x, int y, Borders b); 
 void roads_construction_conquere_road(Roads_construction *rd, Player *p, int index_player, int x, int y);
-
 void Roads_construction_print(Roads_construction *roads_construction);
 
 
@@ -67,6 +80,7 @@ int get_tile_number_of_roads(Tile *t);
 void check_neighbors(Grid *g, int x, int y, Borders tab[4]);
 bool is_center_road(Tile *t);
 void Roads_construction_get_connected_roads(Roads_construction *rd);
+Road * Roads_construction_finished_roads(Roads_construction *rd, Grid *g);
 
 
 

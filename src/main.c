@@ -95,20 +95,28 @@ int main(void) {
     grid_cut_show(g, SPECIAL_TILE_X_POS, SPECIAL_TILE_X_POS, 5);
     grid_cut_show_v3(g, SPECIAL_TILE_X_POS - 4, SPECIAL_TILE_X_POS - 4, 8);  
 
-    if (isRoadComplete(g,  SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS, false, false)) {
-      printf("Road is complete\n");
-      // player_add_score(players_arr[player_index_turn], 1);
-    }else {
-      printf("Road is not complete\n");
-    }
-
-    if (is_city_complete(g, x, y, visited_tiles)) {
-        printf("City is complete\n");
-    } else {
-        printf("City is not complete\n");
-    }
+    // if (isRoadComplete(g,  SPECIAL_TILE_X_POS, SPECIAL_TILE_Y_POS, false, false)) {
+    //   printf("Road is complete\n");
+    //   // player_add_score(players_arr[player_index_turn], 1);
+    // }else {
+    //   printf("Road is not complete\n");
+    // }
 
     
+    // // to make sure that the tile is a city
+    // for (int k = 0; k < 4; k++) {
+    //   if (g->tab[x][y].t->borders[k].landscape == CITY) {
+    //     if (is_city_complete(g, x, y, visited_tiles)) {
+    //       printf("City is complete\n");
+    //       // player_add_score(players_arr[player_index_turn], 2);
+    //     } else {
+    //       printf("City is not complete\n");
+    //     }
+    //     break;
+    //   }
+    // }
+
+    Roads_construction_finished_roads(rd, g);
     player_index_turn++;
     if (player_index_turn == gm->num_players) player_index_turn = 0;
    }

@@ -280,7 +280,7 @@ void open_squares_find_dupplicates(Open_squares *os, int *a, int *b)
   // printf("calling about squaresto find duplicates for %d %d where size of os is %d \n" , *a , *b , os->size);
   for (int i = 0; i < os->size; i++)
   {
-    for (int j = i + 1; j < os->size - 1; j++)
+    for (int j = i + 1; j < os->size; j++)
     {
       // printf(" i = %d j = %d\n" , i , j);
       if ((os->arr[i].coor.x == os->arr[j].coor.x) && (os->arr[i].coor.y == os->arr[j].coor.y))

@@ -8,17 +8,17 @@
 // x and y for the last put Tile
 Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x, int y)
 {
-  // printf("calling roads_construction_update\n");
-  if (roads_construction_search_road(rd, x, y, TOP) != NULL
-      && roads_construction_search_road(rd, x, y, BOTTOM) != NULL
-      && roads_construction_search_road(rd, x, y, LEFT) != NULL
-      && roads_construction_search_road(rd, x, y, RIGHT) != NULL
-      && roads_construction_search_road(rd, x, y, CENTER) != NULL
-    )
-  {
-    printf("all roads are already conquered ==> the unsure condition\n");
-    return CONQUERED_ROAD;
-  }
+  // // printf("calling roads_construction_update\n");
+  // if (roads_construction_search_road(rd, x, y, TOP) != NULL
+  //     && roads_construction_search_road(rd, x, y, BOTTOM) != NULL
+  //     && roads_construction_search_road(rd, x, y, LEFT) != NULL
+  //     && roads_construction_search_road(rd, x, y, RIGHT) != NULL
+  //     && roads_construction_search_road(rd, x, y, CENTER) != NULL
+  //   )
+  // {
+  //   printf("all roads are already conquered ==> the unsure condition\n");
+  //   return CONQUERED_ROAD;
+  // }
 
   int num_road = get_tile_number_of_roads(t);
   printf("number of roads is the tile is  %d \n", num_road);
@@ -36,6 +36,7 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
          are_neighbors_roads[2], are_neighbors_roads[3]);
 
   Borders b = LEFT;
+  road_search_result *res;
   Road *road;
   switch (num_road)
   {
@@ -63,7 +64,8 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
       switch (b)
       {
       case LEFT:
-        road = roads_construction_search_road(rd, x, y - 1, LEFT);
+        res = roads_construction_search_road(rd, x, y - 1, RIGHT);
+        road = res->road;
         printf("searching for road on pos x = %d and y = %d \n", x, y - 1);
         if (road != NULL)
         {
@@ -72,7 +74,8 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         }
         break;
       case RIGHT:
-        road = roads_construction_search_road(rd, x, y + 1, RIGHT);
+         res = roads_construction_search_road(rd, x, y + 1, LEFT);
+        road = res->road;
         printf("searching for road on pos x = %d and y = %d \n", x, y + 1);
         if (road != NULL)
         {
@@ -81,7 +84,8 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         }
         break;
       case TOP:
-        road = roads_construction_search_road(rd, x - 1, y, TOP);
+        res =  roads_construction_search_road(rd, x - 1, y, BOTTOM);
+        road = res->road;
         printf("searching for road on pos x = %d and y = %d \n", x - 1, y);
         if (road != NULL)
         {
@@ -90,7 +94,8 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         }
         break;
       case BOTTOM:
-        road = roads_construction_search_road(rd, x + 1, y, BOTTOM);
+        res =  roads_construction_search_road(rd, x + 1, y, TOP);
+        road = res->road;
         printf("searching for road on pos x = %d and y = %d \n", x + 1, y);
         if (road != NULL)
         {
@@ -129,77 +134,129 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
           case 0: // Left
             pos_x = x;
             pos_y = y - 1;
-            road = roads_construction_search_road(rd, pos_x, pos_y, RIGHT);
+            res =  roads_construction_search_road(rd, pos_x, pos_y, RIGHT);
+            road = res->road;
             printf("searching for road on pos x = %d and y = %d \n", pos_x, pos_y);
             if (road == NULL)
               printf("am scruid\n");
             else
             {
-              double_linked_list_append_in_end(&road->dll->tail, i, x, y);
-              double_linked_list_append_in_end(&road->dll->tail, CENTER, x, y);
-              for (int j = 0 ;j < 4 ; j++) {
-                if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
-                  double_linked_list_append_in_end(&road->dll->tail, j, x, y);
+              if (res->ref == HEAD) {
+                double_linked_list_append_in_beg(&road->dll->head, i, x, y);
+                double_linked_list_append_in_beg(&road->dll->head, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_beg(&road->dll->head, j, x, y);
+                  }
                 }
               }
-              printf("inserting in the tail\n");
+
+              else {
+                double_linked_list_append_in_end(&road->dll->tail, i, x, y);
+                double_linked_list_append_in_end(&road->dll->tail, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_end(&road->dll->tail, j, x, y);
+                  }
+                }
+                // printf("inserting in the tail\n");
+              }
             }
             break;
           case 1: // top
             pos_x = x - 1;
             pos_y = y;
-            road = roads_construction_search_road(rd, pos_x, pos_y, BOTTOM);
+            res =  roads_construction_search_road(rd, pos_x, pos_y, BOTTOM);
+            road = res->road;
             printf("searching for road on pos x = %d and y = %d \n", pos_x, pos_y);
             if (road == NULL)
               printf("am scruid\n");
             else
             {
-              double_linked_list_append_in_end(&road->dll->tail, i, x, y);
-              double_linked_list_append_in_end(&road->dll->tail, CENTER, x, y);
-                            for (int j = 0 ;j < 4 ; j++) {
-                if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
-                  double_linked_list_append_in_end(&road->dll->tail, j, x, y);
+              if (res->ref == HEAD) {
+                double_linked_list_append_in_beg(&road->dll->head, i, x, y);
+                double_linked_list_append_in_beg(&road->dll->head, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_beg(&road->dll->head, j, x, y);
+                  }
                 }
               }
-              printf("inserting in the tail\n");
+
+              else {
+                double_linked_list_append_in_end(&road->dll->tail, i, x, y);
+                double_linked_list_append_in_end(&road->dll->tail, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_end(&road->dll->tail, j, x, y);
+                  }
+                }
+                // printf("inserting in the tail\n");
+              }
             }
             break;
           case 2: // right
             pos_x = x;
             pos_y = y + 1;
-            road = roads_construction_search_road(rd, pos_x, pos_y, LEFT);
+            res =  roads_construction_search_road(rd, pos_x, pos_y, LEFT);
+            road = res->road;
             printf("searching for road on pos x = %d and y = %d \n", pos_x, pos_y);
             if (road == NULL)
               printf("am scruid\n");
             if (road != NULL)
             {
-              double_linked_list_append_in_beg(&road->dll->head, i, x, y);
-              double_linked_list_append_in_beg(&road->dll->head, CENTER, x, y);
-              for (int j = 0 ;j < 4 ; j++) {
-                if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
-                  double_linked_list_append_in_beg(&road->dll->head, j, x, y);
+              if (res->ref == HEAD) {
+                double_linked_list_append_in_beg(&road->dll->head, i, x, y);
+                double_linked_list_append_in_beg(&road->dll->head, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_beg(&road->dll->head, j, x, y);
+                  }
                 }
               }
-              printf("inserting in the head\n");
+
+              else {
+                double_linked_list_append_in_end(&road->dll->tail, i, x, y);
+                double_linked_list_append_in_end(&road->dll->tail, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_end(&road->dll->tail, j, x, y);
+                  }
+                }
+                // printf("inserting in the tail\n");
+              }
             }
             break;
           case 3: // bottom
             pos_x = x + 1;
             pos_y = y;
-            road = roads_construction_search_road(rd, pos_x, pos_y, TOP);
+            res = roads_construction_search_road(rd, pos_x, pos_y, TOP);
+            road = res->road;
             printf("searching for road on pos x = %d and y = %d \n", pos_x, pos_y); 
             if (road == NULL)
               printf("am scruid\n");
             if (road != NULL)
             {
-              double_linked_list_append_in_beg(&road->dll->head, i, x, y);
-              double_linked_list_append_in_beg(&road->dll->head, i, CENTER, y);
-              for (int j = 0 ;j < 4 ; j++) {
-                if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
-                  double_linked_list_append_in_beg(&road->dll->head, j, x, y);
+              if (res->ref == HEAD) {
+                double_linked_list_append_in_beg(&road->dll->head, i, x, y);
+                double_linked_list_append_in_beg(&road->dll->head, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_beg(&road->dll->head, j, x, y);
+                  }
                 }
               }
-              printf("inserting in the head\n");
+
+              else {
+                double_linked_list_append_in_end(&road->dll->tail, i, x, y);
+                double_linked_list_append_in_end(&road->dll->tail, CENTER, x, y);
+                for (int j = 0 ;j < 4 ; j++) {
+                  if (g->tab[x][y].t->borders[j].landscape == ROAD && j != i) {
+                    double_linked_list_append_in_end(&road->dll->tail, j, x, y);
+                  }
+                }
+                // printf("inserting in the tail\n");
+              }
             }
             break;
           }
@@ -294,43 +351,71 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         switch (first_index_one)
         {
         case 0:
-          road = roads_construction_search_road(rd, x, y - 1, RIGHT);
+          res = roads_construction_search_road(rd, x, y - 1, RIGHT);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-            printf("inserting in the tail\n");
+            if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 1:
-          road = roads_construction_search_road(rd, x - 1, y, BOTTOM);
+          res =  roads_construction_search_road(rd, x - 1, y, BOTTOM);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, TOP, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 2:
-          road = roads_construction_search_road(rd, x, y + 1, LEFT);
+          res = roads_construction_search_road(rd, x, y + 1, LEFT);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 3:
-          road = roads_construction_search_road(rd, x, y + 1, TOP);
+          res =  roads_construction_search_road(rd, x, y + 1, TOP);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, BOTTOM, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
 
           break;
@@ -338,47 +423,75 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         switch (second_index_one)
         {
         case 0:
-          road = roads_construction_search_road(rd, x, y - 1, RIGHT);
+          res =  roads_construction_search_road(rd, x, y - 1, RIGHT);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 1:
-          road = roads_construction_search_road(rd, x - 1, y, BOTTOM);
+          res =  roads_construction_search_road(rd, x - 1, y, BOTTOM);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
-            printf("inserting in the tail\n");
+            if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, TOP, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
 
           break;
         case 2:
 
-          road = roads_construction_search_road(rd, x, y + 1, LEFT);
+          res =  roads_construction_search_road(rd, x, y + 1, LEFT);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 3:
 
         {
-          road = roads_construction_search_road(rd, x, y + 1, TOP);
+          res = roads_construction_search_road(rd, x, y + 1, TOP);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, BOTTOM, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
         }
         break;
@@ -390,49 +503,77 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
         switch (first_index_one)
         {
         case 0:
-          road = roads_construction_search_road(rd, x, y - 1, RIGHT);
+          res =  roads_construction_search_road(rd, x, y - 1, RIGHT);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 1:
 
         {
-          road = roads_construction_search_road(rd, x - 1, y, BOTTOM);
+         res =  roads_construction_search_road(rd, x - 1, y, BOTTOM);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, TOP, x, y);
+              printf("inserting in the head\n");
+            } else {
+              double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
         }
         break;
         case 2:
 
-          road = roads_construction_search_road(rd, x, y + 1, LEFT);
+          res = roads_construction_search_road(rd, x, y + 1, LEFT);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
           break;
         case 3:
 
         {
-          road = roads_construction_search_road(rd, x, y + 1 , TOP);
+          res = roads_construction_search_road(rd, x, y + 1 , TOP);
+          road = res->road;
           if (road == NULL)
             printf("am scruid\n");
           else
           {
-            double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
-            printf("inserting in the tail\n");
+             if (res->ref == HEAD) {
+              double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
+              printf("inserting in the head\n");
+            }else {
+              double_linked_list_append_in_end(&road->dll->tail, BOTTOM, x, y);
+              printf("inserting in the tail\n");
+
+            }
           }
         }
         break;
@@ -469,47 +610,71 @@ Result roads_construction_update(Roads_construction *rd, Grid *g, Tile *t, int x
           switch (i)
           {
               case 0:
-                road = roads_construction_search_road(rd, x, y - 1, RIGHT);
+                res = roads_construction_search_road(rd, x, y - 1, RIGHT);
+                road = res->road;
                 if (road == NULL)
                   printf("am scruid\n");
                 else
                 {
-                  double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
-                  printf("inserting in the tail\n");
+                  if (res->ref == HEAD) {
+                    double_linked_list_append_in_beg(&road->dll->head, LEFT, x, y);
+                    // printf("inserting in the head\n");
+                  }else {
+                    double_linked_list_append_in_end(&road->dll->tail, LEFT, x, y);
+                    // printf("inserting in the tail\n");
+                  }
                 }
                 break;
               case 1:
               {
-                road = roads_construction_search_road(rd, x - 1, y, BOTTOM);
+                res =  roads_construction_search_road(rd, x - 1, y, BOTTOM);
+                road = res->road;
                 if (road == NULL)
                   printf("am scruid\n");
                 else
                 {
-                  double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
-                  printf("inserting in the tail\n");
+                  if (res->ref == HEAD) {
+                    double_linked_list_append_in_beg(&road->dll->head, TOP, x, y);
+                    // printf("inserting in the head\n");
+                  }else {
+                    double_linked_list_append_in_end(&road->dll->tail, TOP, x, y);
+                    // printf("inserting in the tail\n");
+                  }
                 }
               }
               break;
               case 2:
 
-                road = roads_construction_search_road(rd, x, y + 1, LEFT);
+                res =  roads_construction_search_road(rd, x, y + 1, LEFT);
+                road = res->road;
                 if (road == NULL)
                   printf("am scruid\n");
                 else
                 {
-                  double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y); // TODO: check if it is right
-                  printf("inserting in the head\n");
+                  if (res->ref == HEAD) {
+                    double_linked_list_append_in_beg(&road->dll->head, RIGHT, x, y);
+                    // printf("inserting in the head\n");
+                  }else {
+                    double_linked_list_append_in_end(&road->dll->tail, RIGHT, x, y);
+                    // printf("inserting in the tail\n");
+                  }
                 };
                 break;
               case 3:
               {
-                road = roads_construction_search_road(rd, x + 1, y, TOP);
+                res = roads_construction_search_road(rd, x + 1, y, TOP);
+                road = res->road;
                 if (road == NULL)
                   printf("am scruid\n");
                 else
                 {
-                  double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
-                  printf("inserting in the head\n");
+                  if (res->ref == HEAD) {
+                    double_linked_list_append_in_beg(&road->dll->head, BOTTOM, x, y);
+                    // printf("inserting in the head\n");
+                  }else {
+                    double_linked_list_append_in_end(&road->dll->tail, BOTTOM, x, y);
+                    // printf("inserting in the tail\n");
+                  }
                 }
               }
               break;
@@ -602,21 +767,26 @@ Road *roads_construction_add_road(Roads_construction *R, Borders b, int x, int y
 
 // search in all Roads and return a road that goes through x and y coordinates
 // of course we need to check only the head and th tail
-Road *roads_construction_search_road(Roads_construction *rd, int x, int y, Borders b)
+road_search_result * roads_construction_search_road(Roads_construction *rd, int x, int y, Borders b)
 {
 
+  // allocate memory for the result
+  road_search_result *result = (road_search_result *)malloc(sizeof(road_search_result));
+  check_null((void *)result, "could not allocate memory for road_search_result");
   Road **ptr_roads = rd->arr;
 
   for (int i = 0; i < rd->size; i++) {
-  if ((ptr_roads[i]->dll->head->pos.x == x &&
-       ptr_roads[i]->dll->head->pos.y == y &&
-       ptr_roads[i]->dll->head->border == b) ||
-      (ptr_roads[i]->dll->tail->pos.x == x &&
-       ptr_roads[i]->dll->tail->pos.y == y &&
-       ptr_roads[i]->dll->tail->border == b)) {
-    return ptr_roads[i];
+    if (ptr_roads[i]->dll->head->pos.x == x && ptr_roads[i]->dll->head->pos.y == y && ptr_roads[i]->dll->head->border == b) {
+      result->road = ptr_roads[i];
+      result->ref = HEAD;
+      return result;
+    }
+    if (ptr_roads[i]->dll->tail->pos.x == x && ptr_roads[i]->dll->tail->pos.y == y && ptr_roads[i]->dll->tail->border == b) {
+      result->road = ptr_roads[i];
+      result->ref = TAIL;
+      return result;
+      }
   }
-}
   return NULL;
 }
 
@@ -625,7 +795,9 @@ void roads_construction_conquere_road(Roads_construction *rd, Player *p, int ind
 
   for (int i = 0;i < 5; i++) {
 
-    Road *road = roads_construction_search_road(rd, x, y, i);
+    Road *road; 
+    road_search_result *res = roads_construction_search_road(rd, x, y, i);
+    road = res->road;
 
     if (road != NULL)
     {
@@ -815,4 +987,38 @@ void Roads_construction_get_connected_roads(Roads_construction *rd)
       }
     }
   }
+}
+
+
+Road * Roads_construction_finished_roads(Roads_construction *rd, Grid *g) {
+  for (int i = 0; i < rd->size; i++) {
+    Road * road = rd->arr[i];
+    int x =  road->dll->head->pos.x;
+    int y = road->dll->head->pos.y;
+    int x2 = road->dll->tail->pos.x;
+    int y2 = road->dll->tail->pos.y;
+
+    if (
+      
+        (g->tab[x][y].t->borders[4].landscape == VILLAGE &&
+        g->tab[x2][y2].t->borders[4].landscape == VILLAGE ) ||
+
+        (g->tab[x][y].t->borders[4].landscape == CLOISTER &&
+        g->tab[x2][y2].t->borders[4].landscape == CLOISTER ) ||
+
+        (g->tab[x][y].t->borders[4].landscape == VILLAGE &&
+        g->tab[x2][y2].t->borders[4].landscape == CLOISTER ) ||
+
+        ( 
+          g->tab[x][y].t->borders[4].landscape == CLOISTER &&
+          g->tab[x2][y2].t->borders[4].landscape == VILLAGE )
+        
+        
+        ) {
+      printf("found a finished road where the head strts from %d %d and finishes on %d %d \n", x, y, x2, y2);
+      return road;
+    }
+
+  }
+  return NULL;
 }
