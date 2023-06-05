@@ -32,5 +32,7 @@ int game_suggest_tile_rotation(Valid_squares *vs, int x, int y);
 int game_suggest_meeple();
 void game_get_players(Player * players_arr[MAX_PLAYERS]); 
 void print_error(Result result); 
+int get_rand_number(int max);
+int get_rand_number_for_rotation(Valid_squares *vs, int x, int y) ;
 
 #endif

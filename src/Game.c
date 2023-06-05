@@ -6,6 +6,7 @@
 #include "./../include/Valid_squares.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 Game *game_init(Player *players_arr[MAX_PLAYERS], Grid *g, Stack *s,
                 __u_int num_players) {
@@ -152,3 +153,38 @@ void print_error(Result result) {
     break;
   }
 }
+
+int get_rand_number(int max) {
+    srand(time(NULL)); // Seed the random number generator with the current time
+    return rand() % (max + 1); // Generate a random number between 0 and max
+}
+
+
+int get_rand_number_for_rotation(Valid_squares *vs, int x, int y) {
+  int i = 0;
+  int choice = 0;
+  int arr[4] = {-1, -1, -1, -1};
+
+
+  for (i = 0; i < vs->size; i++) {
+    if (vs->arr[i].coor.x == x && vs->arr[i].coor.y == y)
+      break;
+  }
+
+  if (vs->arr[i].possible_fits > 1) {
+    int j = 0;
+    for (j = 0; j < 4; j++) {
+      if (vs->arr[i].orientation[j] == 1) {
+        return j;
+      }
+    }
+  } else {
+    printf("there is only one valid way to put the tile \n");
+    for (int j = 0; j < 4; j++) {
+      if (vs->arr[i].orientation[j] == 1) {
+        return j;
+      }
+    }
+  }
+}
+
